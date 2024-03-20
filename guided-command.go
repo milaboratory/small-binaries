@@ -28,7 +28,8 @@ func main() {
 		doneText = os.Args[4]
 	}
 
-	err := os.WriteFile(startedPath, []byte{}, 0o666)
+	pidStr := fmt.Sprintf("%d", os.Getpid())
+	err := os.WriteFile(startedPath, []byte(pidStr), 0o666)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to create 'i'm started' file %q: %v", startedPath, err)
 		os.Exit(1)

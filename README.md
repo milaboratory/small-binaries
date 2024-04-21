@@ -1,13 +1,27 @@
-# Most common pipeline
+# Release
+
+Build new version of all binaries, pack them into archives and upload them to our binary registry
+(publically available)
+
+```bash
+./release.sh
+```
+
+# Build
+
+## Single binary
+```bash
+go build "./<go file>"
+```
+
+## All binaries for all supported architectures:
 
 ```bash
 ./build.sh
-./pack.sh
-./upload.sh
 ```
 
-# Simplest way to build:
+## Pack all built binaries into archives
 
 ```bash
-go build "./<go file>"
+./pack.sh
 ```

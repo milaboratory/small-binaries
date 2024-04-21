@@ -2,6 +2,7 @@
 
 set -o errexit
 set -o nounset
+set -o pipefail
 
 : "${BUILD_DIR:="build"}"
 
@@ -11,7 +12,8 @@ cd "${script_dir}"
 build_binaries() {
     local _os="${1}"
     local _arch="${2}"
-    local _bin_suffix="${3}"
+    local _group="${3}"
+    local _ext="${4:-}"
 
     printf "Building for %s, %s:\n"  "${_os}" "${_arch}"
 
@@ -20,7 +22,7 @@ build_binaries() {
             printf "\t%s... "  "${file}"
             env GOOS="${_os}" GOARCH="${_arch}" \
                 go build \
-                    -o "${BUILD_DIR}/${_bin_suffix}/${file%.go}" \
+                    -o "${BUILD_DIR}/${_group}/${file%.go}${_ext}" \
                     "./${file}"
             printf "\n"
         done
@@ -33,7 +35,7 @@ build_binaries() {
 #  amd64 -> x64
 #  arm64 -> aarch64
 
-build_binaries "windows" "amd64" "windows-x64"
+build_binaries "windows" "amd64" "windows-x64" ".exe"
 
 build_binaries "linux" "amd64" "linux-x64"
 build_binaries "linux" "arm64" "linux-aarch64"

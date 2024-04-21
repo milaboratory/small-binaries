@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"math/rand"
 	"os"
 	"os/signal"
 	"syscall"
@@ -29,7 +30,7 @@ func main() {
 	}
 
 	pidStr := fmt.Sprintf("%d", os.Getpid())
-	err := os.WriteFile(startedPath, []byte(pidStr), 0o666)
+	err := writeFileAtomic(startedPath, []byte(pidStr), 0o666)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to create 'i'm started' file %q: %v", startedPath, err)
 		os.Exit(1)
@@ -63,9 +64,38 @@ WaitForUnblockFile:
 		}
 	}
 
-	err = os.WriteFile(donePath, []byte(doneText), 0o666)
+	err = writeFileAtomic(donePath, []byte(doneText), 0o666)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to create 'i'm done' file %q: %v", donePath, err)
 		os.Exit(1)
 	}
+}
+
+func writeFileAtomic(filePath string, data []byte, mode os.FileMode) error {
+	filePathTmp := fmt.Sprintf("%s.%s", filePath, randStr(5))
+
+	err := os.WriteFile(filePathTmp, data, mode)
+	if err != nil {
+		return fmt.Errorf("failed to create intermediate tmp file for %q: %w", filePathTmp, err)
+	}
+
+	err = os.Rename(filePathTmp, filePath)
+	if err != nil {
+		return fmt.Errorf("failed to rename intermediate tmp file %q to %q: %w", filePathTmp, filePath, err)
+	}
+
+	return nil
+}
+
+func randStr(length int) string {
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+	variety := len(charset)
+
+	ret := make([]byte, length)
+	for i := range ret {
+		ret[i] = charset[rand.Intn(variety)]
+	}
+
+	return string(ret)
 }

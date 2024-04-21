@@ -1,10 +1,13 @@
-# How to build:
+# Most common pipeline
 
 ```bash
 ./build.sh
+./pack.sh
+./upload.sh
 ```
 
-# How to upload
-```
+# Simplest way to build:
 
+```bash
+go build "./<go file>"
 ```

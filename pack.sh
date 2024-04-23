@@ -41,7 +41,7 @@ ls "${BUILD_DIR}" |
                 # do not put additional ,_file.txt with extra metadata into the archive
                 COPYFILE_DISABLE=1 tar \
                     -C "${bin_path}" \
-                    -c -z -f "${target_dir}/${current_version#v}-${os_arch}.tar.gz" \
+                    -c -z -f "${target_dir}/${current_version#v}-${os_arch}.tgz" \
                     "${bin_name}"
 
                 printf "\n"

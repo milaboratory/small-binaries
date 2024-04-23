@@ -38,7 +38,8 @@ ls "${BUILD_DIR}" |
 
                 mkdir -p "${target_dir}"
 
-                tar \
+                # do not put additional ,_file.txt with extra metadata into the archive
+                COPYFILE_DISABLE=1 tar \
                     -C "${bin_path}" \
                     -c -z -f "${target_dir}/${current_version#v}-${os_arch}.tar.gz" \
                     "${bin_name}"

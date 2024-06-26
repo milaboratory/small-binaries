@@ -10,7 +10,7 @@ Main development flow is:
 * Change the code
 * Commit
 * Create version tag
-* Release new binaries
+* Run ./release.sh
 
 # Release
 

@@ -1,0 +1,21 @@
+{
+    "name": "@milaboratory/sleep",
+    "version": "1.4.0",
+    "description": "Cross-platform 'sleep' command, go implementation",
+    "scripts": {
+      "build": "./scripts/build.sh",
+  
+      "release:packages": "./scripts/publish.sh",
+      "release:descriptors": "pl-pkg publish descriptor",
+      "release": "npm run release:packages && npm run release:descriptors"
+    },
+    "files": [
+      "dist/"
+    ],
+    "license": "UNLICENSED",
+    "dependencies": {},
+    "devDependencies": {
+      "@milaboratory/pl-package-builder": "1.6.x"
+    }
+  }
+  

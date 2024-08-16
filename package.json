@@ -3,11 +3,13 @@
     "version": "1.5.0",
     "description": "Cross-platform 'sleep' command, go implementation",
     "scripts": {
-      "build": "./scripts/build.sh",
+      "build": "true",
   
+      "pkg:build": "./scripts/build.sh",
+
       "release:packages": "./scripts/publish.sh",
       "release:descriptors": "pl-pkg publish descriptor",
-      "release": "npm run release:packages && npm run release:descriptors"
+      "release": "npm run pkg:build && npm run release:packages && npm run release:descriptors"
     },
     "files": [
       "dist/"

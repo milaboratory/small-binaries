@@ -15,7 +15,7 @@ publish_package() {
   local _arch="${3}"
 
   pl-pkg publish package \
-    --package-name="${_bin_name}" \
+    --package-name="common/${_bin_name}" \
     --os="${_os}" \
     --arch="${_arch}"
   printf "\n"

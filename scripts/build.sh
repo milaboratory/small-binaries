@@ -28,7 +28,7 @@ build_binary() {
     printf "\n"
 
     pl-pkg build package \
-        --package-name="${_bin_name}" \
+        --package-name="common/${_bin_name}" \
         --os="${_os_reg}" \
         --arch="${_arch_reg}" \
         --content-root="${BUILD_DIR}/${_group}/${_bin_name}/"
@@ -57,7 +57,7 @@ build_binaries() {
 
     pl-pkg build descriptor \
         --name="${_bin_name}" \
-        --package-name="${_bin_name}"
+        --package-name="common/${_bin_name}"
 }
 
 rm -rf "${script_dir}/${BUILD_DIR}"

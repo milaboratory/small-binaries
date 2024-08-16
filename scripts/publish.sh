@@ -39,3 +39,4 @@ publish_packages() {
 
 publish_packages "guided-command"
 publish_packages "sleep"
+publish_packages "read-file-to-stdout-with-sleep"

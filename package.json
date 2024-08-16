@@ -1,6 +1,6 @@
 {
     "name": "@milaboratory/sleep",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "description": "Cross-platform 'sleep' command, go implementation",
     "scripts": {
       "build": "./scripts/build.sh",

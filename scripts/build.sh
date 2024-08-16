@@ -63,6 +63,7 @@ build_binaries() {
 rm -rf "${script_dir}/${BUILD_DIR}"
 build_binaries "guided-command"
 build_binaries "sleep"
+build_binaries "read-file-to-stdout-with-sleep"
 
 echo ""
 echo "All binaries are saved to '${script_dir}/${BUILD_DIR}'"

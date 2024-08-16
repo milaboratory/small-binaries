@@ -4,40 +4,22 @@ Each go file = single binary.
 This repo intentionally has no go.mod file as it is designed
 for small binary utilities with small implementation.
 
-The binary version is detected from git tag.
+The binary version is detected from `version` in package.json file
 
-Main development flow is:
+All binaries have their software descriptors inside NPM package released along with the packages.
+Say, for `sleep` command, there is a `@milaboratory/small-binaries:sleep` software descirptor to be used in
+Platforma workflows
+
+## Patching existing binaries
 * Change the code
-* Commit
-* Create version tag
-* Run ./release.sh
+* Check it can be built: `go build -o /dev/null ./read-file-to-stdout-with-sleep.go`
+* Bump package version in `package.json` (patch or minor, depending on the changes you made)
+* Commit and push changes.
+  All updates to the `main` branch with version change in `package.json` are released to registry and NPM
 
-# Release
-
-Build new version of all binaries, pack them into archives and upload them to our binary registry
-(publically available)
-
-The binary version is detected from git tag.
-
-```bash
-./release.sh
-```
-
-# Build
-
-## Single binary
-```bash
-go build "./<go file>"
-```
-
-## All binaries for all supported architectures:
-
-```bash
-./build.sh
-```
-
-## Pack all built binaries into archives
-
-```bash
-./pack.sh
-```
+## Adding new binaries
+* Create `.go` file in root directory
+* Write the code.
+* Add new file name (without `.go` extension) to `./scripts/build.sh` and `./scripts/publish.sh`
+* Bump package version in `package.json` (minor version, as you added new binary)
+* Commit and push changes.

@@ -19,12 +19,12 @@ build_binary() {
 
     local _group="${_os_go}-${_arch_go}"
 
-    printf "## os='%s', arch='%s':\n"  "${_os_go}" "${_arch_go}"
-    
+    printf "## os='%s', arch='%s':\n" "${_os_go}" "${_arch_go}"
+
     env GOOS="${_os_go}" GOARCH="${_arch_go}" \
         go build \
-            -o "${BUILD_DIR}/${_group}/${_bin_name}/main${_ext}" \
-            "./${_bin_name}.go"
+        -o "${BUILD_DIR}/${_group}/${_bin_name}/main${_ext}" \
+        "./${_bin_name}.go"
     printf "\n"
 
     pl-pkg build package \
@@ -37,6 +37,13 @@ build_binary() {
 
 build_binaries() {
     local _bin_name="${1}"
+
+    # OS names mapping:
+    #  darwin -> macosx
+    #
+    # Architecture names mapping:
+    #  amd64 -> x64
+    #  arm64 -> aarch64
 
     printf "\n# Building '%s'...\n\n" "${_bin_name}"
 
@@ -53,14 +60,8 @@ build_binaries() {
         --package-name="${_bin_name}"
 }
 
-# OS names mapping:
-#  darwin -> macosx
-#
-# Architecture names mapping:
-#  amd64 -> x64
-#  arm64 -> aarch64
-
 rm -rf "${script_dir}/${BUILD_DIR}"
+
 build_binaries "guided-command"
 build_binaries "sleep"
 build_binaries "read-file-to-stdout-with-sleep"

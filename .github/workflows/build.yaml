@@ -33,6 +33,7 @@ jobs:
       app-name: Small cross-platform utils
       app-name-slug: 'small-cross-platform-packages'
       notify-telegram: true
+      aws-publish-enable: true
 
       node-version: '20.x'
       golang-version: '1.22'

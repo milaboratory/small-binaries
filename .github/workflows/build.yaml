@@ -19,21 +19,15 @@ jobs:
           file: "./package.json"
           select: '.version'
 
-    outputs:
-      version: ${{ steps.pkg_version.outputs.value }}
-
   run:
     needs:
       - init
 
     uses: milaboratory/github-ci-internal/.github/workflows/node-go-simple.yaml@v4
     with:
-      env: >
-        { "GO_BUILD_VERSION": "${{ needs.init.outputs.version }}" }
       app-name: Small cross-platform utils
       app-name-slug: 'small-cross-platform-packages'
       notify-telegram: true
-      aws-publish-enable: true
 
       node-version: '20.x'
       golang-version: '1.22'
@@ -46,6 +40,9 @@ jobs:
       test-script-name: 'test'
 
       publish-script-name: 'release'
+
+      aws-publish-enable: true
+      aws-iam-role-to-assume: 'arn:aws:iam::511903394050:role/milab-euce1-prod-github-oidc-role-pl-registry'
 
     secrets:
       TELEGRAM_NOTIFICATION_TARGET: ${{ secrets.TG_CHANNEL_MIBUILDS }}

@@ -62,6 +62,7 @@ build_binaries() {
 
 rm -rf "${script_dir}/${BUILD_DIR}"
 
+build_binaries "hello-world"
 build_binaries "guided-command"
 build_binaries "sleep"
 build_binaries "read-file-to-stdout-with-sleep"

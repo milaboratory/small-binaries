@@ -35,6 +35,7 @@ publish_packages() {
   publish_package "${_bin_name}" "macosx" "aarch64"
 }
 
+publish_packages "hello-world"
 publish_packages "guided-command"
 publish_packages "sleep"
 publish_packages "read-file-to-stdout-with-sleep"

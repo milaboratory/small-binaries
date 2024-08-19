@@ -1,7 +1,7 @@
 {
     "name": "@milaboratory/small-binaries",
-    "version": "1.6.0",
-    "description": "Cross-platform 'sleep' command, go implementation",
+    "version": "1.6.1",
+    "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
       "build": "true",
 

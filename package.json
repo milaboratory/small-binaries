@@ -3,21 +3,19 @@
     "version": "1.6.2",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
-      "build": "true",
+        "build": "true",
 
-      "pkg:build": "./scripts/build.sh",
+        "pkg:build": "./scripts/build.sh",
 
-      "release:packages": "./scripts/publish.sh",
-      "release:descriptors": "pl-pkg publish descriptor",
-      "release": "npm run pkg:build && npm run release:packages && npm run release:descriptors"
+        "release:packages": "./scripts/publish.sh",
+        "release:descriptors": "pl-pkg publish descriptor",
+        "release": "npm run pkg:build && npm run release:packages && npm run release:descriptors"
     },
     "files": [
-      "dist/"
+        "dist/"
     ],
     "license": "UNLICENSED",
-    "dependencies": {},
     "devDependencies": {
-      "@milaboratory/pl-package-builder": "1.8.x"
+        "@milaboratory/pl-package-builder": "^1.8.2"
     }
-  }
-  
+}

@@ -3,6 +3,7 @@
     "version": "1.6.3",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
+        "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
         "build": "true",
         "pkg:build": "./scripts/build.sh",
         "release:packages": "./scripts/publish.sh",

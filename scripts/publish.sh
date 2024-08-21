@@ -14,7 +14,7 @@ publish_package() {
   local _os="${2}"
   local _arch="${3}"
 
-  pl-pkg publish package \
+  pl-pkg publish packages \
     --package-id="${_bin_name}" \
     --skip-existing-packages \
     --os="${_os}" \

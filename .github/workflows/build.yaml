@@ -41,6 +41,11 @@ jobs:
 
       publish-script-name: 'release'
 
+      env: >-
+        {
+          "PL_REGISTRY_MILABORATORIES_UPLOAD_URL": "s3://milab-euce1-prod-pkgs-s3-platforma-registry/pub/?region=eu-central-1"
+        }
+
       aws-publish-enable: true
       aws-iam-role-to-assume: 'arn:aws:iam::511903394050:role/milab-euce1-prod-github-oidc-role-pl-registry'
 

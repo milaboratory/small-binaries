@@ -4,18 +4,64 @@
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "build": "true",
-
         "pkg:build": "./scripts/build.sh",
-
         "release:packages": "./scripts/publish.sh",
-        "release:descriptors": "pl-pkg publish descriptor",
+        "release:descriptors": "pl-pkg publish descriptors",
         "release": "npm run pkg:build && npm run release:packages && npm run release:descriptors"
+    },
+    "block-software": {
+        "packages": {
+            "hello-world": {
+                "binary": {
+                    "registry": { "name": "milaboratories" },
+                    "name": "common/hello-world",
+                    "version": "1.6.2",
+                    "root": "./nonexistent/",
+                    "entrypoints": {
+                        "hello-world": { "cmd": [ "{pkg}/main" ] }
+                    }
+                }
+            },
+            "sleep": {
+                "binary": {
+                    "registry": { "name": "milaboratories" },
+                    "name": "common/sleep",
+                    "version": "1.6.2",
+                    "root": "./nonexistent/",
+                    "entrypoints": {
+                        "sleep": { "cmd": [ "{pkg}/main" ] }
+                    }
+                }
+            },
+            "guided-command": {
+                "binary": {
+                    "registry": { "name": "milaboratories" },
+                    "name": "common/guided-command",
+                    "version": "1.6.2",
+                    "root": "./nonexistent/",
+                    "entrypoints": {
+                        "guided-command": { "cmd": [ "{pkg}/main" ] }
+                    }
+                }
+            },
+            "read-file-to-stdout-with-sleep": {
+                "binary": {
+                    "registry": { "name": "milaboratories" },
+                    "name": "common/read-file-to-stdout-with-sleep",
+                    "version": "1.6.2",
+                    "root": "./nonexistent/",
+                    "entrypoints": {
+                        "read-file-to-stdout-with-sleep": { "cmd": [ "{pkg}/main" ] }
+                    }
+                }
+            }
+        }
     },
     "files": [
         "dist/"
     ],
     "license": "UNLICENSED",
     "devDependencies": {
-        "@milaboratory/pl-package-builder": "^1.8.2"
+        "@milaboratory/pl-package-builder": "^2.4.0"
     }
 }

@@ -13,7 +13,8 @@ Platforma workflows
 ## Patching existing binaries
 * Change the code
 * Check it can be built: `go build -o /dev/null ./read-file-to-stdout-with-sleep.go`
-* Bump package version in `package.json` (patch or minor, depending on the changes you made)
+* Bump 2 package versions in `package.json`: the version of NPM package and the version of software package
+  (patch or minor, depending on the changes you made)
 * Commit and push changes.
   All updates to the `main` branch with version change in `package.json` are released to registry and NPM
 
@@ -21,5 +22,6 @@ Platforma workflows
 * Create `.go` file in root directory
 * Write the code.
 * Add new file name (without `.go` extension) to `./scripts/build.sh` and `./scripts/publish.sh`
+* Add new software package into `package.json` (`block-software.packages.<file name>`).
 * Bump package version in `package.json` (minor version, as you added new binary)
 * Commit and push changes.

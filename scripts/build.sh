@@ -61,6 +61,7 @@ build_binaries() {
 
 rm -rf "${script_dir}/${BUILD_DIR}"
 
+build_binaries "runenv-java-stub"
 build_binaries "hello-world"
 build_binaries "guided-command"
 build_binaries "sleep"

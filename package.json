@@ -1,6 +1,6 @@
 {
     "name": "@milaboratory/small-binaries",
-    "version": "1.6.4",
+    "version": "1.7.0",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
@@ -54,6 +54,17 @@
                     "entrypoints": {
                         "read-file-to-stdout-with-sleep": { "cmd": [ "{pkg}/main" ] }
                     }
+                }
+            },
+            "runenv-java-stub": {
+                "environment": {
+                    "registry": { "name": "milaboratories" },
+                    "name": "common/runenv-java-stub",
+                    "version": "1.0.0",
+                    "type": "java",
+                    "root": "./nonexistent/",
+                    "binDir": ".",
+                    "entrypointName": "runenv-java-stub"
                 }
             }
         }

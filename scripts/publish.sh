@@ -36,7 +36,7 @@ publish_packages() {
   publish_package "${_bin_name}" "macosx" "aarch64"
 }
 
-publish_binaries "runenv-java-stub"
+publish_packages "runenv-java-stub"
 publish_packages "hello-world"
 publish_packages "guided-command"
 publish_packages "sleep"

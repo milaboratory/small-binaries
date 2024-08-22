@@ -11,10 +11,5 @@ func main() {
 		fmt.Fprintf(os.Stdout, "run environment was started with no command and arguments")
 	}
 
-	cmdToRun := make([]string, 0, len(os.Args))
-	for _, arg := range cmdToRun {
-		cmdToRun = append(cmdToRun, fmt.Sprintf("%q", arg))
-	}
-
-	fmt.Fprint(os.Stdout, strings.Join(cmdToRun, " "))
+	fmt.Fprint(os.Stdout, strings.Join(os.Args[1:], "\n"))
 }

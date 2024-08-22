@@ -1,6 +1,6 @@
 {
     "name": "@milaboratory/small-binaries",
-    "version": "1.7.0",
+    "version": "1.7.2",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
@@ -60,7 +60,7 @@
                 "environment": {
                     "registry": { "name": "milaboratories" },
                     "name": "common/runenv-java-stub",
-                    "version": "1.0.0",
+                    "version": "1.0.1",
                     "type": "java",
                     "root": "./nonexistent/",
                     "binDir": ".",

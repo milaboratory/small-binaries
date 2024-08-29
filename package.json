@@ -1,14 +1,21 @@
 {
     "name": "@milaboratory/small-binaries",
-    "version": "1.7.2",
+    "version": "1.7.3",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
-        "build": "true",
+        "build": "npm run pkg:build",
+
         "pkg:build": "./scripts/build.sh",
-        "release:packages": "./scripts/publish.sh",
-        "release:descriptors": "pl-pkg publish descriptors",
-        "release": "npm run pkg:build && npm run release:packages && npm run release:descriptors"
+        "pkg:sign": "pl-pkg sign --all-platforms --sign-util='gcloud-kms-sign'",
+        "pkg:publish": "pl-pkg publish packages --all-platforms",
+        "pkg:release": "npm run pkg:build && npm run pkg:sign && npm run pkg:publish",
+
+        "descriptors:build": "pl-pkg build descriptors",
+        "descriptors:publish": "pl-pkg publish descriptors",
+        "descriptors:release": "npm run descriptors:build && npm run descriptors:publish",
+
+        "release": "npm run pkg:release && npm run descriptors:release"
     },
     "block-software": {
         "packages": {
@@ -17,7 +24,13 @@
                     "registry": { "name": "milaboratories" },
                     "name": "common/hello-world",
                     "version": "1.6.3",
-                    "root": "./nonexistent/",
+                    "roots": {
+                        "linux-x64": "./build/linux-x64/hello-world",
+                        "linux-aarch64": "./build/linux-aarch64/hello-world",
+                        "macosx-x64": "./build/macosx-x64/hello-world",
+                        "macosx-aarch64": "./build/macosx-aarch64/hello-world",
+                        "windows-x64": "./build/windows-x64/hello-world"
+                    },
                     "entrypoints": {
                         "hello-world": { "cmd": [ "{pkg}/main" ] }
                     }
@@ -28,7 +41,13 @@
                     "registry": { "name": "milaboratories" },
                     "name": "common/sleep",
                     "version": "1.6.3",
-                    "root": "./nonexistent/",
+                    "roots": {
+                        "linux-x64": "./build/linux-x64/sleep",
+                        "linux-aarch64": "./build/linux-aarch64/sleep",
+                        "macosx-x64": "./build/macosx-x64/sleep",
+                        "macosx-aarch64": "./build/macosx-aarch64/sleep",
+                        "windows-x64": "./build/windows-x64/sleep"
+                    },
                     "entrypoints": {
                         "sleep": { "cmd": [ "{pkg}/main" ] }
                     }
@@ -39,7 +58,13 @@
                     "registry": { "name": "milaboratories" },
                     "name": "common/guided-command",
                     "version": "1.6.3",
-                    "root": "./nonexistent/",
+                    "roots": {
+                        "linux-x64": "./build/linux-x64/guided-command",
+                        "linux-aarch64": "./build/linux-aarch64/guided-command",
+                        "macosx-x64": "./build/macosx-x64/guided-command",
+                        "macosx-aarch64": "./build/macosx-aarch64/guided-command",
+                        "windows-x64": "./build/windows-x64/guided-command"
+                    },
                     "entrypoints": {
                         "guided-command": { "cmd": [ "{pkg}/main" ] }
                     }
@@ -50,7 +75,13 @@
                     "registry": { "name": "milaboratories" },
                     "name": "common/read-file-to-stdout-with-sleep",
                     "version": "1.6.3",
-                    "root": "./nonexistent/",
+                    "roots": {
+                        "linux-x64": "./build/linux-x64/read-file-to-stdout-with-sleep",
+                        "linux-aarch64": "./build/linux-aarch64/read-file-to-stdout-with-sleep",
+                        "macosx-x64": "./build/macosx-x64/read-file-to-stdout-with-sleep",
+                        "macosx-aarch64": "./build/macosx-aarch64/read-file-to-stdout-with-sleep",
+                        "windows-x64": "./build/windows-x64/read-file-to-stdout-with-sleep"
+                    },
                     "entrypoints": {
                         "read-file-to-stdout-with-sleep": { "cmd": [ "{pkg}/main" ] }
                     }
@@ -62,7 +93,13 @@
                     "name": "common/runenv-java-stub",
                     "version": "1.0.1",
                     "type": "java",
-                    "root": "./nonexistent/",
+                    "roots": {
+                        "linux-x64": "./build/linux-x64/runenv-java-stub",
+                        "linux-aarch64": "./build/linux-aarch64/runenv-java-stub",
+                        "macosx-x64": "./build/macosx-x64/runenv-java-stub",
+                        "macosx-aarch64": "./build/macosx-aarch64/runenv-java-stub",
+                        "windows-x64": "./build/windows-x64/runenv-java-stub"
+                    },
                     "binDir": ".",
                     "entrypointName": "runenv-java-stub"
                 }
@@ -74,6 +111,6 @@
     ],
     "license": "UNLICENSED",
     "devDependencies": {
-        "@milaboratory/pl-package-builder": "^2.4.0"
+        "@milaboratory/pl-package-builder": "^2.6.1"
     }
 }

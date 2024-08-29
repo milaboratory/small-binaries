@@ -17,22 +17,13 @@ build_binary() {
     local _arch_reg="${5}"
     local _ext="${6:-}"
 
-    local _group="${_os_go}-${_arch_go}"
+    local _platform="${_os_reg}-${_arch_reg}"
 
     printf "## os='%s', arch='%s':\n" "${_os_go}" "${_arch_go}"
-
     env GOOS="${_os_go}" GOARCH="${_arch_go}" \
         go build \
-        -o "${BUILD_DIR}/${_group}/${_bin_name}/main${_ext}" \
+        -o "${BUILD_DIR}/${_platform}/${_bin_name}/main${_ext}" \
         "./${_bin_name}.go"
-    printf "\n"
-
-    pl-pkg build packages \
-        --package-id="${_bin_name}" \
-        --os="${_os_reg}" \
-        --arch="${_arch_reg}" \
-        --content-root="${BUILD_DIR}/${_group}/${_bin_name}/"
-    printf "\n"
 }
 
 build_binaries() {
@@ -45,7 +36,7 @@ build_binaries() {
     #  amd64 -> x64
     #  arm64 -> aarch64
 
-    printf "\n# Building '%s'...\n\n" "${_bin_name}"
+    printf "\n# Building '%s'...\n" "${_bin_name}"
 
     build_binary "${_bin_name}" "windows" "amd64" "windows" "x64" ".exe"
 
@@ -54,9 +45,6 @@ build_binaries() {
 
     build_binary "${_bin_name}" "darwin" "amd64" "macosx" "x64"
     build_binary "${_bin_name}" "darwin" "arm64" "macosx" "aarch64"
-
-    pl-pkg build descriptors \
-        --package-id="${_bin_name}"
 }
 
 rm -rf "${script_dir}/${BUILD_DIR}"
@@ -66,6 +54,8 @@ build_binaries "hello-world"
 build_binaries "guided-command"
 build_binaries "sleep"
 build_binaries "read-file-to-stdout-with-sleep"
+
+pl-pkg build packages --all-platforms
 
 echo ""
 echo "All binaries are saved to '$(pwd)/${BUILD_DIR}'"

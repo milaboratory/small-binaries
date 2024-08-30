@@ -8,7 +8,7 @@
 
         "pkg:build": "./scripts/build.sh",
         "pkg:sign": "pl-pkg sign --all-platforms --sign-command='[\"gcloud-kms-sign\", \"{pkg}\", \"{pkg}.sig\"]'",
-        "pkg:publish": "pl-pkg publish packages --all-platforms",
+        "pkg:publish": "pl-pkg publish packages --all-platforms --skip-existing-packages",
         "pkg:release": "npm run pkg:build && npm run pkg:publish",
 
         "descriptors:build": "pl-pkg build descriptors",
@@ -23,7 +23,7 @@
                 "binary": {
                     "registry": { "name": "milaboratories" },
                     "name": "common/hello-world",
-                    "version": "1.6.3",
+                    "version": "1.7.0",
                     "roots": {
                         "linux-x64": "./build/linux-x64/hello-world",
                         "linux-aarch64": "./build/linux-aarch64/hello-world",
@@ -40,7 +40,7 @@
                 "binary": {
                     "registry": { "name": "milaboratories" },
                     "name": "common/sleep",
-                    "version": "1.6.3",
+                    "version": "1.7.0",
                     "roots": {
                         "linux-x64": "./build/linux-x64/sleep",
                         "linux-aarch64": "./build/linux-aarch64/sleep",
@@ -57,7 +57,7 @@
                 "binary": {
                     "registry": { "name": "milaboratories" },
                     "name": "common/guided-command",
-                    "version": "1.6.3",
+                    "version": "1.7.0",
                     "roots": {
                         "linux-x64": "./build/linux-x64/guided-command",
                         "linux-aarch64": "./build/linux-aarch64/guided-command",
@@ -74,7 +74,7 @@
                 "binary": {
                     "registry": { "name": "milaboratories" },
                     "name": "common/read-with-sleep",
-                    "version": "1.6.3",
+                    "version": "1.7.0",
                     "roots": {
                         "linux-x64": "./build/linux-x64/read-with-sleep",
                         "linux-aarch64": "./build/linux-aarch64/read-with-sleep",
@@ -91,7 +91,7 @@
                 "environment": {
                     "registry": { "name": "milaboratories" },
                     "name": "common/runenv-java-stub",
-                    "version": "1.0.1",
+                    "version": "1.1.0",
                     "type": "java",
                     "roots": {
                         "linux-x64": "./build/linux-x64/runenv-java-stub",

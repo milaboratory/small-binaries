@@ -7,7 +7,7 @@
         "build": "npm run pkg:build",
 
         "pkg:build": "./scripts/build.sh",
-        "pkg:sign": "pl-pkg sign --all-platforms --sign-command=[\"gcloud-kms-sign\", \"{pkg}\", \"{pkg}.sig\"]",
+        "pkg:sign": "pl-pkg sign --all-platforms --sign-command='[\"gcloud-kms-sign\", \"{pkg}\", \"{pkg}.sig\"]'",
         "pkg:publish": "pl-pkg publish packages --all-platforms",
         "pkg:release": "npm run pkg:build && npm run pkg:sign && npm run pkg:publish",
 

@@ -1,10 +1,10 @@
 {
     "name": "@milaboratory/small-binaries",
-    "version": "1.8.0",
+    "version": "1.8.1",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
-        "build": "npm run pkg:build",
+        "build": "npm run pkg:build && npm run descriptors:build",
 
         "pkg:build": "./scripts/build.sh",
         "pkg:sign": "pl-pkg sign --all-platforms --sign-command='[\"gcloud-kms-sign\", \"{pkg}\", \"{pkg}.sig\"]'",
@@ -18,107 +18,113 @@
         "release": "npm run pkg:release && npm run descriptors:release"
     },
     "block-software": {
-        "packages": {
+        "artifacts": {
+            "hello-world": {
+                "registry": "milaboratories",
+                "version": "1.0.0",
+                "type": "binary",
+                "roots": {
+                    "linux-x64": "./build/linux-x64/hello-world",
+                    "linux-aarch64": "./build/linux-aarch64/hello-world",
+                    "macosx-x64": "./build/macosx-x64/hello-world",
+                    "macosx-aarch64": "./build/macosx-aarch64/hello-world",
+                    "windows-x64": "./build/windows-x64/hello-world"
+                }
+            },
+
+            "sleep": {
+                "registry": "milaboratories",
+                "version": "1.0.0",
+                "type": "binary",
+                "roots": {
+                    "linux-x64": "./build/linux-x64/sleep",
+                    "linux-aarch64": "./build/linux-aarch64/sleep",
+                    "macosx-x64": "./build/macosx-x64/sleep",
+                    "macosx-aarch64": "./build/macosx-aarch64/sleep",
+                    "windows-x64": "./build/windows-x64/sleep"
+                }
+            },
+
+            "guided-command": {
+                "registry": "milaboratories",
+                "version": "1.0.0",
+                "type": "binary",
+                "roots": {
+                    "linux-x64": "./build/linux-x64/guided-command",
+                    "linux-aarch64": "./build/linux-aarch64/guided-command",
+                    "macosx-x64": "./build/macosx-x64/guided-command",
+                    "macosx-aarch64": "./build/macosx-aarch64/guided-command",
+                    "windows-x64": "./build/windows-x64/guided-command"
+                }
+            },
+
+            "read-with-sleep": {
+                "registry": "milaboratories",
+                "version": "1.0.0",
+                "type": "binary",
+                "roots": {
+                    "linux-x64": "./build/linux-x64/read-with-sleep",
+                    "linux-aarch64": "./build/linux-aarch64/read-with-sleep",
+                    "macosx-x64": "./build/macosx-x64/read-with-sleep",
+                    "macosx-aarch64": "./build/macosx-aarch64/read-with-sleep",
+                    "windows-x64": "./build/windows-x64/read-with-sleep"
+                }
+            },
+
+            "runenv-java-stub": {
+                "registry": "milaboratories",
+                "version": "1.0.0",
+                "type": "environment",
+                "runtime": "java",
+                "roots": {
+                    "linux-x64": "./build/linux-x64/runenv-java-stub",
+                    "linux-aarch64": "./build/linux-aarch64/runenv-java-stub",
+                    "macosx-x64": "./build/macosx-x64/runenv-java-stub",
+                    "macosx-aarch64": "./build/macosx-aarch64/runenv-java-stub",
+                    "windows-x64": "./build/windows-x64/runenv-java-stub"
+                },
+                "binDir": "bin/"
+            },
+            "runenv-python-stub": {
+                "registry": { "name": "milaboratories" },
+                "name": "common/runenv-python-stub",
+                "version": "1.0.0",
+                "type": "environment",
+                "runtime": "python",
+                "roots": {
+                    "linux-x64": "./build/linux-x64/runenv-python-stub",
+                    "linux-aarch64": "./build/linux-aarch64/runenv-python-stub",
+                    "macosx-x64": "./build/macosx-x64/runenv-python-stub",
+                    "macosx-aarch64": "./build/macosx-aarch64/runenv-python-stub",
+                    "windows-x64": "./build/windows-x64/runenv-python-stub"
+                },
+                "binDir": "bin/",
+                "entrypointName": "runenv-python-stub"
+            }
+        },
+        "entrypoints": {
             "hello-world": {
                 "binary": {
-                    "registry": { "name": "milaboratories" },
-                    "name": "common/hello-world",
-                    "version": "1.7.0",
-                    "roots": {
-                        "linux-x64": "./build/linux-x64/hello-world",
-                        "linux-aarch64": "./build/linux-aarch64/hello-world",
-                        "macosx-x64": "./build/macosx-x64/hello-world",
-                        "macosx-aarch64": "./build/macosx-aarch64/hello-world",
-                        "windows-x64": "./build/windows-x64/hello-world"
-                    },
-                    "entrypoints": {
-                        "hello-world": { "cmd": [ "{pkg}/hello-world" ] }
-                    }
+                    "artifact": "hello-world",
+                    "cmd": [ "{pkg}/hello-world" ]
                 }
             },
             "sleep": {
                 "binary": {
-                    "registry": { "name": "milaboratories" },
-                    "name": "common/sleep",
-                    "version": "1.7.0",
-                    "roots": {
-                        "linux-x64": "./build/linux-x64/sleep",
-                        "linux-aarch64": "./build/linux-aarch64/sleep",
-                        "macosx-x64": "./build/macosx-x64/sleep",
-                        "macosx-aarch64": "./build/macosx-aarch64/sleep",
-                        "windows-x64": "./build/windows-x64/sleep"
-                    },
-                    "entrypoints": {
-                        "sleep": { "cmd": [ "{pkg}/sleep" ] }
-                    }
+                    "artifact": "sleep",
+                    "cmd": [ "{pkg}/sleep", "arg", "arg2" ]
                 }
             },
             "guided-command": {
                 "binary": {
-                    "registry": { "name": "milaboratories" },
-                    "name": "common/guided-command",
-                    "version": "1.7.0",
-                    "roots": {
-                        "linux-x64": "./build/linux-x64/guided-command",
-                        "linux-aarch64": "./build/linux-aarch64/guided-command",
-                        "macosx-x64": "./build/macosx-x64/guided-command",
-                        "macosx-aarch64": "./build/macosx-aarch64/guided-command",
-                        "windows-x64": "./build/windows-x64/guided-command"
-                    },
-                    "entrypoints": {
-                        "guided-command": { "cmd": [ "{pkg}/guided-command" ] }
-                    }
+                    "artifact": "guided-command",
+                    "cmd": [ "{pkg}/guided-command" ]
                 }
             },
-            "read-with-sleep": {
+            "read-file-to-stdout-with-sleep": {
                 "binary": {
-                    "registry": { "name": "milaboratories" },
-                    "name": "common/read-with-sleep",
-                    "version": "1.7.0",
-                    "roots": {
-                        "linux-x64": "./build/linux-x64/read-with-sleep",
-                        "linux-aarch64": "./build/linux-aarch64/read-with-sleep",
-                        "macosx-x64": "./build/macosx-x64/read-with-sleep",
-                        "macosx-aarch64": "./build/macosx-aarch64/read-with-sleep",
-                        "windows-x64": "./build/windows-x64/read-with-sleep"
-                    },
-                    "entrypoints": {
-                        "read-file-to-stdout-with-sleep": { "cmd": [ "{pkg}/read-with-sleep" ] }
-                    }
-                }
-            },
-            "runenv-java-stub": {
-                "environment": {
-                    "registry": { "name": "milaboratories" },
-                    "name": "common/runenv-java-stub",
-                    "version": "1.1.0",
-                    "type": "java",
-                    "roots": {
-                        "linux-x64": "./build/linux-x64/runenv-java-stub",
-                        "linux-aarch64": "./build/linux-aarch64/runenv-java-stub",
-                        "macosx-x64": "./build/macosx-x64/runenv-java-stub",
-                        "macosx-aarch64": "./build/macosx-aarch64/runenv-java-stub",
-                        "windows-x64": "./build/windows-x64/runenv-java-stub"
-                    },
-                    "binDir": "bin/",
-                    "entrypointName": "runenv-java-stub"
-                }
-            },
-            "runenv-python-stub": {
-                "environment": {
-                    "registry": { "name": "milaboratories" },
-                    "name": "common/runenv-python-stub",
-                    "version": "1.0.0",
-                    "type": "python",
-                    "roots": {
-                        "linux-x64": "./build/linux-x64/runenv-python-stub",
-                        "linux-aarch64": "./build/linux-aarch64/runenv-python-stub",
-                        "macosx-x64": "./build/macosx-x64/runenv-python-stub",
-                        "macosx-aarch64": "./build/macosx-aarch64/runenv-python-stub",
-                        "windows-x64": "./build/windows-x64/runenv-python-stub"
-                    },
-                    "binDir": "bin/",
-                    "entrypointName": "runenv-python-stub"
+                    "artifact": "read-with-sleep",
+                    "cmd": [ "{pkg}/read-with-sleep" ]
                 }
             }
         }
@@ -128,6 +134,6 @@
     ],
     "license": "UNLICENSED",
     "devDependencies": {
-        "@milaboratory/pl-package-builder": "^2.6.4"
+        "@milaboratory/pl-package-builder": "^2.8.0"
     }
 }

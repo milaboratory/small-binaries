@@ -30,7 +30,7 @@ func main() {
 
 	if isVenvCreation(os.Args) {
 		createFakeVenv(os.Args)
-		fmt.Fprintf(os.Stdout, "venv directory created")
+		fmt.Fprintf(os.Stdout, "venv directory created\n")
 		return
 	}
 }
@@ -53,8 +53,11 @@ func createFakeVenv(args []string) {
 		"python stub: failed to create %q dir", binDir,
 	)
 
-	must(copyFile(args[0], filepath.Join(binDir, "python")), "failed to put 'python' into %q", binDir)
-	must(copyFile(args[0], filepath.Join(binDir, "pip")), "failed to put 'pip' into %q", binDir)
+	exec, err := os.Executable()
+	must(err, "failed to get current executable path")
+
+	must(copyFile(exec, filepath.Join(binDir, "python")), "failed to put 'python' into %q", binDir)
+	must(copyFile(exec, filepath.Join(binDir, "pip")), "failed to put 'pip' into %q", binDir)
 }
 
 func copyFile(src, dst string) error {

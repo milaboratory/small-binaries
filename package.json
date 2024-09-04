@@ -1,6 +1,6 @@
 {
     "name": "@milaboratory/small-binaries",
-    "version": "1.10.0",
+    "version": "1.10.1",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
@@ -89,7 +89,7 @@
 
             "runenv-python-stub": {
                 "registry": "milaboratories" ,
-                "version": "1.0.0",
+                "version": "1.0.1",
                 "type": "environment",
                 "runtime": "python",
                 "roots": {

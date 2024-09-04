@@ -1,6 +1,6 @@
 {
     "name": "@milaboratory/small-binaries",
-    "version": "1.8.1",
+    "version": "1.9.0",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
@@ -11,7 +11,8 @@
         "pkg:publish": "pl-pkg publish packages --all-platforms --skip-existing-packages",
         "pkg:release": "npm run pkg:build && npm run pkg:publish",
 
-        "descriptors:build": "pl-pkg build descriptors",
+        "descriptors:b:runenv": "pl-pkg build descriptors --entrypoint runenv-python-stub --entrypoint runenv-java-stub",
+        "descriptors:build": "npm run descriptors:b:runenv && pl-pkg build descriptors",
         "descriptors:publish": "pl-pkg publish descriptors",
         "descriptors:release": "npm run descriptors:build && npm run descriptors:publish",
 
@@ -85,9 +86,9 @@
                 },
                 "binDir": "bin/"
             },
+
             "runenv-python-stub": {
-                "registry": { "name": "milaboratories" },
-                "name": "common/runenv-python-stub",
+                "registry": "milaboratories" ,
                 "version": "1.0.0",
                 "type": "environment",
                 "runtime": "python",
@@ -98,11 +99,20 @@
                     "macosx-aarch64": "./build/macosx-aarch64/runenv-python-stub",
                     "windows-x64": "./build/windows-x64/runenv-python-stub"
                 },
-                "binDir": "bin/",
-                "entrypointName": "runenv-python-stub"
+                "binDir": "bin/"
             }
         },
         "entrypoints": {
+            "runenv-java-stub": {
+                "environment": {
+                    "artifact": "runenv-java-stub"
+                }
+            },
+            "runenv-python-stub": {
+                "environment": {
+                    "artifact": "runenv-python-stub"
+                }
+            },
             "hello-world": {
                 "binary": {
                     "artifact": "hello-world",
@@ -119,6 +129,22 @@
                 "binary": {
                     "artifact": "guided-command",
                     "cmd": [ "{pkg}/guided-command" ]
+                }
+            },
+            "stub-python-script": {
+                "binary": {
+                    "artifact": {
+                        "type": "python",
+                        "registry": "milaboratories",
+                        "version": "1.0.0",
+                        "environment": ":runenv-python-stub",
+                        "dependencies": {
+                            "toolset": "pip",
+                            "requirements": "requirements.txt"
+                        },
+                        "root": "./python-stub"
+                    },
+                    "cmd": [ "python", "{pkg}/hello.py" ]
                 }
             },
             "read-file-to-stdout-with-sleep": {

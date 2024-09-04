@@ -11,7 +11,7 @@ func main() {
 	cmdName := os.Args[0]
 
 	if len(os.Args) == 1 {
-		fmt.Fprintf(os.Stdout, "%q of java run environment was started with no command and arguments", cmdName)
+		fmt.Fprintf(os.Stdout, "%q was started with no arguments", cmdName)
 	}
 
 	const columnWidth = 8

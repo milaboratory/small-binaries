@@ -1,6 +1,6 @@
 {
     "name": "@milaboratory/small-binaries",
-    "version": "1.9.0",
+    "version": "1.10.0",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
@@ -144,7 +144,19 @@
                         },
                         "root": "./python-stub"
                     },
-                    "cmd": [ "python", "{pkg}/hello.py" ]
+                    "cmd": [ "python", "got fake python by dependency", "pkg={pkg}", "python={python}" ]
+                }
+            },
+            "stub-java-script": {
+                "binary": {
+                    "artifact": {
+                        "type": "java",
+                        "registry": "milaboratories",
+                        "version": "1.0.0",
+                        "environment": ":runenv-java-stub",
+                        "root": "./java-stub"
+                    },
+                    "cmd": [ "java", "got fake java by dependency", "pkg={pkg}", "java={java}" ]
                 }
             },
             "read-file-to-stdout-with-sleep": {

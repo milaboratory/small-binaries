@@ -1,6 +1,6 @@
 {
     "name": "@milaboratories/software-small-binaries",
-    "version": "1.10.2",
+    "version": "1.10.3",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
@@ -9,14 +9,12 @@
         "pkg:build": "./scripts/build.sh",
         "pkg:sign": "pl-pkg sign --all-platforms --sign-command='[\"gcloud-kms-sign\", \"{pkg}\", \"{pkg}.sig\"]'",
         "pkg:publish": "pl-pkg publish packages --all-platforms --skip-existing-packages",
-        "pkg:release": "npm run pkg:build && npm run pkg:publish",
 
         "descriptors:b:runenv": "pl-pkg build descriptors --entrypoint runenv-python-stub --entrypoint runenv-java-stub",
         "descriptors:build": "npm run descriptors:b:runenv && pl-pkg build descriptors",
         "descriptors:publish": "pl-pkg publish descriptors",
-        "descriptors:release": "npm run descriptors:build && npm run descriptors:publish",
 
-        "release": "npm run pkg:release && npm run descriptors:release"
+        "prepublishOnly": "npm run pkg:sign && npm run pkg:publish"
     },
     "block-software": {
         "artifacts": {

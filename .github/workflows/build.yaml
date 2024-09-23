@@ -39,7 +39,9 @@ jobs:
       test: false
       test-script-name: 'test'
 
-      publish-script-name: 'release'
+      registry-url: 'https://registry.npmjs.org'
+      scope: '@milaboratories'
+      publish-to-public: true
 
       env: >-
         {
@@ -50,6 +52,10 @@ jobs:
       aws-iam-role-to-assume: 'arn:aws:iam::511903394050:role/milab-euce1-prod-github-oidc-role-pl-registry'
 
     secrets:
+      env: |
+        {
+          "NPMJS_TOKEN": ${{ toJSON(secrets.NPMJS_TOKEN) }}
+        }
       TELEGRAM_NOTIFICATION_TARGET: ${{ secrets.TG_CHANNEL_MIBUILDS }}
       TELEGRAM_API_TOKEN: ${{ secrets.TG_CI_BOT_TOKEN }}
       GH_PAT: ${{ secrets.GH_PAT_CLASSIC_BLOCKS }}

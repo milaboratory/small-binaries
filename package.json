@@ -1,6 +1,6 @@
 {
-    "name": "@milaboratory/small-binaries",
-    "version": "1.10.1",
+    "name": "@milaboratories/software-small-binaries",
+    "version": "1.10.2",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",

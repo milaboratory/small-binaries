@@ -7,7 +7,7 @@ for small binary utilities with small implementation.
 The binary version is detected from `version` in package.json file
 
 All binaries have their software descriptors inside NPM package released along with the packages.
-Say, for `sleep` command, there is a `@milaboratory/small-binaries:sleep` software descirptor to be used in
+Say, for `sleep` command, there is a `@milaboratories/software-small-binaries:sleep` software descirptor to be used in
 Platforma workflows
 
 ## Patching existing binaries

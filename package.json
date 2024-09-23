@@ -14,7 +14,7 @@
         "descriptors:build": "npm run descriptors:b:runenv && pl-pkg build descriptors",
         "descriptors:publish": "pl-pkg publish descriptors",
 
-        "prepublishOnly": "npm run pkg:sign && npm run pkg:publish"
+        "prepublishOnly": "npm run pkg:publish"
     },
     "block-software": {
         "artifacts": {

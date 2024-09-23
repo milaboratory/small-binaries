@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
 )
 
 func main() {
@@ -24,7 +23,6 @@ func main() {
 		argStr := fmt.Sprintf("arg[%d]", i)
 		fmt.Fprintf(&argsReport, "%*s = %q\n", columnWidth, argStr, a)
 	}
-	fmt.Fprintf(&argsReport, "%*s = %d", columnWidth, "time", time.Now().Unix())
 
 	fmt.Fprint(os.Stdout, argsReport.String()+"\n")
 

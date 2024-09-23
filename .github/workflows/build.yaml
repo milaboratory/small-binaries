@@ -36,18 +36,20 @@ jobs:
       publish-to-public: true
       npmrc-config: |
         {
-           "registries": {
-             "https://registry.npmjs.org/": {
-               "milaboratories": "NPMJS_TOKEN",
-               "platforma-sdk": "NPMJS_TOKEN"
-             },
-             "https://npm.pkg.github.com/": {
-               "milaboratory": "NODE_AUTH_TOKEN"
-             }
-           }
+          "registries": {
+            "https://registry.npmjs.org/": {
+              "scopes": ["milaboratories", "platforma-sdk"],
+              "tokenVar": "NPMJS_TOKEN"
+            },
+            "https://npm.pkg.github.com/": {
+              "scopes": ["milaboratory"],
+              "tokenVar": "NODE_AUTH_TOKEN"
+            }
+          }
         }
       env: >-
         {
+
 
           "PL_REGISTRY_MILABORATORIES_UPLOAD_URL": "s3://milab-euce1-prod-pkgs-s3-platforma-registry/pub/?region=eu-central-1"
         }

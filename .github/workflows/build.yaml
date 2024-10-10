@@ -49,8 +49,6 @@ jobs:
         }
       env: >-
         {
-
-
           "PL_REGISTRY_PLATFORMA_OPEN_UPLOAD_URL": "s3://milab-euce1-prod-pkgs-s3-platforma-registry/pub/?region=eu-central-1"
         }
       aws-publish-enable: true

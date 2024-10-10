@@ -79,7 +79,7 @@
                     "linux-aarch64": "./build/linux-aarch64/table-converter",
                     "macosx-x64": "./build/macosx-x64/table-converter",
                     "macosx-aarch64": "./build/macosx-aarch64/table-converter",
-                    "windows-x64": "./build/windows-x64/table-converterb"
+                    "windows-x64": "./build/windows-x64/table-converter"
                 }
             },
 

@@ -1,6 +1,6 @@
 {
     "name": "@milaboratories/software-small-binaries",
-    "version": "1.10.4",
+    "version": "1.11.0",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
@@ -19,7 +19,7 @@
     "block-software": {
         "artifacts": {
             "hello-world": {
-                "registry": "milaboratories",
+                "registry": "platforma-open",
                 "version": "1.0.0",
                 "type": "binary",
                 "roots": {
@@ -32,7 +32,7 @@
             },
 
             "sleep": {
-                "registry": "milaboratories",
+                "registry": "platforma-open",
                 "version": "1.0.0",
                 "type": "binary",
                 "roots": {
@@ -45,7 +45,7 @@
             },
 
             "guided-command": {
-                "registry": "milaboratories",
+                "registry": "platforma-open",
                 "version": "1.0.0",
                 "type": "binary",
                 "roots": {
@@ -58,7 +58,7 @@
             },
 
             "read-with-sleep": {
-                "registry": "milaboratories",
+                "registry": "platforma-open",
                 "version": "1.0.0",
                 "type": "binary",
                 "roots": {
@@ -70,8 +70,21 @@
                 }
             },
 
+            "table-converter": {
+                "registry": "platforma-open" ,
+                "version": "1.0.0",
+                "type": "binary",
+                "roots": {
+                    "linux-x64": "./build/linux-x64/table-converter",
+                    "linux-aarch64": "./build/linux-aarch64/table-converter",
+                    "macosx-x64": "./build/macosx-x64/table-converter",
+                    "macosx-aarch64": "./build/macosx-aarch64/table-converter",
+                    "windows-x64": "./build/windows-x64/table-converterb"
+                }
+            },
+
             "runenv-java-stub": {
-                "registry": "milaboratories",
+                "registry": "platforma-open",
                 "version": "1.0.1",
                 "type": "environment",
                 "runtime": "java",
@@ -86,7 +99,7 @@
             },
 
             "runenv-python-stub": {
-                "registry": "milaboratories" ,
+                "registry": "platforma-open" ,
                 "version": "1.0.2",
                 "type": "environment",
                 "runtime": "python",
@@ -161,6 +174,12 @@
                 "binary": {
                     "artifact": "read-with-sleep",
                     "cmd": [ "{pkg}/read-with-sleep" ]
+                }
+            },
+            "table-converter": {
+                "binary": {
+                    "artifact": "table-converter",
+                    "cmd": [ "{pkg}/table-converter" ]
                 }
             }
         }

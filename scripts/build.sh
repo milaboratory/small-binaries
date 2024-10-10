@@ -4,10 +4,12 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-: "${BUILD_DIR:="build"}"
 
 script_dir="$(cd "$(dirname "${0}")" && pwd)"
 cd "${script_dir}/.."
+repo_root="$(pwd)"
+
+: "${BUILD_DIR:="${repo_root}/build"}"
 
 pkg_content_root() {
     local _pkg_name="${1}"
@@ -32,8 +34,9 @@ build_binary() {
     printf "## os='%s', arch='%s':\n" "${_os_go}" "${_arch_go}"
     env GOOS="${_os_go}" GOARCH="${_arch_go}" \
         go build \
+        -C "$(dirname "./${_go_name}")" \
         -o "${_pkg_root}/${_bin_name}${_ext}" \
-        "./${_go_name}"
+        "./$(basename "${_go_name}")"
 }
 
 additional_file() {
@@ -101,6 +104,8 @@ add_file() {
 }
 
 rm -rf "${script_dir}/${BUILD_DIR}"
+
+build_binaries "table-converter" "table-converter/table-converter" "table-converter"
 
 build_binaries "runenv-java-stub" "dump-args.go" "bin/java"
 

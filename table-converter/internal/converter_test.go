@@ -160,6 +160,12 @@ func TestConvert(t *testing.T) {
 				s1,v1,v2`),
 			expectedError: "sample name column \"S\" not found",
 		},
+
+		"empty source": {
+			config:        Config{InputFileSeparator: ','},
+			input:         noindent(``),
+			expectedError: "failed to read header",
+		},
 	}
 
 	runTest := func(conf testCase) func(t *testing.T) {

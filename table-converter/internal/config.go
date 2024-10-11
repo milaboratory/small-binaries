@@ -1,9 +1,11 @@
 package converter
 
-import "errors"
+import (
+	"errors"
+	"regexp"
+)
 
 const (
-	DefaultSamplesColumnName = "Sample"
 	DefaultMetricColumnLabel = "Metric"
 	DefaultValueColumnLabel  = "Value"
 )
@@ -15,7 +17,10 @@ type Config struct {
 	OutputFileName      string
 	OutputFileSeparator rune
 
-	SampleColumnName string
+	SampleColumnName    string
+	SampleColumnSearch  *regexp.Regexp
+	SampleColumnIndex   int
+	MetricColmunsSearch *regexp.Regexp
 
 	MetricColumnLabel string
 	ValueColumnLabel  string
@@ -39,9 +44,6 @@ func (c *Config) LoadDefaults() {
 	}
 	if c.ValueColumnLabel == "" {
 		c.ValueColumnLabel = DefaultValueColumnLabel
-	}
-	if c.SampleColumnName == "" {
-		c.SampleColumnName = DefaultSamplesColumnName
 	}
 }
 

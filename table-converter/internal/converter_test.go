@@ -2,6 +2,7 @@ package converter
 
 import (
 	"bytes"
+	"regexp"
 	"strings"
 	"testing"
 )
@@ -27,13 +28,13 @@ func TestConvert(t *testing.T) {
 				s3 v7 v8 v9`),
 			expectedOutput: noindent(`
 				Sample Metric Value
-				s1 M1 v1 
+				s1 M1 v1
 				s1 M2 v2
 				s1 M3 v3
-				s2 M1 v4 
+				s2 M1 v4
 				s2 M2 v5
 				s2 M3 v6
-				s3 M1 v7 
+				s3 M1 v7
 				s3 M2 v8
 				s3 M3 v9
 				`),
@@ -54,16 +55,55 @@ func TestConvert(t *testing.T) {
 				s3 v7 v8`),
 			expectedOutput: noindent(`
 				Sample,MM,VV
-				s1,M1,v1 
+				s1,M1,v1
 				s1,M2,v2
-				s2,M1,v4 
+				s2,M1,v4
 				s2,M2,v5
-				s3,M1,v7 
+				s3,M1,v7
 				s3,M2,v8
 				`),
 		},
 
-		"leaky matrix": {
+		"left-most column as default sample name": {
+			config: Config{
+				InputFileSeparator: ' ',
+				MetricColumnLabel:  "M",
+				ValueColumnLabel:   "V",
+			},
+
+			input: noindent(`
+				Sm M1 M2
+				s1 v1 v2`),
+			expectedOutput: noindent(`
+				Sample M V
+				s1 M1 v1
+				s1 M2 v2
+				`),
+		},
+
+		"metric selection": {
+			config: Config{
+				InputFileSeparator:  ' ',
+				OutputFileSeparator: ',',
+				MetricColumnLabel:   "M",
+				ValueColumnLabel:    "V",
+				MetricColmunsSearch: regexp.MustCompile("^M1$"),
+			},
+
+			input: noindent(`
+				Sample M1 M2
+				s1 v1 v2
+				s2 v4 v5
+				s3 v7 v8`),
+			expectedOutput: noindent(`
+				Sample,M,V
+				s1,M1,v1
+				s2,M1,v4
+				s3,M1,v7
+				`),
+		},
+
+		"holey matrix": {
 			config: Config{
 				InputFileSeparator:  ';',
 				OutputFileSeparator: '_',
@@ -81,11 +121,35 @@ func TestConvert(t *testing.T) {
 				`),
 			expectedOutput: noindent(`
 				Sample_M_V
-				s1_M1_v1 
+				s1_M1_v1
 				s1_M2_
 				s2_M1_
 				s2_M2_v2
-				s3_M1_v3 
+				s3_M1_v3
+				s3_M2_v4
+				`),
+		},
+
+		"index selection": {
+			config: Config{
+				InputFileSeparator:  ';',
+				OutputFileSeparator: '_',
+				SampleColumnIndex:   1,
+
+				MetricColumnLabel: "M",
+				ValueColumnLabel:  "V",
+			},
+
+			input: noindent(`
+				M1;S;M2
+				v1;s1;
+				v3;s3;v4
+				`),
+			expectedOutput: noindent(`
+				Sample_M_V
+				s1_M1_v1
+				s1_M2_
+				s3_M1_v3
 				s3_M2_v4
 				`),
 		},
@@ -158,7 +222,7 @@ func TestConvert(t *testing.T) {
 			input: noindent(`
 				U,M1,M2
 				s1,v1,v2`),
-			expectedError: "sample name column \"S\" not found",
+			expectedError: "sample name column not found in input table header",
 		},
 
 		"empty source": {

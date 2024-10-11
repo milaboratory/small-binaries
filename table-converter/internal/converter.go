@@ -2,6 +2,7 @@ package converter
 
 import (
 	"encoding/csv"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -42,12 +43,17 @@ func (c *Converter) Convert(input io.Reader, output io.Writer) error {
 
 	sampleIndex, metricIndices := c.detectColumns(headers)
 	if sampleIndex == -1 {
-		return fmt.Errorf("sample name column %q not found in input header", c.config.SampleColumnName)
+		return errors.New("sample name column not found in input table header")
+	}
+	if sampleIndex >= len(headers) {
+		return fmt.Errorf(
+			"sample name column index is outside input table bounds: input columns count is %d, index is %d", len(headers), sampleIndex,
+		)
 	}
 
 	err = writer.Write([]string{SampleColumnName, c.config.MetricColumnLabel, c.config.ValueColumnLabel})
 	if err != nil {
-		return Wrap(err, "[output]: failed to write output header")
+		return Wrap(err, "[output]: failed to write output table header")
 	}
 
 	if len(metricIndices) == 0 {
@@ -79,14 +85,41 @@ func (c *Converter) Convert(input io.Reader, output io.Writer) error {
 
 func (c *Converter) detectColumns(headers []string) (sampleIndex int, metricIndices []int) {
 	sampleIndex = -1
+
+	if c.config.SampleColumnName != "" {
+		for i, header := range headers {
+			if header == c.config.SampleColumnName {
+				sampleIndex = i
+				break
+			}
+		}
+	} else if c.config.SampleColumnSearch != nil {
+		for i, header := range headers {
+			if c.config.SampleColumnSearch.MatchString(header) {
+				sampleIndex = i
+				break
+			}
+		}
+	} else {
+		sampleIndex = c.config.SampleColumnIndex
+	}
+
 	for i, header := range headers {
-		if header == c.config.SampleColumnName {
-			sampleIndex = i
-		} else {
+		if i == sampleIndex {
+			continue
+		}
+
+		if c.config.MetricColmunsSearch == nil {
+			metricIndices = append(metricIndices, i)
+			continue
+		}
+
+		if c.config.MetricColmunsSearch.MatchString(header) {
 			metricIndices = append(metricIndices, i)
 		}
 	}
-	return
+
+	return sampleIndex, metricIndices
 }
 
 func (c *Converter) Run() error {

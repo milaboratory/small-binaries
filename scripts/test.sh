@@ -60,6 +60,18 @@ repo_root="$(pwd)"
     echo "OK"
     echo ""
 
+    echo "# Test case: custom labels"
+    "${converter}" \
+        -sample-column-name M \
+        -separator ' ' \
+        --sample-label S \
+        --metric-label M \
+        --value-label V \
+        "${integrations}/custom_in.csv" "./custom_out_labels.csv"
+    diff "${integrations}/custom_out_labels.csv" "./custom_out_labels.csv"
+    echo "OK"
+    echo ""
+
     echo "# Test case: custom (sample by RE)"
     "${converter}" -sample-column-search '^M$' -separator ' ' "${integrations}/custom_in.csv" "./custom_out.csv"
     diff "${integrations}/custom_out.csv" "./custom_out.csv"

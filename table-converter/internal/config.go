@@ -6,6 +6,7 @@ import (
 )
 
 const (
+	DefaultSampleColumnLabel = "Sample"
 	DefaultMetricColumnLabel = "Metric"
 	DefaultValueColumnLabel  = "Value"
 )
@@ -22,6 +23,7 @@ type Config struct {
 	SampleColumnIndex   int
 	MetricColmunsSearch *regexp.Regexp
 
+	SampleColumnLabel string
 	MetricColumnLabel string
 	ValueColumnLabel  string
 }
@@ -39,6 +41,9 @@ func (c *Config) LoadDefaults() {
 		}
 	}
 
+	if c.SampleColumnLabel == "" {
+		c.SampleColumnLabel = DefaultSampleColumnLabel
+	}
 	if c.MetricColumnLabel == "" {
 		c.MetricColumnLabel = DefaultMetricColumnLabel
 	}

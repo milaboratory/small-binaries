@@ -1,6 +1,6 @@
 {
     "name": "@milaboratories/software-small-binaries",
-    "version": "1.11.1",
+    "version": "1.12.0",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
@@ -73,7 +73,7 @@
 
             "table-converter": {
                 "registry": "platforma-open" ,
-                "version": "1.1.0",
+                "version": "1.2.0",
                 "type": "binary",
                 "roots": {
                     "linux-x64": "./build/linux-x64/table-converter",

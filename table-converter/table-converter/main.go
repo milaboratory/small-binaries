@@ -18,11 +18,12 @@ const (
 	optInputSeparator  = "input-separator"
 	optOutputSeparator = "output-separator"
 
-	optSampleColumnname    = "sample-column-name"
+	optSampleColumnName    = "sample-column-name"
 	optSampleColumnSearch  = "sample-column-search"
 	optSampleColumnI       = "sample-column-i"
 	optMetricColumnsSearch = "metric-columns-search"
 
+	optSampleLabel = "sample-label"
 	optMetricLabel = "metric-label"
 	optValueLabel  = "value-label"
 )
@@ -58,6 +59,7 @@ func configure(flags *flag.FlagSet, args []string) (conf converter.Config, err e
 		sampleColumnI    int
 		metricColumnRE   string
 
+		sampleColumnLabel string
 		metricColumnLabel string
 		valueColumnLabel  string
 	)
@@ -66,11 +68,12 @@ func configure(flags *flag.FlagSet, args []string) (conf converter.Config, err e
 	flags.StringVar(&inputSeparator, optInputSeparator, "", "Separator for input file")
 	flags.StringVar(&outputSeparator, optOutputSeparator, "", "Separator for output file")
 
-	flags.StringVar(&sampleColumnName, optSampleColumnname, "", "Name of the column that contains sample names in input table")
+	flags.StringVar(&sampleColumnName, optSampleColumnName, "", "Name of the column that contains sample names in input table")
 	flags.StringVar(&sampleColumnRE, optSampleColumnSearch, "", "Regex to use when searching the column that contains sample names in input table")
 	flags.IntVar(&sampleColumnI, optSampleColumnI, 0, "Instead of searching by name, just use column number N from the table. Left-most column has index 0")
 	flags.StringVar(&metricColumnRE, optMetricColumnsSearch, "", "Regex to select metric columns in input table")
 
+	flags.StringVar(&sampleColumnLabel, optSampleLabel, converter.DefaultSampleColumnLabel, "Label for 'sample' column in output table")
 	flags.StringVar(&metricColumnLabel, optMetricLabel, converter.DefaultMetricColumnLabel, "Label for 'metric' column in output table")
 	flags.StringVar(&valueColumnLabel, optValueLabel, converter.DefaultValueColumnLabel, "Label for 'value' column in output table")
 
@@ -123,6 +126,9 @@ func configure(flags *flag.FlagSet, args []string) (conf converter.Config, err e
 	//
 	if outputSeparator != "" {
 		conf.OutputFileSeparator = rune(outputSeparator[0])
+	}
+	if sampleColumnLabel != "" {
+		conf.SampleColumnLabel = sampleColumnLabel
 	}
 	if metricColumnLabel != "" {
 		conf.MetricColumnLabel = metricColumnLabel

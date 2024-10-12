@@ -8,8 +8,6 @@ import (
 	"os"
 )
 
-const SampleColumnName = "Sample"
-
 type Converter struct {
 	config Config
 }
@@ -51,7 +49,7 @@ func (c *Converter) Convert(input io.Reader, output io.Writer) error {
 		)
 	}
 
-	err = writer.Write([]string{SampleColumnName, c.config.MetricColumnLabel, c.config.ValueColumnLabel})
+	err = writer.Write([]string{c.config.SampleColumnLabel, c.config.MetricColumnLabel, c.config.ValueColumnLabel})
 	if err != nil {
 		return Wrap(err, "[output]: failed to write output table header")
 	}

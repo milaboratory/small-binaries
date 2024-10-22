@@ -1,5 +1,5 @@
 {
-    "name": "@milaboratories/software-small-binaries",
+    "name": "@platforma-open/milaboratories.software-small-binaries",
     "version": "1.13.1",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {

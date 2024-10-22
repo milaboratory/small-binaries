@@ -32,13 +32,13 @@ jobs:
       test: true
       test-script-name: 'test'
       registry-url: 'https://registry.npmjs.org'
-      scope: '@milaboratories'
+      scope: '@platforma-open'
       publish-to-public: true
       npmrc-config: |
         {
           "registries": {
             "https://registry.npmjs.org/": {
-              "scopes": ["milaboratories", "platforma-sdk"],
+              "scopes": ["milaboratories", "platforma-sdk", "platforma-open"],
               "tokenVar": "NPMJS_TOKEN"
             },
             "https://npm.pkg.github.com/": {

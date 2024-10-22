@@ -1,6 +1,6 @@
 {
     "name": "@milaboratories/software-small-binaries",
-    "version": "1.13.0",
+    "version": "1.13.1",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
@@ -148,7 +148,7 @@
             "hello-world-py": {
                 "binary": {
                     "artifact": "hello-world-py",
-                    "cmd": [ "{python}", "{pkg}/hello.py" ]
+                    "cmd": [ "python", "{pkg}/hello.py" ]
                 }
             },
             "sleep": {
@@ -167,7 +167,7 @@
                 "binary": {
                     "artifact": {
                         "type": "python",
-                        "registry": "milaboratories",
+                        "registry": "platforma-open",
                         "version": "1.0.0",
                         "environment": ":runenv-python-stub",
                         "dependencies": {
@@ -183,7 +183,7 @@
                 "binary": {
                     "artifact": {
                         "type": "java",
-                        "registry": "milaboratories",
+                        "registry": "platforma-open",
                         "version": "1.0.0",
                         "environment": ":runenv-java-stub",
                         "root": "./java-stub"

@@ -32,6 +32,9 @@ jobs:
       test: true
       test-script-name: 'test'
       publish-to-public: true
+      aws-login-enable: true
+      gcp-login-enable: true
+      registry-url: 'https://registry.npmjs.org/'
       npmrc-config: |
         {
           "registries": {

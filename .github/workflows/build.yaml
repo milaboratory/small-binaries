@@ -19,7 +19,7 @@ jobs:
   run:
     needs:
       - init
-    uses: milaboratory/github-ci-internal/.github/workflows/node-go-simple.yaml@v4
+    uses: milaboratory/github-ci/.github/workflows/node-go-simple.yaml@v4-beta
     with:
       app-name: Small cross-platform utils
       app-name-slug: 'small-cross-platform-packages'
@@ -31,33 +31,31 @@ jobs:
       build-script-name: 'build'
       test: true
       test-script-name: 'test'
-      registry-url: 'https://registry.npmjs.org'
-      scope: '@platforma-open'
       publish-to-public: true
       npmrc-config: |
         {
           "registries": {
             "https://registry.npmjs.org/": {
-              "scopes": ["milaboratories", "platforma-sdk", "platforma-open"],
+              "scopes": ["platforma-open"],
               "tokenVar": "NPMJS_TOKEN"
-            },
-            "https://npm.pkg.github.com/": {
-              "scopes": ["milaboratory"],
-              "tokenVar": "NODE_AUTH_TOKEN"
             }
           }
         }
-      env: >-
-        {
-          "PL_REGISTRY_PLATFORMA_OPEN_UPLOAD_URL": "s3://milab-euce1-prod-pkgs-s3-platforma-registry/pub/?region=eu-central-1"
-        }
-      aws-publish-enable: true
-      aws-iam-role-to-assume: 'arn:aws:iam::511903394050:role/milab-euce1-prod-github-oidc-role-pl-registry'
     secrets:
       env: |
         {
-          "NPMJS_TOKEN": ${{ toJSON(secrets.NPMJS_TOKEN) }}
+          "NPMJS_TOKEN": ${{ toJSON(secrets.NPMJS_TOKEN) }},
+          "GH_CI_PAT": "${{ toJSON(secrets.GH_PAT_CLASSIC_BLOCK) }}",
+          "PL_REGISTRY_PLATFORMA_OPEN_UPLOAD_URL": ${{ toJSON(secrets.PL_REGISTRY_PLOPEN_UPLOAD_URL) }}
         }
       TELEGRAM_NOTIFICATION_TARGET: ${{ secrets.TG_CHANNEL_MIBUILDS }}
       TELEGRAM_API_TOKEN: ${{ secrets.TG_CI_BOT_TOKEN }}
-      GH_PAT: ${{ secrets.GH_PAT_CLASSIC_BLOCKS }}
+
+      AWS_ASSUME_ROLE: ${{ secrets.AWS_CI_IAM_MONOREPO_SIMPLE_ROLE }}
+      AWS_ASSUME_REGION: 'eu-central-1'
+
+      GCP_KMS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCP_KMS_WORKLOAD_IDENTITY_PROVIDER }}
+      GCP_KMS_SERVICE_ACCOUNT: ${{ secrets.GCP_KMS_SERVICE_ACCOUNT }}
+      GCP_KMS_LOCATION: ${{ secrets.GCP_KMS_LOCATION }}
+      GCP_KMS_KEYRING: ${{ secrets.GCP_KMS_KEYRING }}
+      GCP_KMS_KEY_NAME: ${{ secrets.GCP_KMS_KEY_NAME }}

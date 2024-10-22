@@ -1,6 +1,6 @@
 {
     "name": "@milaboratories/software-small-binaries",
-    "version": "1.12.0",
+    "version": "1.13.0",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
@@ -29,6 +29,19 @@
                     "macosx-x64": "./build/macosx-x64/hello-world",
                     "macosx-aarch64": "./build/macosx-aarch64/hello-world",
                     "windows-x64": "./build/windows-x64/hello-world"
+                }
+            },
+
+            "hello-world-py": {
+                "registry": "platforma-open",
+                "version": "1.0.0",
+                "root": "./hello-world-py",
+
+                "type": "python",
+                "environment": "@platforma-open/milaboratories.runenv-python-3:3.12.6",
+                "dependencies": {
+                    "toolset": "pip",
+                    "requirements": "requirements.txt"
                 }
             },
 
@@ -72,7 +85,7 @@
             },
 
             "table-converter": {
-                "registry": "platforma-open" ,
+                "registry": "platforma-open",
                 "version": "1.2.0",
                 "type": "binary",
                 "roots": {
@@ -100,7 +113,7 @@
             },
 
             "runenv-python-stub": {
-                "registry": "platforma-open" ,
+                "registry": "platforma-open",
                 "version": "1.0.2",
                 "type": "environment",
                 "runtime": "python",
@@ -129,6 +142,13 @@
                 "binary": {
                     "artifact": "hello-world",
                     "cmd": [ "{pkg}/hello-world" ]
+                }
+            },
+
+            "hello-world-py": {
+                "binary": {
+                    "artifact": "hello-world-py",
+                    "cmd": [ "{python}", "{pkg}/hello.py" ]
                 }
             },
             "sleep": {
@@ -190,6 +210,7 @@
     ],
     "license": "UNLICENSED",
     "devDependencies": {
+        "@platforma-open/milaboratories.runenv-python-3": "^1.0.0",
         "@platforma-sdk/package-builder": "^2.9.2"
     }
 }

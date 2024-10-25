@@ -1,6 +1,6 @@
 {
     "name": "@platforma-open/milaboratories.software-small-binaries",
-    "version": "1.14.0",
+    "version": "1.14.1",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
@@ -219,6 +219,6 @@
     "license": "UNLICENSED",
     "devDependencies": {
         "@platforma-open/milaboratories.runenv-python-3": "^1.0.0",
-        "@platforma-sdk/package-builder": "^2.10.0"
+        "@platforma-sdk/package-builder": "^2.10.2"
     }
 }

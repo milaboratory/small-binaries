@@ -131,7 +131,10 @@
             "small-asset": {
                 "asset": {
                     "type": "asset",
-                    "registry": "platforma-open",
+                    "registry": {
+                        "name": "platforma-open",
+                        "downloadURL": "https://bin.pl-open.science/"
+                    },
                     "version": "1.1.1",
                     "root": "small-asset/"
                 }
@@ -219,6 +222,6 @@
     "license": "UNLICENSED",
     "devDependencies": {
         "@platforma-open/milaboratories.runenv-python-3": "^1.0.0",
-        "@platforma-sdk/package-builder": "^2.10.3"
+        "@platforma-sdk/package-builder": "^2.10.4"
     }
 }

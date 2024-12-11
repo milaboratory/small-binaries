@@ -11,7 +11,7 @@ repo_root="$(pwd)"
 
 (
     echo "#"
-    echo "# Functional tests"
+    echo "# Functional tests: table-converter"
     echo "#"
     cd "table-converter"
     go test ./...
@@ -20,7 +20,7 @@ repo_root="$(pwd)"
 
 (
     echo "#"
-    echo "# Integration tests"
+    echo "# Integration tests: table-converter"
     echo "#"
     echo ""
     echo "# Building table-converter"
@@ -84,5 +84,14 @@ repo_root="$(pwd)"
         exit 1
     fi
     echo "OK"
+    echo ""
+)
+
+(
+    echo "#"
+    echo "# Functional tests: mnz-client"
+    echo "#"
+    cd "mnz-client"
+    go test ./...
     echo ""
 )

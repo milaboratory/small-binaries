@@ -14,6 +14,9 @@ func main() {
 	// define flags
 	flag.Usage = func() {
 		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s:\n", os.Args[0])
+		println("mnz-client -license E-ABC -productName test_product [more flags..] <argName>:<type=file>:<filepath>:<specs:size,linesNum>")
+		println("Only type 'file' now supported.")
+		println("Program may send multiple specs. Connect them with comma ','")
 		flag.PrintDefaults()
 	}
 	url := flag.String(

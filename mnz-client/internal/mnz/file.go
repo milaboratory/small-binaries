@@ -13,13 +13,13 @@ import (
 )
 
 var FileArgType = ArgType{
-	"file",
-	map[string]interface{}{
+	Name: ArgTypeFile,
+	AvailableSpecs: map[string]interface{}{
 		"size":     nil,
 		"linesNum": nil,
 		"hash":     nil,
 	},
-	[]string{"hash"},
+	RequiredSpecs: []string{"hash"},
 }
 
 func fileSpecs(path string, mNames []string) (map[string]any, error) {

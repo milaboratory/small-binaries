@@ -105,6 +105,7 @@ add_file() {
 
 rm -rf "${script_dir}/${BUILD_DIR}"
 
+build_binaries "mnz-client" "mnz-client/cmd/mnz-client" "mnz-client"
 build_binaries "table-converter" "table-converter/table-converter" "table-converter"
 
 build_binaries "runenv-java-stub" "dump-args.go" "bin/java"

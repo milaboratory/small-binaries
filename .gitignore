@@ -5,3 +5,6 @@
 /pkg-*.zip
 /tests
 package.sw.json
+
+# IDE
+.idea

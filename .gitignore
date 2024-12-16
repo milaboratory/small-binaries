@@ -1,9 +1,9 @@
 build/
 dist/
+.turbo
 node_modules/
 pkg-*.tgz
 pkg-*.zip
-/tests
 package.sw.json
 
 # IDE

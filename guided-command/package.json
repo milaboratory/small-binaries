@@ -6,8 +6,8 @@
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
     "build": "../scripts/build.sh './guided-command.go' 'guided-command' && pl-pkg build --all-platforms",
-    "test": "true",
-    "prepublishOnly": "pl-pkg publish"
+
+    "upload-packages": "pl-pkg publish"
   },
   "block-software": {
     "entrypoints": {
@@ -31,7 +31,7 @@
       }
     }
   },
-  "dependencies": {
+  "devDependencies": {
     "@platforma-sdk/package-builder": "catalog:"
   },
   "keywords": [],

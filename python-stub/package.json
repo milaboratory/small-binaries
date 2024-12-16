@@ -1,0 +1,41 @@
+{
+    "name": "@platforma-open/milaboratories.software-small-binaries.python-stub",
+    "private": true,
+    "version": "1.0.0",
+    "description": "Stub pacakge that uses python run environment stub",
+    "scripts": {
+      "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
+      "build": "pl-pkg build",
+
+      "upload-packages": "pl-pkg publish"
+    },
+    "block-software": {
+      "entrypoints": {
+        "main": {
+          "binary": {
+            "artifact": {
+              "type": "java",
+              "registry": "platforma-open",
+              "environment": "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub:main",
+              "root": "./src"
+            },
+            "cmd": [
+              "java",
+              "got fake java by dependency",
+              "pkg={pkg}",
+              "java={java}"
+            ]
+          }
+        }
+      }
+    },
+    "files": [
+      "dist/"
+    ],
+    "license": "UNLICENSED",
+    "devDependencies": {
+      "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub": "workspace:",
+      "@platforma-sdk/package-builder": "catalog:"
+    }
+  }
+  

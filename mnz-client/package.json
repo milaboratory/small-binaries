@@ -7,7 +7,7 @@
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
     "build": "../scripts/build.sh './cmd/mnz-client' 'mnz-client' && pl-pkg build --all-platforms",
     "test": "go test ./...",
-    "prepublishOnly": "pl-pkg publish"
+    "upload-packages": "pl-pkg publish"
   },
   "block-software": {
     "entrypoints": {

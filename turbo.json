@@ -1,0 +1,17 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "globalDependencies": ["tsconfig.json"],
+    "tasks": {
+      "upload-packages": {
+        "dependsOn": ["build", "^upload-packages"]
+      },
+      "build": {
+        "inputs": ["$TURBO_DEFAULT$"],
+        "outputs": ["./dist/**", "./build/**", "./pkg-*.tgz"],
+        "dependsOn": ["^build"]
+      },
+      "test": {
+        "dependsOn": ["build"]
+      }
+    }
+  }

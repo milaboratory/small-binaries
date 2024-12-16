@@ -1,0 +1,33 @@
+{
+  "name": "@platforma-open/milaboratories.software-small-binaries.small-asset",
+  "private": true,
+  "version": "1.1.1",
+  "description": "Small hello world on python",
+  "scripts": {
+    "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
+    "build": "pl-pkg build",
+
+    "upload-packages": "pl-pkg publish"
+  },
+  "block-software": {
+    "entrypoints": {
+      "main": {
+        "asset": {
+          "type": "asset",
+          "registry": {
+            "name": "platforma-open",
+            "downloadURL": "https://bin.pl-open.science/"
+          },
+          "root": "./data"
+        }
+      }
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@platforma-sdk/package-builder": "catalog:"
+  }
+}

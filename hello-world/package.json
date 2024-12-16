@@ -1,10 +1,12 @@
 {
-  "name": "hello-world",
+  "name": "@platforma-open/milaboratories.software-small-binaries.hello-world",
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "../scripts/build.sh 'hello-world' './hello-world.go' 'hello-world'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
+    "build": "../scripts/build.sh './hello-world.go' 'hello-world' && pl-pkg build --all-platforms",
+    "test": "true",
+    "prepublishOnly": "pl-pkg publish"
   },
   "block-software": {
     "entrypoints": {
@@ -17,11 +19,11 @@
             "registry": "platforma-open",
             "type": "binary",
             "roots": {
-              "linux-x64": "./build/linux-x64/hello-world",
-              "linux-aarch64": "./build/linux-aarch64/hello-world",
-              "macosx-x64": "./build/macosx-x64/hello-world",
-              "macosx-aarch64": "./build/macosx-aarch64/hello-world",
-              "windows-x64": "./build/windows-x64/hello-world"
+              "linux-x64": "./build/linux-x64/",
+              "linux-aarch64": "./build/linux-aarch64/",
+              "macosx-x64": "./build/macosx-x64/",
+              "macosx-aarch64": "./build/macosx-aarch64/",
+              "windows-x64": "./build/windows-x64/"
             }
           }
         }

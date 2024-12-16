@@ -3,3 +3,4 @@ packages:
 
 catalog:
   "@platforma-sdk/package-builder": ^2.11.1
+  "@platforma-open/milaboratories.runenv-python-3": "^1.0.0"

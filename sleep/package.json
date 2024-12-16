@@ -1,0 +1,41 @@
+{
+    "name": "@platforma-open/milaboratories.software-small-binaries.sleep",
+    "private": true,
+    "version": "1.0.0",
+    "description": "Cross-platform sleep",
+    "scripts": {
+      "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
+      "build": "../scripts/build.sh './sleep.go' 'sleep' && pl-pkg build --all-platforms",
+      "test": "true",
+      "prepublishOnly": "pl-pkg publish"
+    },
+    "block-software": {
+      "entrypoints": {
+        "main": {
+          "binary": {
+            "artifact": {
+              "registry": "platforma-open",
+              "type": "binary",
+              "roots": {
+                "linux-x64": "./build/linux-x64/",
+                "linux-aarch64": "./build/linux-aarch64/",
+                "macosx-x64": "./build/macosx-x64/",
+                "macosx-aarch64": "./build/macosx-aarch64/",
+                "windows-x64": "./build/windows-x64/"
+              }
+            },
+            "cmd": [
+              "{pkg}/sleep"
+            ]
+          }
+        }
+      }
+    },
+    "dependencies": {
+      "@platforma-sdk/package-builder": "catalog:"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "UNLICENSED"
+  }
+  

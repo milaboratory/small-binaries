@@ -57,6 +57,12 @@ importers:
         specifier: 'catalog:'
         version: 2.12.0
 
+  sleep:
+    dependencies:
+      '@platforma-sdk/package-builder':
+        specifier: 'catalog:'
+        version: 2.12.0
+
   table-converter:
     devDependencies:
       '@platforma-sdk/package-builder':

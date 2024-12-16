@@ -65,7 +65,6 @@ build_binaries "${go_build_target}" "${result_binary_name}"
 
 # build_binaries "runenv-java-stub" "dump-args.go" "bin/java"
 
-# build_binaries "guided-command" "guided-command.go" "guided-command"
 # build_binaries "sleep" "sleep.go" "sleep"
 # build_binaries "read-with-sleep" "read-file-to-stdout-with-sleep.go" "read-with-sleep"
 

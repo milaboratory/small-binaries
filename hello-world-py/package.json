@@ -14,7 +14,6 @@
         "binary": {
           "artifact": {
             "registry": "platforma-open",
-            "version": "1.0.1",
             "root": "./src",
             "type": "python",
             "environment": "@platforma-open/milaboratories.runenv-python-3:3.12.6",

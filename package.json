@@ -1,24 +1,24 @@
 {
   "name": "small-binaries",
   "scripts": {
-      "cleanup": "turbo run cleanup",
-      "build": "turbo run build",
-      "test": "turbo run test",
+    "cleanup": "turbo run cleanup",
+    "build": "turbo run build",
+    "test": "turbo run test",
 
-      "prepublishOnly": "turbo run upload-packages"
+    "changeset": "changeset",
+    "version-packages": "changeset version"
   },
-  "files": [
-      "dist/"
-  ],
   "license": "UNLICENSED",
   "packageManager": "pnpm@9.14.4",
-  "engines": { "node": ">=20" },
-  "devDependencies": {
-      "@platforma-sdk/package-builder": "catalog:"
+  "engines": {
+    "node": ">=20"
   },
-  "pnpm": {
+  "devDependencies": {
+    "@platforma-sdk/package-builder": "catalog:"
+  },
+  "//pnpm": {
     "overrides": {
-        "@platforma-sdk/package-builder": "file:/Users/denkoren/work/milaboratory/platforma/platforma/tools/package-builder/package.tgz"
+      "@platforma-sdk/package-builder": "file:/Users/denkoren/work/milaboratory/platforma/platforma/tools/package-builder/package.tgz"
     }
   }
 }

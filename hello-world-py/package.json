@@ -1,5 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.hello-world-py",
+  "private": true,
   "version": "1.0.1",
   "description": "Small hello world on python",
   "scripts": {
@@ -10,7 +11,7 @@
   },
   "block-software": {
     "entrypoints": {
-      "hello-world-py": {
+      "main": {
         "binary": {
           "artifact": {
             "registry": "platforma-open",

@@ -1,5 +1,6 @@
 packages:
   - hello-world
+  - guided-command
   - runenv-python-stub
   - hello-world-py
   - table-converter

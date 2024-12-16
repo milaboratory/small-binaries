@@ -1,5 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.hello-world",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -10,11 +11,8 @@
   },
   "block-software": {
     "entrypoints": {
-      "hello-world": {
+      "main": {
         "binary": {
-          "cmd": [
-            "{pkg}/hello-world"
-          ],
           "artifact": {
             "registry": "platforma-open",
             "type": "binary",
@@ -25,7 +23,10 @@
               "macosx-aarch64": "./build/macosx-aarch64/",
               "windows-x64": "./build/windows-x64/"
             }
-          }
+          },
+          "cmd": [
+            "{pkg}/hello-world"
+          ]
         }
       }
     }
@@ -35,5 +36,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "UNLICENSED"
 }

@@ -1,5 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub",
+  "private": true,
   "version": "1.0.2",
   "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
   "scripts": {
@@ -10,7 +11,7 @@
   },
   "block-software": {
     "entrypoints": {
-      "runenv-python-stub": {
+      "main": {
         "environment": {
           "artifact": {
             "registry": "platforma-open",

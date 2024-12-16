@@ -63,10 +63,6 @@ result_binary_name="${2}"
 
 build_binaries "${go_build_target}" "${result_binary_name}"
 
-# build_binaries "runenv-java-stub" "dump-args.go" "bin/java"
-
-# build_binaries "read-with-sleep" "read-file-to-stdout-with-sleep.go" "read-with-sleep"
-
 echo ""
 echo "All binaries are saved to '${BUILD_DIR}'"
 echo ""

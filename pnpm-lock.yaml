@@ -57,6 +57,12 @@ importers:
         specifier: 'catalog:'
         version: 2.12.0
 
+  runenv-java-stub:
+    dependencies:
+      '@platforma-sdk/package-builder':
+        specifier: 'catalog:'
+        version: 2.12.0
+
   runenv-python-stub:
     devDependencies:
       '@platforma-sdk/package-builder':

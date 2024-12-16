@@ -3,6 +3,7 @@ packages:
   - read-with-sleep
   - hello-world
   - guided-command
+  - runenv-java-stub
   - runenv-python-stub
   - hello-world-py
   - table-converter

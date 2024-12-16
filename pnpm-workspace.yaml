@@ -1,5 +1,7 @@
 packages:
   - hello-world
+  - runenv-python-stub
+  - hello-world-py
 
 catalog:
   "@platforma-sdk/package-builder": ^2.11.1

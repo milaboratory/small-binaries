@@ -14,7 +14,8 @@
     "node": ">=20"
   },
   "devDependencies": {
-    "@platforma-sdk/package-builder": "catalog:"
+    "turbo": "catalog:",
+    "@changesets/cli": "catalog:"
   },
   "//pnpm": {
     "overrides": {

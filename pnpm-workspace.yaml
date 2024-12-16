@@ -1,5 +1,6 @@
 packages:
   - sleep
+  - read-with-sleep
   - hello-world
   - guided-command
   - runenv-python-stub

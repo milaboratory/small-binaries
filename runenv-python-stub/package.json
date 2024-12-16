@@ -34,7 +34,6 @@
   ],
   "license": "UNLICENSED",
   "devDependencies": {
-    "@platforma-open/milaboratories.runenv-python-3": "catalog:",
     "@platforma-sdk/package-builder": "catalog:"
   }
 }

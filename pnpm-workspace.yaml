@@ -3,6 +3,7 @@ packages:
   - runenv-python-stub
   - hello-world-py
   - table-converter
+  - mnz-client
 
 catalog:
   "@platforma-sdk/package-builder": ^2.11.1

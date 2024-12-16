@@ -63,9 +63,6 @@ result_binary_name="${2}"
 
 build_binaries "${go_build_target}" "${result_binary_name}"
 
-# build_binaries "mnz-client" "mnz-client/cmd/mnz-client" "mnz-client"
-# build_binaries "table-converter" "table-converter/table-converter" "table-converter"
-
 # build_binaries "runenv-java-stub" "dump-args.go" "bin/java"
 
 # build_binaries "guided-command" "guided-command.go" "guided-command"

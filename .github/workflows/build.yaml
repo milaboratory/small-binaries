@@ -33,6 +33,8 @@ jobs:
       test: true
       test-script-name: 'test'
       publish-to-public: true
+      package-path: 'catalogue'
+      create-tag: true
 
       pnpm-recursive-build: false
       pnpm-recursive-tests: false

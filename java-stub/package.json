@@ -1,12 +1,11 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.java-stub",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Stub pacakge that uses java run environment stub",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
     "build": "pl-pkg build",
-
     "upload-packages": "pl-pkg publish"
   },
   "block-software": {

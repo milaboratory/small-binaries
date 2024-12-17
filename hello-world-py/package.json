@@ -1,12 +1,11 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.hello-world-py",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Small hello world on python",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
     "build": "pl-pkg build",
-
     "upload-packages": "pl-pkg publish"
   },
   "block-software": {

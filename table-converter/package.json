@@ -1,13 +1,12 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.table-converter",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
     "build": "../scripts/build.sh './cmd/table-converter' 'table-converter' && pl-pkg build --all-platforms",
     "test": "./test.sh",
-
     "upload-packages": "pl-pkg publish"
   },
   "block-software": {

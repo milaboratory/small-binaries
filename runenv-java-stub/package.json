@@ -1,12 +1,11 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Stub run environment that 'imitates' java",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
     "build": "../scripts/build.sh './main.go' 'bin/java' && pl-pkg build --all-platforms",
-
     "upload-packages": "pl-pkg publish"
   },
   "block-software": {

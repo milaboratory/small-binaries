@@ -6,14 +6,13 @@ set -o pipefail
 
 
 script_dir="$(cd "$(dirname "${0}")" && pwd)"
-cd "${script_dir}/.."
-repo_root="$(pwd)"
+cd "${script_dir}"
+package_root="$(pwd)"
 
 (
     echo "#"
     echo "# Functional tests: table-converter"
     echo "#"
-    cd "table-converter"
     go test ./...
     echo ""
 )
@@ -24,17 +23,16 @@ repo_root="$(pwd)"
     echo "#"
     echo ""
     echo "# Building table-converter"
-    cd table-converter/table-converter
+    cd cmd/table-converter
     go build .
     echo ""
 
-    cd "${repo_root}"
+    cd "${package_root}"
     mkdir -p tests
     cd tests
 
-    converter_dir="${repo_root}/table-converter"
-    converter="${converter_dir}/table-converter/table-converter"
-    integrations="${converter_dir}/integrations"
+    converter="${package_root}/cmd/table-converter/table-converter"
+    integrations="${package_root}/integrations"
 
     echo "# Test case: canonical"
     "${converter}" "${integrations}/canonical_in.scsv" "./canonical_out.scsv"
@@ -84,14 +82,5 @@ repo_root="$(pwd)"
         exit 1
     fi
     echo "OK"
-    echo ""
-)
-
-(
-    echo "#"
-    echo "# Functional tests: mnz-client"
-    echo "#"
-    cd "mnz-client"
-    go test ./...
     echo ""
 )

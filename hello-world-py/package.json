@@ -1,0 +1,42 @@
+{
+  "name": "@platforma-open/milaboratories.software-small-binaries.hello-world-py",
+  "private": true,
+  "version": "1.0.1",
+  "description": "Small hello world on python",
+  "scripts": {
+    "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
+    "build": "pl-pkg build",
+
+    "upload-packages": "pl-pkg publish"
+  },
+  "block-software": {
+    "entrypoints": {
+      "main": {
+        "binary": {
+          "artifact": {
+            "registry": "platforma-open",
+            "root": "./src",
+            "type": "python",
+            "environment": "@platforma-open/milaboratories.runenv-python-3:3.12.6",
+            "dependencies": {
+              "toolset": "pip",
+              "requirements": "requirements.txt"
+            }
+          },
+          "cmd": [
+            "python",
+            "{pkg}/hello.py"
+          ]
+        }
+      }
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@platforma-open/milaboratories.runenv-python-3": "catalog:",
+    "@platforma-sdk/package-builder": "catalog:"
+  }
+}

@@ -1,0 +1,33 @@
+packages:
+  #
+  # Assets
+  #
+  - small-asset
+
+  #
+  # Small utility functions for tests
+  #
+  - sleep
+  - read-with-sleep
+  - hello-world
+  - guided-command
+  - runenv-java-stub
+  - java-stub
+  - runenv-python-stub
+  - python-stub
+  - hello-world-py
+
+  #
+  # Small production CLI instruments for use in workflows
+  #
+  - table-converter
+  - mnz-client
+
+  - catalogue
+
+catalog:
+  'turbo': ^2.3.3
+  '@changesets/cli': ^2.27.10
+
+  "@platforma-sdk/package-builder": ^2.14.0
+  "@platforma-open/milaboratories.runenv-python-3": "^1.0.0"

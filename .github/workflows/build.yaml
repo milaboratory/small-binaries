@@ -1,8 +1,14 @@
-name: Build NPM package
+name: Build and Test NPM packages
 on:
+  merge_group:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches:
+      - 'main'
   push:
     branches:
       - 'main'
+  workflow_dispatch: {}
 jobs:
   init:
     runs-on: ubuntu-latest
@@ -11,54 +17,49 @@ jobs:
         with:
           version-canonize: false
           branch-versioning: main
-      - id: pkg_version
-        uses: milaboratory/github-ci/actions/helpers/jq@v4
-        with:
-          file: "./package.json"
-          select: '.version'
   run:
     needs:
       - init
-    uses: milaboratory/github-ci/.github/workflows/node-go-simple.yaml@v4-beta
+
+    uses: milaboratory/github-ci/.github/workflows/node-simple-pnpm.yaml@v4-beta
     with:
       app-name: Small cross-platform utils
       app-name-slug: 'small-cross-platform-packages'
       notify-telegram: true
       node-version: '20.x'
       golang-version: '1.22'
-      is-electron-application: 'false'
-      always-auth: 'true'
       build-script-name: 'build'
+
       test: true
       test-script-name: 'test'
       publish-to-public: true
-      aws-login-enable: true
-      gcp-login-enable: true
-      registry-url: 'https://registry.npmjs.org/'
+      package-path: 'catalogue'
+      create-tag: true
+
+      pnpm-recursive-build: false
+      pnpm-recursive-tests: false
       npmrc-config: |
         {
           "registries": {
             "https://registry.npmjs.org/": {
-              "scopes": ["platforma-open"],
+              "scopes": ["milaboratories", "platforma-open", "platforma-sdk"],
               "tokenVar": "NPMJS_TOKEN"
+            },
+            "https://npm.pkg.github.com/": {
+              "scopes": ["milaboratory"],
+              "tokenVar": "NODE_AUTH_TOKEN"
             }
           }
         }
     secrets:
       env: |
-        {
+        { "PL_REGISTRY_PLATFORMA_OPEN_UPLOAD_URL": ${{ toJSON(secrets.PL_REGISTRY_PLOPEN_UPLOAD_URL) }},
           "NPMJS_TOKEN": ${{ toJSON(secrets.NPMJS_TOKEN) }},
-          "GH_CI_PAT": "${{ toJSON(secrets.GH_PAT_CLASSIC_BLOCK) }}",
-          "PL_REGISTRY_PLATFORMA_OPEN_UPLOAD_URL": ${{ toJSON(secrets.PL_REGISTRY_PLOPEN_UPLOAD_URL) }}
-        }
+          "AWS_CI_IAM_MONOREPO_SIMPLE_ROLE": ${{ toJSON(secrets.AWS_CI_IAM_MONOREPO_SIMPLE_ROLE) }},
+          "AWS_CI_TURBOREPO_S3_BUCKET": ${{ toJSON(secrets.AWS_CI_TURBOREPO_US_S3_BUCKET) }} }
+
       TELEGRAM_NOTIFICATION_TARGET: ${{ secrets.TG_CHANNEL_MIBUILDS }}
       TELEGRAM_API_TOKEN: ${{ secrets.TG_CI_BOT_TOKEN }}
 
-      AWS_ASSUME_ROLE: ${{ secrets.AWS_CI_IAM_MONOREPO_SIMPLE_ROLE }}
-      AWS_ASSUME_REGION: 'eu-central-1'
-
-      GCP_KMS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCLOUD_KMS_WORKLOAD_IDENTITY_PROVIDER }}
-      GCP_KMS_SERVICE_ACCOUNT: ${{ secrets.GCLOUD_KMS_SERVICE_ACCOUNT }}
-      GCP_KMS_LOCATION: ${{ secrets.GCLOUD_KMS_LOCATION }}
-      GCP_KMS_KEYRING: ${{ secrets.GCLOUD_KMS_KEYRING }}
-      GCP_KMS_KEY_NAME: ${{ secrets.GCLOUD_KMS_KEY_NAME }}
+      GH_ZEN_APP_ID: ${{ secrets.GH_ZEN_APP_ID }}
+      GH_ZEN_APP_PRIVATE_KEY: ${{ secrets.GH_ZEN_APP_PRIVATE_KEY }}

@@ -1,0 +1,47 @@
+{
+    "name": "@platforma-open/milaboratories.software-small-binaries",
+    "version": "1.15.0",
+    "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
+    "scripts": {
+        "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./dist/",
+        "build": "pl-pkg build",
+
+        "prepublishOnly": "turbo run upload-packages"
+    },
+    "block-software": {
+        "entrypoints": {
+            "small-asset":                    { "reference": "@platforma-open/milaboratories.software-small-binaries.small-asset/dist/tengo/asset/main.as.json" },
+            "runenv-java-stub":               { "reference": "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub/dist/tengo/software/main.sw.json" },
+            "runenv-python-stub":             { "reference": "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub/dist/tengo/software/main.sw.json" },
+            "hello-world":                    { "reference": "@platforma-open/milaboratories.software-small-binaries.hello-world/dist/tengo/software/main.sw.json" },
+            "hello-world-py":                 { "reference": "@platforma-open/milaboratories.software-small-binaries.hello-world-py/dist/tengo/software/main.sw.json" },
+            "sleep":                          { "reference": "@platforma-open/milaboratories.software-small-binaries.sleep/dist/tengo/software/main.sw.json" },
+            "guided-command":                 { "reference": "@platforma-open/milaboratories.software-small-binaries.guided-command/dist/tengo/software/main.sw.json" },
+            "stub-python-script":             { "reference": "@platforma-open/milaboratories.software-small-binaries.python-stub/dist/tengo/software/main.sw.json" },
+            "stub-java-script":               { "reference": "@platforma-open/milaboratories.software-small-binaries.java-stub/dist/tengo/software/main.sw.json" },
+            "read-file-to-stdout-with-sleep": { "reference": "@platforma-open/milaboratories.software-small-binaries.read-with-sleep/dist/tengo/software/main.sw.json" },
+            "table-converter":                { "reference": "@platforma-open/milaboratories.software-small-binaries.table-converter/dist/tengo/software/main.sw.json" },
+            "mnz-client":                     { "reference": "@platforma-open/milaboratories.software-small-binaries.mnz-client/dist/tengo/software/main.sw.json" }
+        }
+    },
+    "files": [
+        "dist/"
+    ],
+    "license": "UNLICENSED",
+    "devDependencies": {
+        "@platforma-open/milaboratories.software-small-binaries.guided-command": "workspace:",
+        "@platforma-open/milaboratories.software-small-binaries.hello-world-py": "workspace:",
+        "@platforma-open/milaboratories.software-small-binaries.hello-world": "workspace:",
+        "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub": "workspace:",
+        "@platforma-open/milaboratories.software-small-binaries.java-stub": "workspace:",
+        "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub": "workspace:",
+        "@platforma-open/milaboratories.software-small-binaries.python-stub": "workspace:",
+        "@platforma-open/milaboratories.software-small-binaries.mnz-client": "workspace:",
+        "@platforma-open/milaboratories.software-small-binaries.read-with-sleep": "workspace:",
+        "@platforma-open/milaboratories.software-small-binaries.sleep": "workspace:",
+        "@platforma-open/milaboratories.software-small-binaries.small-asset": "workspace:",
+        "@platforma-open/milaboratories.software-small-binaries.table-converter": "workspace:",
+        "@platforma-sdk/package-builder": "catalog:"
+    }
+  }
+  

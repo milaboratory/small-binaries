@@ -5,14 +5,21 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/hashicorp/go-retryablehttp"
 	"io"
 	"strings"
 	"time"
+
+	"github.com/hashicorp/go-retryablehttp"
+)
+
+type ArgTypeName string
+
+const (
+	ArgTypeFile ArgTypeName = "file"
 )
 
 type ArgType struct {
-	Name           string                 `json:"name"`
+	Name           ArgTypeName            `json:"name"`
 	AvailableSpecs map[string]interface{} `json:"-"`
 	RequiredSpecs  []string               `json:"-"`
 }
@@ -86,11 +93,12 @@ func PrepareArgs(args []string) (map[string]Arg, error) {
 		var runSpecs map[string]any
 		//for _, specName := range ArgSpecNames {
 		switch argType.Name {
-		case "file":
+		case ArgTypeFile:
 			runSpecs, err = fileSpecs(splittedArgs[filepathN], ArgSpecNames)
 			if err != nil {
-				return nil, fmt.Errorf("error when parsing mnz specs: %w", err)
+				return nil, fmt.Errorf("error when calculating mnz specs: %w", err)
 			}
+
 		default:
 			return nil, fmt.Errorf("unknown arg type '%s'", argType.Name)
 		}

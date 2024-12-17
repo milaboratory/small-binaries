@@ -1,0 +1,40 @@
+{
+  "name": "@platforma-open/milaboratories.software-small-binaries.hello-world",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
+    "build": "../scripts/build.sh './hello-world.go' 'hello-world' && pl-pkg build --all-platforms",
+
+    "upload-packages": "pl-pkg publish"
+  },
+  "block-software": {
+    "entrypoints": {
+      "main": {
+        "binary": {
+          "artifact": {
+            "registry": "platforma-open",
+            "type": "binary",
+            "roots": {
+              "linux-x64": "./build/linux-x64/",
+              "linux-aarch64": "./build/linux-aarch64/",
+              "macosx-x64": "./build/macosx-x64/",
+              "macosx-aarch64": "./build/macosx-aarch64/",
+              "windows-x64": "./build/windows-x64/"
+            }
+          },
+          "cmd": [
+            "{pkg}/hello-world"
+          ]
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@platforma-sdk/package-builder": "catalog:"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED"
+}

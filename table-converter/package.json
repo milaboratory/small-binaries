@@ -1,0 +1,42 @@
+{
+  "name": "@platforma-open/milaboratories.software-small-binaries.table-converter",
+  "private": true,
+  "version": "1.2.0",
+  "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
+  "scripts": {
+    "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
+    "build": "../scripts/build.sh './cmd/table-converter' 'table-converter' && pl-pkg build --all-platforms",
+    "test": "./test.sh",
+
+    "upload-packages": "pl-pkg publish"
+  },
+  "block-software": {
+    "entrypoints": {
+      "main": {
+        "binary": {
+          "artifact": {
+            "registry": "platforma-open",
+            "type": "binary",
+            "roots": {
+              "linux-x64": "./build/linux-x64/",
+              "linux-aarch64": "./build/linux-aarch64/",
+              "macosx-x64": "./build/macosx-x64/",
+              "macosx-aarch64": "./build/macosx-aarch64/",
+              "windows-x64": "./build/windows-x64/"
+            }
+          },
+          "cmd": [
+            "{pkg}/table-converter"
+          ]
+        }
+      }
+    }
+  },
+  "files": [
+    "dist/"
+  ],
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@platforma-sdk/package-builder": "catalog:"
+  }
+}

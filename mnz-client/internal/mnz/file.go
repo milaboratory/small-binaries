@@ -13,13 +13,13 @@ import (
 )
 
 var FileArgType = ArgType{
-	"file",
-	map[string]interface{}{
+	Name: ArgTypeFile,
+	AvailableSpecs: map[string]interface{}{
 		"size":     nil,
 		"linesNum": nil,
 		"hash":     nil,
 	},
-	[]string{"hash"},
+	RequiredSpecs: []string{"hash"},
 }
 
 func fileSpecs(path string, mNames []string) (map[string]any, error) {
@@ -89,14 +89,14 @@ func countLinesInZip(path string) (int64, error) {
 
 func fileSha256(path string) (string, error) {
 	f, err := os.Open(path)
-	defer f.Close()
 	if err != nil {
 		return "", err
 	}
+	defer f.Close()
 
 	h := sha256.New()
-	if _, errh := io.Copy(h, f); err != nil {
-		return "", fmt.Errorf("failed to get SHA256 hash of file %s, error %w", path, errh)
+	if _, err := io.Copy(h, f); err != nil {
+		return "", fmt.Errorf("failed to get SHA256 hash of file %s, error %w", path, err)
 	}
 
 	return hex.EncodeToString(h.Sum(nil)), nil
@@ -104,10 +104,10 @@ func fileSha256(path string) (string, error) {
 
 func fileSize(path string) (int64, error) {
 	f, err := os.Open(path)
-	defer f.Close()
 	if err != nil {
 		return 0, fmt.Errorf("failed to open file %s, error %w", path, err)
 	}
+	defer f.Close()
 
 	fi, errf := f.Stat()
 	if errf != nil {
@@ -119,10 +119,10 @@ func fileSize(path string) (int64, error) {
 
 func isZip(path string) (bool, error) {
 	f, err := os.Open(path)
-	defer f.Close()
 	if err != nil {
 		return false, fmt.Errorf("failed to open file %s, error %w", path, err)
 	}
+	defer f.Close()
 
 	buff := make([]byte, 512) // why 512 bytes ? see http://golang.org/pkg/net/http/#DetectContentType
 	_, err = f.Read(buff)
@@ -136,10 +136,10 @@ func isZip(path string) (bool, error) {
 
 func countLines(path string) (int64, error) {
 	f, err := os.Open(path)
-	defer f.Close()
 	if err != nil {
 		return 0, fmt.Errorf("failed to open file %s, error %w", path, err)
 	}
+	defer f.Close()
 
 	var lc int64
 	scanner := bufio.NewScanner(f)
@@ -174,13 +174,13 @@ func unzipFile(path string, dst *os.File) (string, error) {
 	}
 
 	fileInArchive, err := f.Open()
-	defer fileInArchive.Close()
 	if err != nil {
 		return "", fmt.Errorf("failed to open file in zip %s, error %w", path, err)
 	}
+	defer fileInArchive.Close()
 
-	if _, errc := io.Copy(dst, fileInArchive); err != nil {
-		return "", fmt.Errorf("failed to write dst file %s, error %w", dst.Name(), errc)
+	if _, err := io.Copy(dst, fileInArchive); err != nil {
+		return "", fmt.Errorf("failed to write dst file %s, error %w", dst.Name(), err)
 	}
 
 	return dst.Name(), nil

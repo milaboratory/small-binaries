@@ -33,40 +33,40 @@ importers:
   catalogue:
     devDependencies:
       '@platforma-open/milaboratories.software-small-binaries.guided-command':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../guided-command
       '@platforma-open/milaboratories.software-small-binaries.hello-world':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../hello-world
       '@platforma-open/milaboratories.software-small-binaries.hello-world-py':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../hello-world-py
       '@platforma-open/milaboratories.software-small-binaries.java-stub':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../java-stub
       '@platforma-open/milaboratories.software-small-binaries.mnz-client':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../mnz-client
       '@platforma-open/milaboratories.software-small-binaries.python-stub':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../python-stub
       '@platforma-open/milaboratories.software-small-binaries.read-with-sleep':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../read-with-sleep
       '@platforma-open/milaboratories.software-small-binaries.runenv-java-stub':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../runenv-java-stub
       '@platforma-open/milaboratories.software-small-binaries.runenv-python-stub':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../runenv-python-stub
       '@platforma-open/milaboratories.software-small-binaries.sleep':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../sleep
       '@platforma-open/milaboratories.software-small-binaries.small-asset':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../small-asset
       '@platforma-open/milaboratories.software-small-binaries.table-converter':
-        specifier: 'workspace:'
+        specifier: workspace:*
         version: link:../table-converter
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'

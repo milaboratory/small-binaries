@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.runenv-java-stub
 
+## 1.0.4
+
+### Patch Changes
+
+- 75ad7b6: Drop compiled binary from contents of npm package
+
 ## 1.0.3
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 1.15.4
+
+### Patch Changes
+
+- Updated dependencies [75ad7b6]
+  - @platforma-open/milaboratories.software-small-binaries.runenv-java-stub@1.0.4
+  - @platforma-open/milaboratories.software-small-binaries.read-with-sleep@1.0.3
+  - @platforma-open/milaboratories.software-small-binaries.guided-command@1.0.3
+  - @platforma-open/milaboratories.software-small-binaries.hello-world@1.0.3
+  - @platforma-open/milaboratories.software-small-binaries.sleep@1.0.6
+
 ## 1.15.3
 
 ### Patch Changes

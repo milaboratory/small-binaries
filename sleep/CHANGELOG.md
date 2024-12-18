@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.sleep
 
+## 1.0.6
+
+### Patch Changes
+
+- 75ad7b6: Drop compiled binary from contents of npm package
+
 ## 1.0.5
 
 ### Patch Changes

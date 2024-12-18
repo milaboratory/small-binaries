@@ -19,15 +19,15 @@ const (
 )
 
 type ArgType struct {
-	Name           ArgTypeName            `json:"name"`
-	AvailableSpecs map[string]interface{} `json:"-"`
-	RequiredSpecs  []string               `json:"-"`
+	Name           ArgTypeName
+	AvailableSpecs map[string]interface{}
+	RequiredSpecs  []string
 }
 
 type Arg struct {
-	Name    string         `json:"-"`
-	ArgType ArgType        `json:"argType"`
-	Specs   map[string]any `json:"specs"`
+	Type ArgTypeName    `json:"type"`
+	Name string         `json:"-"`
+	Spec map[string]any `json:"spec"`
 }
 
 func getArgType(s string) (ArgType, error) {
@@ -68,7 +68,7 @@ func PrepareArgs(args []string) (map[string]Arg, error) {
 	for _, arg := range args {
 		splittedArgs := strings.Split(arg, ":")
 		if len(splittedArgs) < filepathN { // specs could be empty
-			return nil, errors.New("invalid argument, agrument format '<type>:<name>:<filepath>[:metrics]'")
+			return nil, errors.New("invalid argument, argument format '<type>:<name>:<filepath>[:metrics]'")
 		}
 
 		// type
@@ -104,7 +104,7 @@ func PrepareArgs(args []string) (map[string]Arg, error) {
 		}
 		//}
 
-		result[argName] = Arg{argName, argType, runSpecs}
+		result[argName] = Arg{Name: argName, Type: argType.Name, Spec: runSpecs}
 	}
 
 	return result, nil

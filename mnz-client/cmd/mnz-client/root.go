@@ -15,7 +15,7 @@ func main() {
 	// define flags
 	flag.Usage = func() {
 		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s:\n", os.Args[0])
-		println("MI_LICENSE=E-ABC mnz-client -productName test_product [more flags..] <argName>:<type=file>:<filepath>:<specs:size,linesNum>")
+		println("MI_LICENSE=E-ABC mnz-client -productName test_product [more flags..] <argName>:<type=file>:<filepath>:<specs:size,lines,sha256>")
 		println("Only type 'file' now supported.")
 		println("Program may send multiple specs. Connect them with comma ','")
 		flag.PrintDefaults()
@@ -56,7 +56,7 @@ func main() {
 		log.Fatal("Missing mandatory argument: productName")
 	}
 	if license == "" || !licenseFound {
-		log.Fatal("Missing mandatory env variable, set your private license string: MI_LICENSE=E-ABC")
+		log.Fatal("Missing mandatory env variable, set your private license string: MI_LICENSE=E-ABC..")
 	}
 
 	// prepare call

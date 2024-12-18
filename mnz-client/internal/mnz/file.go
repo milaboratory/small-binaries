@@ -15,15 +15,15 @@ import (
 var FileArgType = ArgType{
 	Name: ArgTypeFile,
 	AvailableSpecs: map[string]interface{}{
-		"size":     nil,
-		"linesNum": nil,
-		"hash":     nil,
+		"size":   nil,
+		"lines":  nil,
+		"sha256": nil,
 	},
-	RequiredSpecs: []string{"hash"},
+	RequiredSpecs: []string{"sha256"},
 }
 
 func fileSpecs(path string, mNames []string) (map[string]any, error) {
-	specs := make(map[string]any)
+	spec := make(map[string]any)
 
 	for _, mn := range mNames {
 		switch mn {
@@ -33,28 +33,28 @@ func fileSpecs(path string, mNames []string) (map[string]any, error) {
 			if err != nil {
 				return nil, err
 			}
-			specs[mn] = sz
+			spec[mn] = sz
 
-		case "linesNum":
+		case "lines":
 			count, err := countLinesInZip(path)
 			if err != nil {
 				return nil, err
 			}
-			specs[mn] = count
+			spec[mn] = count
 
-		case "hash":
+		case "sha256":
 			hash, err := fileSha256(path)
 			if err != nil {
 				return nil, err
 			}
-			specs[mn] = hash
+			spec[mn] = hash
 
 		default:
 			return nil, fmt.Errorf("spec name '%s' is not available", mn)
 		}
 	}
 
-	return specs, nil
+	return spec, nil
 }
 
 func countLinesInZip(path string) (int64, error) {
@@ -95,7 +95,8 @@ func fileSha256(path string) (string, error) {
 	defer f.Close()
 
 	h := sha256.New()
-	if _, err := io.Copy(h, f); err != nil {
+	buf := make([]byte, 1024*1024) // using large read buffer to increase throughput
+	if _, err := io.CopyBuffer(h, f, buf); err != nil {
 		return "", fmt.Errorf("failed to get SHA256 hash of file %s, error %w", path, err)
 	}
 
@@ -144,7 +145,7 @@ func countLines(path string) (int64, error) {
 	var lc int64
 	scanner := bufio.NewScanner(f)
 	// https://stackoverflow.com/questions/8757389/reading-a-file-line-by-line-in-go/16615559#comment41613175_16615559
-	const maxCapacity int = 4096 * 8 // increase buffer more in case of long lines
+	const maxCapacity int = 1024 * 1024 // increase buffer more in case of long lines
 	buf := make([]byte, maxCapacity)
 	scanner.Buffer(buf, maxCapacity)
 	for scanner.Scan() {

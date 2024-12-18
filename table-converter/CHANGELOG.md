@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.table-converter
 
+## 1.2.2
+
+### Patch Changes
+
+- 8cb1475: Make all subpackages public to make changesets work :(
+
 ## 1.2.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Stub run environment that 'imitates' java",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",

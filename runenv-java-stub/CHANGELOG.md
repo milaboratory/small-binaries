@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.runenv-java-stub
 
+## 1.0.3
+
+### Patch Changes
+
+- 8cb1475: Make all subpackages public to make changesets work :(
+
 ## 1.0.2
 
 ### Patch Changes

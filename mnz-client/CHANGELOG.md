@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.3.1
+
+### Patch Changes
+
+- c99cad1: Republish all packages to upload them to platforma registry for all platforms
+
 ## 1.3.0
 
 ### Minor Changes

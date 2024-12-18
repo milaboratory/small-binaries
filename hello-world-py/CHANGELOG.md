@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.hello-world-py
 
+## 1.0.4
+
+### Patch Changes
+
+- c99cad1: Republish all packages to upload them to platforma registry for all platforms
+
 ## 1.0.3
 
 ### Patch Changes

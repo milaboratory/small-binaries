@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.guided-command",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Command you fully control: when it starts, when writes file and when it exits",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",

@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.python-stub
 
+## 1.0.3
+
+### Patch Changes
+
+- c99cad1: Republish all packages to upload them to platforma registry for all platforms
+
 ## 1.0.2
 
 ### Patch Changes

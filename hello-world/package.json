@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.hello-world",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",

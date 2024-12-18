@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.java-stub",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Stub pacakge that uses java run environment stub",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",

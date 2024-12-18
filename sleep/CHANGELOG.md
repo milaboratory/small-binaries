@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.sleep
 
+## 1.0.7
+
+### Patch Changes
+
+- c99cad1: Republish all packages to upload them to platforma registry for all platforms
+
 ## 1.0.6
 
 ### Patch Changes

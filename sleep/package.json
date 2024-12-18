@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.sleep",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Cross-platform sleep",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",

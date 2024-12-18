@@ -32,6 +32,8 @@ jobs:
 
       test: true
       test-script-name: 'test'
+      pl-start-for-tests: false
+
       publish-to-public: true
       package-path: 'catalogue'
       create-tag: true

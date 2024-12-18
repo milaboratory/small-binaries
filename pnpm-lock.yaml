@@ -31,7 +31,7 @@ importers:
         version: 2.3.3
 
   catalogue:
-    devDependencies:
+    dependencies:
       '@platforma-open/milaboratories.software-small-binaries.guided-command':
         specifier: workspace:*
         version: link:../guided-command
@@ -68,6 +68,7 @@ importers:
       '@platforma-open/milaboratories.software-small-binaries.table-converter':
         specifier: workspace:*
         version: link:../table-converter
+    devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
         version: 2.14.0

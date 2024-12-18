@@ -1,12 +1,11 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.read-with-sleep",
-  "private": true,
   "version": "1.0.1",
   "description": "Read input file line-by-line with pause between lines",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
     "build": "../scripts/build.sh './main.go' 'read-with-sleep' && pl-pkg build --all-platforms",
-    "upload-packages": "pl-pkg publish"
+    "prepublishOnly": "pl-pkg publish"
   },
   "block-software": {
     "entrypoints": {

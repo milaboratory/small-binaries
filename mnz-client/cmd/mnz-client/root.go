@@ -5,16 +5,17 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/milaboratory/small-binaries/mnz-client/internal/mnz"
 	"log"
 	"os"
+
+	"github.com/milaboratory/small-binaries/mnz-client/internal/mnz"
 )
 
 func main() {
 	// define flags
 	flag.Usage = func() {
 		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s:\n", os.Args[0])
-		println("mnz-client -license E-ABC -productName test_product [more flags..] <argName>:<type=file>:<filepath>:<specs:size,linesNum>")
+		println("MI_LICENSE=E-ABC mnz-client -productName test_product [more flags..] <argName>:<type=file>:<filepath>:<specs:size,linesNum>")
 		println("Only type 'file' now supported.")
 		println("Program may send multiple specs. Connect them with comma ','")
 		flag.PrintDefaults()
@@ -23,11 +24,6 @@ func main() {
 		"url",
 		"https://licensing-api.milaboratories.com/mnz/run-spec",
 		"Sets URL for sending blocks run statistics",
-	)
-	license := flag.String(
-		"license",
-		"",
-		"Set your private license string",
 	)
 	productName := flag.String(
 		"productName",
@@ -53,12 +49,14 @@ func main() {
 	// parse flags
 	flag.Parse()
 
+	license, licenseFound := os.LookupEnv("MI_LICENSE")
+
 	// validate flag values
 	if productName == nil || *productName == "" {
 		log.Fatal("Missing mandatory argument: productName")
 	}
-	if license == nil || *license == "" {
-		log.Fatal("Missing mandatory argument: license")
+	if license == "" || !licenseFound {
+		log.Fatal("Missing mandatory env variable, set your private license string: MI_LICENSE=E-ABC")
 	}
 
 	// prepare call
@@ -69,7 +67,7 @@ func main() {
 
 	// call
 	req := mnz.RunSpecRequest{
-		License:     *license,
+		License:     license,
 		ProductName: *productName,
 		RunSpec:     mnzArgs,
 	}

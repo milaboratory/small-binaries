@@ -1,5 +1,12 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 1.15.2
+
+### Patch Changes
+
+- Updated dependencies [12cf3e7]
+  - @platforma-open/milaboratories.software-small-binaries.sleep@1.0.5
+
 ## 1.15.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.sleep
 
+## 1.0.5
+
+### Patch Changes
+
+- 12cf3e7: Formal bump of version to trigger CI
+
 ## 1.0.4
 
 ### Patch Changes

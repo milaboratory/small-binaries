@@ -5,23 +5,27 @@
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
     "build": "pl-pkg build",
-    "prepublishOnly": "pl-pkg publish"
+    "prepublishOnly": "pl-pkg publish --all-platforms"
   },
   "block-software": {
     "entrypoints": {
       "main": {
         "binary": {
           "artifact": {
-            "type": "java",
+            "type": "python",
             "registry": "platforma-open",
-            "environment": "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub:main",
-            "root": "./src"
+            "environment": "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub:main",
+            "root": "./src",
+            "dependencies": {
+              "toolset": "pip",
+              "requirements": "./requirements.txt"
+            }
           },
           "cmd": [
-            "java",
-            "got fake java by dependency",
+            "python",
+            "got fake python by dependency",
             "pkg={pkg}",
-            "java={java}"
+            "python={python}"
           ]
         }
       }
@@ -32,7 +36,7 @@
   ],
   "license": "UNLICENSED",
   "devDependencies": {
-    "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub": "workspace:",
+    "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub": "workspace:",
     "@platforma-sdk/package-builder": "catalog:"
   }
 }

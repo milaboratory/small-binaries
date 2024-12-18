@@ -7,7 +7,7 @@
       },
       "build": {
         "inputs": ["$TURBO_DEFAULT$"],
-        "outputs": ["./dist/**", "./build/**", "./pkg-*.tgz"],
+        "outputs": ["./dist/**", "./build/**", "./pkg-*.tgz", "./pkg-*.zip"],
         "dependsOn": ["^build"]
       },
       "test": {

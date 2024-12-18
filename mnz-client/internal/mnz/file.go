@@ -15,15 +15,15 @@ import (
 var FileArgType = ArgType{
 	Name: ArgTypeFile,
 	AvailableSpecs: map[string]interface{}{
-		"size":        nil,
-		"line_count":  nil,
-		"hash_sha256": nil,
+		"size":   nil,
+		"lines":  nil,
+		"sha256": nil,
 	},
-	RequiredSpecs: []string{"hash_sha256"},
+	RequiredSpecs: []string{"sha256"},
 }
 
 func fileSpecs(path string, mNames []string) (map[string]any, error) {
-	specs := make(map[string]any)
+	spec := make(map[string]any)
 
 	for _, mn := range mNames {
 		switch mn {
@@ -33,28 +33,28 @@ func fileSpecs(path string, mNames []string) (map[string]any, error) {
 			if err != nil {
 				return nil, err
 			}
-			specs[mn] = sz
+			spec[mn] = sz
 
-		case "line_count":
+		case "lines":
 			count, err := countLinesInZip(path)
 			if err != nil {
 				return nil, err
 			}
-			specs[mn] = count
+			spec[mn] = count
 
-		case "hash_sha256":
+		case "sha256":
 			hash, err := fileSha256(path)
 			if err != nil {
 				return nil, err
 			}
-			specs[mn] = hash
+			spec[mn] = hash
 
 		default:
 			return nil, fmt.Errorf("spec name '%s' is not available", mn)
 		}
 	}
 
-	return specs, nil
+	return spec, nil
 }
 
 func countLinesInZip(path string) (int64, error) {

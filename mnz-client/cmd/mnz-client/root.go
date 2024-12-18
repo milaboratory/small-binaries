@@ -15,7 +15,7 @@ func main() {
 	// define flags
 	flag.Usage = func() {
 		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s:\n", os.Args[0])
-		println("MI_LICENSE=E-ABC mnz-client -productName test_product [more flags..] <argName>:<type=file>:<filepath>:<specs:size,line_count,hash_sha256>")
+		println("MI_LICENSE=E-ABC mnz-client -productName test_product [more flags..] <argName>:<type=file>:<filepath>:<specs:size,lines,sha256>")
 		println("Only type 'file' now supported.")
 		println("Program may send multiple specs. Connect them with comma ','")
 		flag.PrintDefaults()

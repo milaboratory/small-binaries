@@ -32,6 +32,9 @@
   "devDependencies": {
     "@platforma-sdk/package-builder": "catalog:"
   },
+  "files": [
+    "dist/"
+  ],
   "keywords": [],
   "author": "",
   "license": "UNLICENSED"

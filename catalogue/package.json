@@ -4,8 +4,7 @@
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./dist/",
-        "build": "pl-pkg build",
-        "prepublishOnly": "turbo run upload-packages"
+        "build": "pl-pkg build"
     },
     "block-software": {
         "entrypoints": {
@@ -51,7 +50,7 @@
         "dist/"
     ],
     "license": "UNLICENSED",
-    "devDependencies": {
+    "dependencies": {
         "@platforma-open/milaboratories.software-small-binaries.guided-command": "workspace:*",
         "@platforma-open/milaboratories.software-small-binaries.hello-world-py": "workspace:*",
         "@platforma-open/milaboratories.software-small-binaries.hello-world": "workspace:*",
@@ -63,7 +62,9 @@
         "@platforma-open/milaboratories.software-small-binaries.read-with-sleep": "workspace:*",
         "@platforma-open/milaboratories.software-small-binaries.sleep": "workspace:*",
         "@platforma-open/milaboratories.software-small-binaries.small-asset": "workspace:*",
-        "@platforma-open/milaboratories.software-small-binaries.table-converter": "workspace:*",
+        "@platforma-open/milaboratories.software-small-binaries.table-converter": "workspace:*"
+    },
+    "devDependencies": {
         "@platforma-sdk/package-builder": "catalog:"
     }
 }

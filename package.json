@@ -1,7 +1,7 @@
 {
   "name": "small-binaries",
   "scripts": {
-    "cleanup": "turbo run cleanup",
+    "cleanup": "pnpm -r cleanup",
     "build": "turbo run build",
     "test": "turbo run test",
 

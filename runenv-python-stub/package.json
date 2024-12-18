@@ -1,12 +1,11 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub",
-  "private": true,
   "version": "1.0.3",
   "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
     "build": "../scripts/build.sh './runenv-python-stub.go' 'bin/python' && ../scripts/build.sh './runenv-python-stub.go' 'bin/pip' && pl-pkg build --all-platforms",
-    "upload-packages": "pl-pkg publish"
+    "prepublishOnly": "pl-pkg publish"
   },
   "block-software": {
     "entrypoints": {

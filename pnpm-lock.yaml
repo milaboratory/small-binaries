@@ -111,9 +111,9 @@ importers:
 
   python-stub:
     devDependencies:
-      '@platforma-open/milaboratories.software-small-binaries.runenv-java-stub':
+      '@platforma-open/milaboratories.software-small-binaries.runenv-python-stub':
         specifier: 'workspace:'
-        version: link:../runenv-java-stub
+        version: link:../runenv-python-stub
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
         version: 2.14.2

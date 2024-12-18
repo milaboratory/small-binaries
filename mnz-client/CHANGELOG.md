@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.4.0
+
+### Minor Changes
+
+- d9b1f21: Better token structure and metric names
+
 ## 1.3.1
 
 ### Patch Changes

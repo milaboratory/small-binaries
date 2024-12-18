@@ -13,8 +13,8 @@ catalogs:
       specifier: ^1.0.0
       version: 1.1.5
     '@platforma-sdk/package-builder':
-      specifier: ^2.14.0
-      version: 2.14.0
+      specifier: ^2.14.2
+      version: 2.14.2
     turbo:
       specifier: ^2.3.3
       version: 2.3.3
@@ -71,19 +71,19 @@ importers:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.14.0
+        version: 2.14.2
 
   guided-command:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.14.0
+        version: 2.14.2
 
   hello-world:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.14.0
+        version: 2.14.2
 
   hello-world-py:
     devDependencies:
@@ -92,7 +92,7 @@ importers:
         version: 1.1.5
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.14.0
+        version: 2.14.2
 
   java-stub:
     devDependencies:
@@ -101,13 +101,13 @@ importers:
         version: link:../runenv-java-stub
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.14.0
+        version: 2.14.2
 
   mnz-client:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.14.0
+        version: 2.14.2
 
   python-stub:
     devDependencies:
@@ -116,43 +116,43 @@ importers:
         version: link:../runenv-java-stub
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.14.0
+        version: 2.14.2
 
   read-with-sleep:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.14.0
+        version: 2.14.2
 
   runenv-java-stub:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.14.0
+        version: 2.14.2
 
   runenv-python-stub:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.14.0
+        version: 2.14.2
 
   sleep:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.14.0
+        version: 2.14.2
 
   small-asset:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.14.0
+        version: 2.14.2
 
   table-converter:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 2.14.0
+        version: 2.14.2
 
 packages:
 
@@ -431,8 +431,8 @@ packages:
   '@platforma-open/milaboratories.runenv-python-3@1.1.5':
     resolution: {integrity: sha512-YFB6zC0cJCHVZw91ysLu0E9UDViPTCVWYmjWtxt1dsvud/zhjge4/iKv7gWIrltfmY6LahXeTehG2/bXnxEoUQ==}
 
-  '@platforma-sdk/package-builder@2.14.0':
-    resolution: {integrity: sha512-WHg7w6S5ZoXHWPdE0/Dfhy01DtvgiwCYZbgICLIwO37xTulpBR91oueMUQYDUb4kGH3elK9KVHzCtxad0/5KeA==}
+  '@platforma-sdk/package-builder@2.14.2':
+    resolution: {integrity: sha512-//N+bIM423gq8loTxgVk1AskZaVMWCM/d8ZEKeb/gzzCazGQUZiDGKfjP4XCAudc3o3ltjsVdpoKEZqTjYuhrA==}
     hasBin: true
 
   '@smithy/abort-controller@3.1.9':
@@ -2058,7 +2058,7 @@ snapshots:
 
   '@platforma-open/milaboratories.runenv-python-3@1.1.5': {}
 
-  '@platforma-sdk/package-builder@2.14.0':
+  '@platforma-sdk/package-builder@2.14.2':
     dependencies:
       '@aws-sdk/client-s3': 3.712.0
       '@aws-sdk/lib-storage': 3.712.0(@aws-sdk/client-s3@3.712.0)

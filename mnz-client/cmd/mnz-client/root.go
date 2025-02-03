@@ -26,7 +26,7 @@ func main() {
 		"Sets URL for sending blocks run statistics",
 	)
 	productKey := flag.String(
-		"productKey",
+		"AAAAAXXXXXXXAAAAAXXXXXXXXXX",
 		"",
 		"Set your product key",
 	)

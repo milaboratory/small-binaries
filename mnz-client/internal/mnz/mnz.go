@@ -39,9 +39,9 @@ func getArgType(s string) (ArgType, error) {
 }
 
 type RunSpecRequest struct {
-	License     string         `json:"license"`
-	ProductName string         `json:"productName"`
-	RunSpec     map[string]Arg `json:"runSpec"`
+	License    string         `json:"license"`
+	ProductKey string         `json:"productKey"`
+	RunSpec    map[string]Arg `json:"runSpec"`
 }
 type RunSpecResResult struct {
 	JwtToken string `json:"jwtToken"`

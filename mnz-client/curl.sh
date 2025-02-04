@@ -6,5 +6,5 @@ curl -X POST https://licensing-api.milaboratories.com/mnz/run-spec \
     "asdf":"12345"
   },
   "license":"E-URA...",
-  "productName":"test_product"
+  "productKey":"GAMLWGMNLAYRMFEGVLSRPRNNODLGJRZMRDDGOZJKAAXOACYF"
 }'

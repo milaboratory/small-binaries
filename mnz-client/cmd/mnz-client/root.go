@@ -15,7 +15,7 @@ func main() {
 	// define flags
 	flag.Usage = func() {
 		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s:\n", os.Args[0])
-		println("MI_LICENSE=E-ABC mnz-client -productName test_product [more flags..] <argName>:<type=file>:<filepath>:<specs:size,lines,sha256>")
+		println("MI_LICENSE=E-ABC mnz-client -productKey test_product [more flags..] <argName>:<type=file>:<filepath>:<specs:size,lines,sha256>")
 		println("Only type 'file' now supported.")
 		println("Program may send multiple specs. Connect them with comma ','")
 		flag.PrintDefaults()
@@ -25,10 +25,10 @@ func main() {
 		"https://licensing-api.milaboratories.com/mnz/run-spec",
 		"Sets URL for sending blocks run statistics",
 	)
-	productName := flag.String(
-		"productName",
+	productKey := flag.String(
+		"AAAAAXXXXXXXAAAAAXXXXXXXXXX",
 		"",
-		"Set your product name",
+		"Set your product key",
 	)
 	retryWaitMin := flag.Int(
 		"retryWaitMin",
@@ -52,8 +52,8 @@ func main() {
 	license, licenseFound := os.LookupEnv("MI_LICENSE")
 
 	// validate flag values
-	if productName == nil || *productName == "" {
-		log.Fatal("Missing mandatory argument: productName")
+	if productKey == nil || *productKey == "" {
+		log.Fatal("Missing mandatory argument: productKey")
 	}
 	if license == "" || !licenseFound {
 		log.Fatal("Missing mandatory env variable, set your private license string: MI_LICENSE=E-ABC..")
@@ -67,9 +67,9 @@ func main() {
 
 	// call
 	req := mnz.RunSpecRequest{
-		License:     license,
-		ProductName: *productName,
-		RunSpec:     mnzArgs,
+		License:    license,
+		ProductKey: *productKey,
+		RunSpec:    mnzArgs,
 	}
 	jwt, err := mnz.CallRunSpec(req, *url, *retryWaitMin, *retryWaitMax, *retryMax)
 	if err != nil {

@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.5.0
+
+### Minor Changes
+
+- d7c7368: productName property was renamed to productKey
+
 ## 1.4.0
 
 ### Minor Changes

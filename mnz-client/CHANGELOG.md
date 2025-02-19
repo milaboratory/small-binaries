@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.5.2
+
+### Patch Changes
+
+- 608eede: mnz-client: print json with jwt token and n remaining runs
+
 ## 1.5.1
 
 ### Patch Changes

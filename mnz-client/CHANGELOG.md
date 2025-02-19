@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.5.1
+
+### Patch Changes
+
+- 8465bf4: add a possibility to run it in dry-run
+
 ## 1.5.0
 
 ### Minor Changes

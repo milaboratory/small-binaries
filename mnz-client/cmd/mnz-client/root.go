@@ -25,6 +25,16 @@ func main() {
 		"https://licensing-api.milaboratories.com/mnz/run-spec",
 		"Sets URL for sending blocks run statistics",
 	)
+	dryRun := flag.Bool(
+		"dry-run",
+		false,
+		"Is this run is a dry-run",
+	)
+	dryRunUrl := flag.String(
+		"dry-run-url",
+		"https://licensing-api.milaboratories.com/mnz/run-spec-dry",
+		"Sets dry-run URL for sending blocks run statistics",
+	)
 	productKey := flag.String(
 		"AAAAAXXXXXXXAAAAAXXXXXXXXXX",
 		"",
@@ -70,6 +80,9 @@ func main() {
 		License:    license,
 		ProductKey: *productKey,
 		RunSpec:    mnzArgs,
+	}
+	if *dryRun {
+		*url = *dryRunUrl
 	}
 	jwt, err := mnz.CallRunSpec(req, *url, *retryWaitMin, *retryWaitMax, *retryMax)
 	if err != nil {

@@ -2,6 +2,7 @@ package mnz
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 )
 
@@ -12,7 +13,7 @@ func Test_unmarshal(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    string
+		want    *RunSpecResResult
 		wantErr error
 	}{
 		{
@@ -27,7 +28,7 @@ func Test_unmarshal(t *testing.T) {
 				}
 				`),
 			},
-			want:    "",
+			want:    nil,
 			wantErr: fmt.Errorf("get API error: VALIDATION_ERR bla"),
 		},
 		{
@@ -41,7 +42,9 @@ func Test_unmarshal(t *testing.T) {
 				}
 				`),
 			},
-			want:    "eyJhbGciOiJSUzI1NiJ9.eyJwcm9kdWN0TmFtZSI6InRZWMiOnsiYXNkZiI6IjEyMzQ1In19.bCZuyt1",
+			want: &RunSpecResResult{
+				JwtToken: "eyJhbGciOiJSUzI1NiJ9.eyJwcm9kdWN0TmFtZSI6InRZWMiOnsiYXNkZiI6IjEyMzQ1In19.bCZuyt1",
+			},
 			wantErr: nil,
 		},
 	}
@@ -54,7 +57,7 @@ func Test_unmarshal(t *testing.T) {
 				t.Errorf("unmarshal() error = %v, wantErr %v", err.Error(), tt.wantErr)
 				return
 			}
-			if got != tt.want {
+			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("unmarshal() got = %v, want %v", got, tt.want)
 			}
 		})

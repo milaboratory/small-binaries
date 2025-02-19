@@ -3,6 +3,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -84,10 +85,15 @@ func main() {
 	if *dryRun {
 		*url = *dryRunUrl
 	}
-	jwt, err := mnz.CallRunSpec(req, *url, *retryWaitMin, *retryWaitMax, *retryMax)
+	result, err := mnz.CallRunSpec(req, *url, *retryWaitMin, *retryWaitMax, *retryMax)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println(jwt)
+	bytes, err := json.Marshal(result)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(string(bytes))
 }

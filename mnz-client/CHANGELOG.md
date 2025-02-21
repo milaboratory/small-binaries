@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.5.3
+
+### Patch Changes
+
+- 7a36160: add fakeProductKey for wf tests
+
 ## 1.5.2
 
 ### Patch Changes

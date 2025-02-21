@@ -3,13 +3,20 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
 	"os"
 
 	"github.com/milaboratory/small-binaries/mnz-client/internal/mnz"
+)
+
+const (
+	// fakeProductKey is needed for tests of our workflow.
+	fakeProductKey = "MIFAKEMIFAKEMIFAKE"
+
+	// fakeResponseToken is a response for fakeProductKey, it contains a number of remaining runs.
+	fakeResponseToken = "eyJhbGciOiJFUzI1NiIsImtpZCI6Im1pMiJ9.eyJtbnoiOnsiZGV0YWlscyI6eyJyZW1haW5pbmciOiA5OTk5OTJ9LCJ0eXBlIjoiYmFzZSJ9LCJwcm9kdWN0S2V5IjoiTUlGQUtFTUlGQUtFTUlGQUtFIiwicnVuU3BlYyI6eyJrZXkiOiJ2YWx1ZSJ9fQ==.K7pU8XE476enl-wI-rnHXnvCGLGfM0mdDS0HPdIXhnE5tuc1nKcSZMMTZSZ6USSc1_syHhDkrjsm7UvZTcQwqg"
 )
 
 func main() {
@@ -76,6 +83,11 @@ func main() {
 		log.Fatal(err)
 	}
 
+	if *productKey == fakeProductKey {
+		fmt.Println(fakeResponseToken)
+		return
+	}
+
 	// call
 	req := mnz.RunSpecRequest{
 		License:    license,
@@ -90,10 +102,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	bytes, err := json.Marshal(result)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(string(bytes))
+	fmt.Println(result)
 }

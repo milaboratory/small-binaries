@@ -44,8 +44,7 @@ type RunSpecRequest struct {
 	RunSpec    map[string]Arg `json:"runSpec"`
 }
 type RunSpecResResult struct {
-	JwtToken       string  `json:"jwtToken"`
-	NRemainingRuns *uint64 `json:"nRemainingRuns,omitempty"`
+	JwtToken string `json:"jwtToken"`
 }
 type RunSpecResError struct {
 	Code    string `json:"code"`
@@ -117,11 +116,11 @@ func CallRunSpec(
 	retryWaitMin int,
 	retryWaitMax int,
 	retryMax int,
-) (*RunSpecResResult, error) {
+) (string, error) {
 	// Serialize the request to JSON
 	data, err := json.Marshal(runSpecRequest)
 	if err != nil {
-		return nil, fmt.Errorf("failed to serialize request: %w", err)
+		return "", fmt.Errorf("failed to serialize request: %w", err)
 	}
 
 	// Create a retryable HTTP client
@@ -134,7 +133,7 @@ func CallRunSpec(
 	// Create the POST request
 	req, err := retryablehttp.NewRequest("POST", url, bytes.NewBuffer(data))
 	if err != nil {
-		return nil, fmt.Errorf("failed to create request: %w", err)
+		return "", fmt.Errorf("failed to create request: %w", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("User-Agent", "mnz-client")
@@ -142,27 +141,27 @@ func CallRunSpec(
 	// Perform the request
 	resp, err := client.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("request failed: %w", err)
+		return "", fmt.Errorf("request failed: %w", err)
 	}
 	defer resp.Body.Close()
 
 	// Check for non-200 HTTP status
 	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("received non-200 response: %d", resp.StatusCode)
+		return "", fmt.Errorf("received non-200 response: %d", resp.StatusCode)
 	}
 
 	// Parse the response
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("failed to read response: %w", err)
+		return "", fmt.Errorf("failed to read response: %w", err)
 	}
 
 	result, err := unmarshal(body)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
-	return result, nil
+	return result.JwtToken, nil
 }
 
 func unmarshal(body []byte) (*RunSpecResResult, error) {

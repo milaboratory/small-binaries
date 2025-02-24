@@ -44,9 +44,9 @@ func main() {
 		"Sets dry-run URL for sending blocks run statistics",
 	)
 	productKey := flag.String(
-		"AAAAAXXXXXXXAAAAAXXXXXXXXXX",
+		"productKey",
 		"",
-		"Set your product key",
+		"Set your product key, for example: AAAAAXXXXXXXAAAAAXXXXXXXXXX",
 	)
 	retryWaitMin := flag.Int(
 		"retryWaitMin",

@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.5.4
+
+### Patch Changes
+
+- 453812f: fix productKey flag
+
 ## 1.5.3
 
 ### Patch Changes

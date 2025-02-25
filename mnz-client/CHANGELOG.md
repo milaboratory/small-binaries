@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.5.5
+
+### Patch Changes
+
+- e47af33: more dry-run fixes
+
 ## 1.5.4
 
 ### Patch Changes

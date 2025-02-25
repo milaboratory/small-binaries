@@ -16,7 +16,25 @@ const (
 	fakeProductKey = "MIFAKEMIFAKEMIFAKE"
 
 	// fakeResponseToken is a response for fakeProductKey, it contains a number of remaining runs.
-	fakeResponseToken = "eyJhbGciOiJFUzI1NiIsImtpZCI6Im1pMiJ9.eyJtbnoiOnsiZGV0YWlscyI6eyJyZW1haW5pbmciOiA5OTk5OTJ9LCJ0eXBlIjoiYmFzZSJ9LCJwcm9kdWN0S2V5IjoiTUlGQUtFTUlGQUtFTUlGQUtFIiwicnVuU3BlYyI6eyJrZXkiOiJ2YWx1ZSJ9fQ==.K7pU8XE476enl-wI-rnHXnvCGLGfM0mdDS0HPdIXhnE5tuc1nKcSZMMTZSZ6USSc1_syHhDkrjsm7UvZTcQwqg"
+	fakeRunSpecResponse = `{"jwtToken": "eyJhbGciOiJFUzI1NiIsImtpZCI6Im1pMiJ9.eyJtbnoiOnsiZGV0YWlscyI6eyJyZW1haW5pbmciOiA5OTk5OTJ9LCJ0eXBlIjoiYmFzZSJ9LCJwcm9kdWN0S2V5IjoiTUlGQUtFTUlGQUtFTUlGQUtFIiwicnVuU3BlYyI6eyJrZXkiOiJ2YWx1ZSJ9fQ==.K7pU8XE476enl-wI-rnHXnvCGLGfM0mdDS0HPdIXhnE5tuc1nKcSZMMTZSZ6USSc1_syHhDkrjsm7UvZTcQwqg"}`
+
+	fakeDryRunResponse = `{
+  "productKey": "MIFAKEMIFAKEMIFAKE",
+  "canRun": true,
+  "mnz": {
+    "type": "base",
+    "details": {
+      "spentRuns": 192,
+      "runsToSpend": 1,
+      "willRemainAfterRun": 7,
+      "subscription": {
+        "availableRuns": 200,
+        "startsAt": "2025-02-25T11:50:59.000Z",
+        "expiresAt": "2025-03-27T11:50:59.000Z"
+      }
+    }
+  }
+}`
 )
 
 func main() {
@@ -77,30 +95,53 @@ func main() {
 		log.Fatal("Missing mandatory env variable, set your private license string: MI_LICENSE=E-ABC..")
 	}
 
+	if *productKey == fakeProductKey && *dryRun {
+		fmt.Println(fakeDryRunResponse)
+		return
+	}
+	if *productKey == fakeProductKey {
+		fmt.Println(fakeRunSpecResponse)
+		return
+	}
+
 	// prepare call
 	mnzArgs, err := mnz.PrepareArgs(flag.Args())
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	if *productKey == fakeProductKey {
-		fmt.Println(fakeResponseToken)
+	// call
+	if *dryRun {
+		result, err := mnz.CallMnz(
+			*dryRunUrl,
+			&mnz.DryRunRequest{
+				License:    license,
+				ProductKey: *productKey,
+				RunSpecs:   []map[string]mnz.Arg{mnzArgs},
+			},
+			*retryWaitMin, *retryWaitMax, *retryMax,
+		)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Println(string(result))
+		return
+	} else {
+		result, err := mnz.CallMnz(
+			*url,
+			&mnz.RunSpecRequest{
+				License:    license,
+				ProductKey: *productKey,
+				RunSpec:    mnzArgs,
+			},
+			*retryWaitMin, *retryWaitMax, *retryMax,
+		)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Println(string(result))
 		return
 	}
-
-	// call
-	req := mnz.RunSpecRequest{
-		License:    license,
-		ProductKey: *productKey,
-		RunSpec:    mnzArgs,
-	}
-	if *dryRun {
-		*url = *dryRunUrl
-	}
-	result, err := mnz.CallRunSpec(req, *url, *retryWaitMin, *retryWaitMax, *retryMax)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(result)
 }

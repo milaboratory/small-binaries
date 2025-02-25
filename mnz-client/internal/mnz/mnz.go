@@ -43,16 +43,19 @@ type RunSpecRequest struct {
 	ProductKey string         `json:"productKey"`
 	RunSpec    map[string]Arg `json:"runSpec"`
 }
-type RunSpecResResult struct {
-	JwtToken string `json:"jwtToken"`
+type DryRunRequest struct {
+	License    string           `json:"license"`
+	ProductKey string           `json:"productKey"`
+	RunSpecs   []map[string]Arg `json:"runSpecs"`
 }
 type RunSpecResError struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
 type RunSpecRes struct {
-	Result RunSpecResResult `json:"result"`
-	Error  RunSpecResError  `json:"error"`
+	// Result might be either jwt token with info or just a ready json in case of dry-run.
+	Result json.RawMessage `json:"result"`
+	Error  RunSpecResError `json:"error"`
 }
 
 func PrepareArgs(args []string) (map[string]Arg, error) {
@@ -110,19 +113,51 @@ func PrepareArgs(args []string) (map[string]Arg, error) {
 	return result, nil
 }
 
-func CallRunSpec(
-	runSpecRequest RunSpecRequest,
+func CallMnz[Req any](
 	url string,
+	req *Req,
+	retryWaitMin, retryWaitMax, retryMax int,
+) ([]byte, error) {
+	// Serialize the request to JSON
+	data, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to serialize request: %w", err)
+	}
+
+	headers := map[string]string{
+		"Content-Type": "application/json",
+		"User-Agent":   "mnz-client",
+	}
+
+	body, err := doHTTPPost(url, data, headers, retryWaitMin, retryWaitMax, retryMax)
+	if err != nil {
+		return nil, fmt.Errorf("failed to do http post: %w", err)
+	}
+
+	return unmarshal(body)
+}
+
+func unmarshal(body []byte) ([]byte, error) {
+	result := RunSpecRes{}
+	jsonErr := json.Unmarshal(body, &result)
+	if jsonErr != nil {
+		return nil, jsonErr
+	}
+
+	if result.Error.Code != "" {
+		return nil, fmt.Errorf("get API error: %s %s", result.Error.Code, result.Error.Message)
+	}
+	return []byte(result.Result), nil
+}
+
+func doHTTPPost(
+	url string,
+	data []byte,
+	headers map[string]string,
 	retryWaitMin int,
 	retryWaitMax int,
 	retryMax int,
-) (string, error) {
-	// Serialize the request to JSON
-	data, err := json.Marshal(runSpecRequest)
-	if err != nil {
-		return "", fmt.Errorf("failed to serialize request: %w", err)
-	}
-
+) ([]byte, error) {
 	// Create a retryable HTTP client
 	client := retryablehttp.NewClient()
 	client.RetryWaitMin = time.Duration(retryWaitMin) * time.Millisecond
@@ -133,46 +168,29 @@ func CallRunSpec(
 	// Create the POST request
 	req, err := retryablehttp.NewRequest("POST", url, bytes.NewBuffer(data))
 	if err != nil {
-		return "", fmt.Errorf("failed to create request: %w", err)
+		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("User-Agent", "mnz-client")
+	for k, v := range headers {
+		req.Header.Set(k, v)
+	}
 
 	// Perform the request
 	resp, err := client.Do(req)
 	if err != nil {
-		return "", fmt.Errorf("request failed: %w", err)
+		return nil, fmt.Errorf("request failed: %w", err)
 	}
 	defer resp.Body.Close()
 
 	// Check for non-200 HTTP status
 	if resp.StatusCode != 200 {
-		return "", fmt.Errorf("received non-200 response: %d", resp.StatusCode)
+		return nil, fmt.Errorf("received non-200 response: %d", resp.StatusCode)
 	}
 
 	// Parse the response
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return "", fmt.Errorf("failed to read response: %w", err)
+		return nil, fmt.Errorf("failed to read response: %w", err)
 	}
 
-	result, err := unmarshal(body)
-	if err != nil {
-		return "", err
-	}
-
-	return result.JwtToken, nil
-}
-
-func unmarshal(body []byte) (*RunSpecResResult, error) {
-	result := RunSpecRes{}
-	jsonErr := json.Unmarshal(body, &result)
-	if jsonErr != nil {
-		return nil, jsonErr
-	}
-
-	if result.Error.Code != "" {
-		return nil, fmt.Errorf("get API error: %s %s", result.Error.Code, result.Error.Message)
-	}
-	return &result.Result, nil
+	return body, nil
 }

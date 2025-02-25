@@ -13,7 +13,7 @@ func Test_unmarshal(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    *RunSpecResResult
+		want    []byte
 		wantErr error
 	}{
 		{
@@ -36,15 +36,11 @@ func Test_unmarshal(t *testing.T) {
 			args: args{
 				body: []byte(`
 				{
-					"result" : {
-						"jwtToken" : "eyJhbGciOiJSUzI1NiJ9.eyJwcm9kdWN0TmFtZSI6InRZWMiOnsiYXNkZiI6IjEyMzQ1In19.bCZuyt1"
-					}
+					"result" : {"jwtToken":"eyJhbGciOiJSUzI1NiJ9.eyJwcm9kdWN0TmFtZSI6InRZWMiOnsiYXNkZiI6IjEyMzQ1In19.bCZuyt1"}
 				}
 				`),
 			},
-			want: &RunSpecResResult{
-				JwtToken: "eyJhbGciOiJSUzI1NiJ9.eyJwcm9kdWN0TmFtZSI6InRZWMiOnsiYXNkZiI6IjEyMzQ1In19.bCZuyt1",
-			},
+			want:    []byte(`{"jwtToken":"eyJhbGciOiJSUzI1NiJ9.eyJwcm9kdWN0TmFtZSI6InRZWMiOnsiYXNkZiI6IjEyMzQ1In19.bCZuyt1"}`),
 			wantErr: nil,
 		},
 	}
@@ -58,7 +54,7 @@ func Test_unmarshal(t *testing.T) {
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("unmarshal() got = %v, want %v", got, tt.want)
+				t.Errorf("unmarshal(jwtToken) got = %q, want %q", got, tt.want)
 			}
 		})
 	}

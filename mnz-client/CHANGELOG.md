@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.5.6
+
+### Patch Changes
+
+- bbceb81: new dry-run url
+
 ## 1.5.5
 
 ### Patch Changes

@@ -58,7 +58,7 @@ func main() {
 	)
 	dryRunUrl := flag.String(
 		"dry-run-url",
-		"https://licensing-api.milaboratories.com/mnz/run-spec-dry",
+		"https://licensing-api.milaboratories.com/mnz/dry-run",
 		"Sets dry-run URL for sending blocks run statistics",
 	)
 	productKey := flag.String(

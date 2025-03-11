@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.5.7
+
+### Patch Changes
+
+- ff1625c: mnz: wrap dry-run errors and http errors in dry-run
+
 ## 1.5.6
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.mnz-client",
-  "version": "1.5.6",
+  "version": "1.5.7",
   "description": "Client for getting licensed JWT tokens for third-party software",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",

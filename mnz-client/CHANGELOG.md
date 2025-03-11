@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.5.8
+
+### Patch Changes
+
+- 637e2f5: mnz: fix mifake response for dry-run
+
 ## 1.5.7
 
 ### Patch Changes

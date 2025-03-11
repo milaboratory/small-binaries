@@ -112,7 +112,7 @@ func main() {
 
 	// call
 	if *dryRun {
-		result, err := mnz.CallMnz(
+		result, err := mnz.CallDryRun(
 			*dryRunUrl,
 			&mnz.DryRunRequest{
 				License:    license,
@@ -128,7 +128,7 @@ func main() {
 		fmt.Println(string(result))
 		return
 	} else {
-		result, err := mnz.CallMnz(
+		result, err := mnz.CallRunSpec(
 			*url,
 			&mnz.RunSpecRequest{
 				License:    license,

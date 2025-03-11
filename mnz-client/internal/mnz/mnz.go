@@ -38,15 +38,23 @@ func getArgType(s string) (ArgType, error) {
 	return ArgType{}, errors.New("unknown arg type")
 }
 
-type RunSpecRequest struct {
-	License    string         `json:"license"`
-	ProductKey string         `json:"productKey"`
-	RunSpec    map[string]Arg `json:"runSpec"`
-}
 type DryRunRequest struct {
 	License    string           `json:"license"`
 	ProductKey string           `json:"productKey"`
 	RunSpecs   []map[string]Arg `json:"runSpecs"`
+}
+
+// DryRunResult is both a response and http error like connection refused, 500 from milm etc.
+// We need to pass it to block's UI as is, so that the component could show this error to the client.
+type DryRunResult struct {
+	Response  json.RawMessage `json:"response"`
+	HTTPError string          `json:"httpError"`
+}
+
+type RunSpecRequest struct {
+	License    string         `json:"license"`
+	ProductKey string         `json:"productKey"`
+	RunSpec    map[string]Arg `json:"runSpec"`
 }
 type RunSpecResError struct {
 	Code    string `json:"code"`
@@ -113,9 +121,37 @@ func PrepareArgs(args []string) (map[string]Arg, error) {
 	return result, nil
 }
 
-func CallMnz[Req any](
+func CallDryRun(
 	url string,
-	req *Req,
+	req *DryRunRequest,
+	retryWaitMin, retryWaitMax, retryMax int,
+) ([]byte, error) {
+	// Serialize the request to JSON
+	data, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to serialize request: %w", err)
+	}
+
+	headers := map[string]string{
+		"Content-Type": "application/json",
+		"User-Agent":   "mnz-client",
+	}
+
+	body, err := doHTTPPost(url, data, headers, retryWaitMin, retryWaitMax, retryMax)
+	httpError := ""
+	if err != nil {
+		httpError = err.Error()
+	}
+
+	return json.Marshal(DryRunResult{
+		Response:  body,
+		HTTPError: httpError,
+	})
+}
+
+func CallRunSpec(
+	url string,
+	req *RunSpecRequest,
 	retryWaitMin, retryWaitMax, retryMax int,
 ) ([]byte, error) {
 	// Serialize the request to JSON
@@ -134,10 +170,10 @@ func CallMnz[Req any](
 		return nil, fmt.Errorf("failed to do http post: %w", err)
 	}
 
-	return unmarshal(body)
+	return unmarshalRunSpec(body)
 }
 
-func unmarshal(body []byte) ([]byte, error) {
+func unmarshalRunSpec(body []byte) ([]byte, error) {
 	result := RunSpecRes{}
 	jsonErr := json.Unmarshal(body, &result)
 	if jsonErr != nil {

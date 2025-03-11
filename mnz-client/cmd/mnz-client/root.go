@@ -19,18 +19,23 @@ const (
 	fakeRunSpecResponse = `{"jwtToken": "eyJhbGciOiJFUzI1NiIsImtpZCI6Im1pMiJ9.eyJtbnoiOnsiZGV0YWlscyI6eyJyZW1haW5pbmciOiA5OTk5OTJ9LCJ0eXBlIjoiYmFzZSJ9LCJwcm9kdWN0S2V5IjoiTUlGQUtFTUlGQUtFTUlGQUtFIiwicnVuU3BlYyI6eyJrZXkiOiJ2YWx1ZSJ9fQ==.K7pU8XE476enl-wI-rnHXnvCGLGfM0mdDS0HPdIXhnE5tuc1nKcSZMMTZSZ6USSc1_syHhDkrjsm7UvZTcQwqg"}`
 
 	fakeDryRunResponse = `{
-  "productKey": "MIFAKEMIFAKEMIFAKE",
-  "canRun": true,
-  "mnz": {
-    "type": "base",
-    "details": {
-      "spentRuns": 192,
-      "runsToSpend": 1,
-      "willRemainAfterRun": 7,
-      "subscription": {
-        "availableRuns": 200,
-        "startsAt": "2025-02-25T11:50:59.000Z",
-        "expiresAt": "2025-03-27T11:50:59.000Z"
+  "httpError": "",
+  "response": {
+    "result": {
+      "productKey": "MIFAKEMIFAKEMIFAKE",
+      "canRun": true,
+      "mnz": {
+        "type": "base",
+        "details": {
+          "spentRuns": 192,
+          "runsToSpend": 1,
+          "willRemainAfterRun": 7,
+          "subscription": {
+            "availableRuns": 200,
+            "startsAt": "2025-02-25T11:50:59.000Z",
+            "expiresAt": "2025-03-27T11:50:59.000Z"
+          }
+        }
       }
     }
   }

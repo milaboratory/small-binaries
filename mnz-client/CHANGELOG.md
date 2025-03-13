@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.5.9
+
+### Patch Changes
+
+- 148ba93: add support for multiple run specs
+
 ## 1.5.8
 
 ### Patch Changes

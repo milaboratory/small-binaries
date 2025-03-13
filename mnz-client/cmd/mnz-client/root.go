@@ -46,7 +46,7 @@ func main() {
 	// define flags
 	flag.Usage = func() {
 		fmt.Fprintf(flag.CommandLine.Output(), "Usage of %s:\n", os.Args[0])
-		println("MI_LICENSE=E-ABC mnz-client -productKey test_product [more flags..] <argName>:<type=file>:<filepath>:<specs:size,lines,sha256>")
+		println("MI_LICENSE=E-ABC mnz-client -productKey test_product [more flags..] <runIndex><argName>:<type=file>:<filepath>:<specs:size,lines,sha256>")
 		println("Only type 'file' now supported.")
 		println("Program may send multiple specs. Connect them with comma ','")
 		flag.PrintDefaults()
@@ -110,7 +110,7 @@ func main() {
 	}
 
 	// prepare call
-	mnzArgs, err := mnz.PrepareArgs(flag.Args())
+	runSpecs, err := mnz.PrepareRunSpecs(flag.Args())
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -122,7 +122,7 @@ func main() {
 			&mnz.DryRunRequest{
 				License:    license,
 				ProductKey: *productKey,
-				RunSpecs:   []map[string]mnz.Arg{mnzArgs},
+				RunSpecs:   runSpecs,
 			},
 			*retryWaitMin, *retryWaitMax, *retryMax,
 		)
@@ -133,12 +133,16 @@ func main() {
 		fmt.Println(string(result))
 		return
 	} else {
+		if len(runSpecs) > 1 {
+			log.Fatalf("Only one run spec is supported in run spec for now, got: %#v", runSpecs)
+		}
+
 		result, err := mnz.CallRunSpec(
 			*url,
 			&mnz.RunSpecRequest{
 				License:    license,
 				ProductKey: *productKey,
-				RunSpec:    mnzArgs,
+				RunSpec:    runSpecs[0],
 			},
 			*retryWaitMin, *retryWaitMax, *retryMax,
 		)

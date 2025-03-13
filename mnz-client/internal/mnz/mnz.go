@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"strconv"
 	"strings"
 	"time"
 
@@ -66,20 +67,37 @@ type RunSpecRes struct {
 	Error  RunSpecResError `json:"error"`
 }
 
-func PrepareArgs(args []string) (map[string]Arg, error) {
+// PrepareRunSpecs returns a slice of runs,
+// each run could have several named args.
+func PrepareRunSpecs(args []string) ([]map[string]Arg, error) {
 	const (
-		nameN = iota
+		runIndexN = iota
+		nameN
 		typeN
 		filepathN
 		metricN
 	)
 
-	result := make(map[string]Arg, len(args))
+	result := make([]struct {
+		argName  string
+		runIndex int
+		arg      Arg
+	}, 0, len(args))
+	maxRunIndex := 0
 
 	for _, arg := range args {
 		splittedArgs := strings.Split(arg, ":")
 		if len(splittedArgs) < filepathN { // specs could be empty
-			return nil, errors.New("invalid argument, argument format '<type>:<name>:<filepath>[:metrics]'")
+			return nil, errors.New("invalid argument, argument format '<runIndex>:<type>:<name>:<filepath>[:metrics]'")
+		}
+
+		// runIndex
+		runIndex, err := strconv.Atoi(splittedArgs[runIndexN])
+		if err != nil {
+			return nil, fmt.Errorf("invalid argument, runIndex is not a number: %w", err)
+		}
+		if runIndex > maxRunIndex {
+			maxRunIndex = runIndex
 		}
 
 		// type
@@ -93,7 +111,7 @@ func PrepareArgs(args []string) (map[string]Arg, error) {
 
 		// specs
 		ArgSpecNames := argType.RequiredSpecs
-		if len(splittedArgs) >= metricN {
+		if len(splittedArgs) > metricN {
 			for _, spec := range strings.Split(splittedArgs[metricN], ",") {
 				if _, ok := argType.AvailableSpecs[spec]; !ok {
 					return nil, fmt.Errorf("invalid spec '%s'", spec)
@@ -115,10 +133,26 @@ func PrepareArgs(args []string) (map[string]Arg, error) {
 		}
 		//}
 
-		result[argName] = Arg{Name: argName, Type: argType.Name, Spec: runSpecs}
+		result = append(result, struct {
+			argName  string
+			runIndex int
+			arg      Arg
+		}{
+			argName:  argName,
+			runIndex: runIndex,
+			arg:      Arg{Name: argName, Type: argType.Name, Spec: runSpecs},
+		})
 	}
 
-	return result, nil
+	runSpecs := make([]map[string]Arg, maxRunIndex+1)
+	for _, arg := range result {
+		if runSpecs[arg.runIndex] == nil {
+			runSpecs[arg.runIndex] = make(map[string]Arg)
+		}
+		runSpecs[arg.runIndex][arg.argName] = arg.arg
+	}
+
+	return runSpecs, nil
 }
 
 func CallDryRun(

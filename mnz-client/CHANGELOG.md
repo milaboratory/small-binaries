@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.5.10
+
+### Patch Changes
+
+- 98997ae: fix empty array
+
 ## 1.5.9
 
 ### Patch Changes

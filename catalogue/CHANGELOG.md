@@ -1,5 +1,12 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 1.15.18
+
+### Patch Changes
+
+- Updated dependencies [6428a78]
+  - @platforma-open/milaboratories.software-small-binaries.mnz-client@1.5.11
+
 ## 1.15.17
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
     "name": "@platforma-open/milaboratories.software-small-binaries",
-    "version": "1.15.17",
+    "version": "1.15.18",
     "description": "Small cross-platform binaries, like 'sleep' or 'hello-world', suitable for test needs",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./dist/",

@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.5.11
+
+### Patch Changes
+
+- 6428a78: fix array empty
+
 ## 1.5.10
 
 ### Patch Changes

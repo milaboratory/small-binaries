@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.5.12
+
+### Patch Changes
+
+- f5b1c5f: fix run-spec empty array
+
 ## 1.5.11
 
 ### Patch Changes

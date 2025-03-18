@@ -144,6 +144,10 @@ func PrepareRunSpecs(args []string) ([]map[string]Arg, error) {
 		})
 	}
 
+	if len(result) == 0 {
+		return nil, nil
+	}
+
 	runSpecs := make([]map[string]Arg, maxRunIndex+1)
 	for _, arg := range result {
 		if runSpecs[arg.runIndex] == nil {

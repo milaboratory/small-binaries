@@ -101,6 +101,12 @@ func TestPrepareRunSpecs(t *testing.T) {
 			wantErr: false,
 		},
 		{
+			name:    "should ok when no arguments are provided",
+			args:    []string{},
+			want:    nil,
+			wantErr: false,
+		},
+		{
 			name: "should ok when multiple arguments in same run",
 			args: []string{
 				"0:input1:file:mixcr.csv",

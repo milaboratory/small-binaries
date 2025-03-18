@@ -103,7 +103,7 @@ func TestPrepareRunSpecs(t *testing.T) {
 		{
 			name:    "should ok when no arguments are provided",
 			args:    []string{},
-			want:    nil,
+			want:    []map[string]Arg{},
 			wantErr: false,
 		},
 		{

@@ -133,7 +133,13 @@ func main() {
 		fmt.Println(string(result))
 		return
 	} else {
-		if len(runSpecs) > 1 {
+		var runSpec map[string]mnz.Arg
+		switch len(runSpecs) {
+		case 0:
+			runSpec = make(map[string]mnz.Arg)
+		case 1:
+			runSpec = runSpecs[0]
+		default:
 			log.Fatalf("Only one run spec is supported in run spec for now, got: %#v", runSpecs)
 		}
 
@@ -142,7 +148,7 @@ func main() {
 			&mnz.RunSpecRequest{
 				License:    license,
 				ProductKey: *productKey,
-				RunSpec:    runSpecs[0],
+				RunSpec:    runSpec,
 			},
 			*retryWaitMin, *retryWaitMax, *retryMax,
 		)

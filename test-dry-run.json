@@ -1,0 +1,1730 @@
+{
+  "id": "2wLhGvJB74XppN8wpiWgLth3glj",
+  "version": "1",
+  "turboVersion": "2.3.3",
+  "monorepo": true,
+  "globalCacheInputs": {
+    "rootKey": "I can’t see ya, but I know you’re here",
+    "files": {},
+    "hashOfExternalDependencies": "692a174df4ffea68",
+    "hashOfInternalDependencies": "",
+    "environmentVariables": {
+      "specified": {
+        "env": [],
+        "passThroughEnv": null
+      },
+      "configured": [],
+      "inferred": [],
+      "passthrough": null
+    },
+    "engines": {
+      "node": ">=20"
+    }
+  },
+  "packages": [
+    "@platforma-open/milaboratories.software-small-binaries",
+    "@platforma-open/milaboratories.software-small-binaries.guided-command",
+    "@platforma-open/milaboratories.software-small-binaries.hello-world",
+    "@platforma-open/milaboratories.software-small-binaries.hello-world-py",
+    "@platforma-open/milaboratories.software-small-binaries.java-stub",
+    "@platforma-open/milaboratories.software-small-binaries.mnz-client",
+    "@platforma-open/milaboratories.software-small-binaries.python-stub",
+    "@platforma-open/milaboratories.software-small-binaries.read-with-sleep",
+    "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub",
+    "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub",
+    "@platforma-open/milaboratories.software-small-binaries.sleep",
+    "@platforma-open/milaboratories.software-small-binaries.small-asset",
+    "@platforma-open/milaboratories.software-small-binaries.table-converter"
+  ],
+  "envMode": "strict",
+  "frameworkInference": true,
+  "tasks": [
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries#build",
+      "task": "build",
+      "package": "@platforma-open/milaboratories.software-small-binaries",
+      "hash": "78d3ad4540d121ca",
+      "inputs": {
+        "CHANGELOG.md": "02087495277015a9f92c72f189e0e7ac4845ff07",
+        "package.json": "aa29877ad16ac2ff095d7646b50eb9dbec158eff"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": true,
+        "remote": false,
+        "status": "HIT",
+        "source": "LOCAL",
+        "timeSaved": 0
+      },
+      "command": "pl-pkg build",
+      "cliArguments": [],
+      "outputs": [
+        "./build/**",
+        "./dist/**",
+        "./pkg-*.tgz",
+        "./pkg-*.zip"
+      ],
+      "excludedOutputs": null,
+      "logFile": "catalogue/.turbo/turbo-build.log",
+      "directory": "catalogue",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.guided-command#build",
+        "@platforma-open/milaboratories.software-small-binaries.hello-world#build",
+        "@platforma-open/milaboratories.software-small-binaries.hello-world-py#build",
+        "@platforma-open/milaboratories.software-small-binaries.java-stub#build",
+        "@platforma-open/milaboratories.software-small-binaries.mnz-client#build",
+        "@platforma-open/milaboratories.software-small-binaries.python-stub#build",
+        "@platforma-open/milaboratories.software-small-binaries.read-with-sleep#build",
+        "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub#build",
+        "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub#build",
+        "@platforma-open/milaboratories.software-small-binaries.sleep#build",
+        "@platforma-open/milaboratories.software-small-binaries.small-asset#build",
+        "@platforma-open/milaboratories.software-small-binaries.table-converter#build"
+      ],
+      "dependents": [
+        "@platforma-open/milaboratories.software-small-binaries#test"
+      ],
+      "resolvedTaskDefinition": {
+        "outputs": [
+          "./build/**",
+          "./dist/**",
+          "./pkg-*.tgz",
+          "./pkg-*.zip"
+        ],
+        "cache": true,
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "$TURBO_DEFAULT$"
+        ],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries#test",
+      "task": "test",
+      "package": "@platforma-open/milaboratories.software-small-binaries",
+      "hash": "3759e9b280d0b7f0",
+      "inputs": {
+        "CHANGELOG.md": "02087495277015a9f92c72f189e0e7ac4845ff07",
+        "package.json": "aa29877ad16ac2ff095d7646b50eb9dbec158eff"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": false,
+        "remote": false,
+        "status": "MISS",
+        "timeSaved": 0
+      },
+      "command": "<NONEXISTENT>",
+      "cliArguments": [],
+      "outputs": null,
+      "excludedOutputs": null,
+      "logFile": "catalogue/.turbo/turbo-test.log",
+      "directory": "catalogue",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries#build"
+      ],
+      "dependents": [],
+      "resolvedTaskDefinition": {
+        "outputs": [],
+        "cache": true,
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.guided-command#build",
+      "task": "build",
+      "package": "@platforma-open/milaboratories.software-small-binaries.guided-command",
+      "hash": "2f1ab97a517e709d",
+      "inputs": {
+        "CHANGELOG.md": "1fb82efc0d733d8bfdee18cbda6093270519c64f",
+        "guided-command.go": "3ccb07a8c1114d68775646ff381eb0e0c4f54fe8",
+        "package.json": "848e9088938070dc897903592144598d0b57352a"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": true,
+        "remote": false,
+        "status": "HIT",
+        "source": "LOCAL",
+        "timeSaved": 0
+      },
+      "command": "../scripts/build.sh './guided-command.go' 'guided-command' && pl-pkg build --all-platforms",
+      "cliArguments": [],
+      "outputs": [
+        "./build/**",
+        "./dist/**",
+        "./pkg-*.tgz",
+        "./pkg-*.zip"
+      ],
+      "excludedOutputs": null,
+      "logFile": "guided-command/.turbo/turbo-build.log",
+      "directory": "guided-command",
+      "dependencies": [],
+      "dependents": [
+        "@platforma-open/milaboratories.software-small-binaries#build",
+        "@platforma-open/milaboratories.software-small-binaries.guided-command#test"
+      ],
+      "resolvedTaskDefinition": {
+        "outputs": [
+          "./build/**",
+          "./dist/**",
+          "./pkg-*.tgz",
+          "./pkg-*.zip"
+        ],
+        "cache": true,
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "$TURBO_DEFAULT$"
+        ],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.guided-command#test",
+      "task": "test",
+      "package": "@platforma-open/milaboratories.software-small-binaries.guided-command",
+      "hash": "54d1cc3d0ac2606e",
+      "inputs": {
+        "CHANGELOG.md": "1fb82efc0d733d8bfdee18cbda6093270519c64f",
+        "guided-command.go": "3ccb07a8c1114d68775646ff381eb0e0c4f54fe8",
+        "package.json": "848e9088938070dc897903592144598d0b57352a"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": false,
+        "remote": false,
+        "status": "MISS",
+        "timeSaved": 0
+      },
+      "command": "<NONEXISTENT>",
+      "cliArguments": [],
+      "outputs": null,
+      "excludedOutputs": null,
+      "logFile": "guided-command/.turbo/turbo-test.log",
+      "directory": "guided-command",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.guided-command#build"
+      ],
+      "dependents": [],
+      "resolvedTaskDefinition": {
+        "outputs": [],
+        "cache": true,
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.hello-world#build",
+      "task": "build",
+      "package": "@platforma-open/milaboratories.software-small-binaries.hello-world",
+      "hash": "c02439a5d22db43c",
+      "inputs": {
+        "CHANGELOG.md": "6a91ba7e55ee78df274bd73928db72d22be72d08",
+        "hello-world.go": "d6c36101cafebb14de3310fd87ad3ff4b4e22266",
+        "package.json": "7e9c5f3bc76a9f05810ce71d9cb28d262f7e4572"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": true,
+        "remote": false,
+        "status": "HIT",
+        "source": "LOCAL",
+        "timeSaved": 0
+      },
+      "command": "../scripts/build.sh './hello-world.go' 'hello-world' && pl-pkg build --all-platforms",
+      "cliArguments": [],
+      "outputs": [
+        "./build/**",
+        "./dist/**",
+        "./pkg-*.tgz",
+        "./pkg-*.zip"
+      ],
+      "excludedOutputs": null,
+      "logFile": "hello-world/.turbo/turbo-build.log",
+      "directory": "hello-world",
+      "dependencies": [],
+      "dependents": [
+        "@platforma-open/milaboratories.software-small-binaries#build",
+        "@platforma-open/milaboratories.software-small-binaries.hello-world#test"
+      ],
+      "resolvedTaskDefinition": {
+        "outputs": [
+          "./build/**",
+          "./dist/**",
+          "./pkg-*.tgz",
+          "./pkg-*.zip"
+        ],
+        "cache": true,
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "$TURBO_DEFAULT$"
+        ],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.hello-world#test",
+      "task": "test",
+      "package": "@platforma-open/milaboratories.software-small-binaries.hello-world",
+      "hash": "49153250c2f29a30",
+      "inputs": {
+        "CHANGELOG.md": "6a91ba7e55ee78df274bd73928db72d22be72d08",
+        "hello-world.go": "d6c36101cafebb14de3310fd87ad3ff4b4e22266",
+        "package.json": "7e9c5f3bc76a9f05810ce71d9cb28d262f7e4572"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": false,
+        "remote": false,
+        "status": "MISS",
+        "timeSaved": 0
+      },
+      "command": "<NONEXISTENT>",
+      "cliArguments": [],
+      "outputs": null,
+      "excludedOutputs": null,
+      "logFile": "hello-world/.turbo/turbo-test.log",
+      "directory": "hello-world",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.hello-world#build"
+      ],
+      "dependents": [],
+      "resolvedTaskDefinition": {
+        "outputs": [],
+        "cache": true,
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.hello-world-py#build",
+      "task": "build",
+      "package": "@platforma-open/milaboratories.software-small-binaries.hello-world-py",
+      "hash": "43cba81f12531b6e",
+      "inputs": {
+        "CHANGELOG.md": "56e7d88828fe61d868c245eaa444322cf4cda8e7",
+        "package.json": "209f34d25f056ce326c5700dc0093d6342886aba",
+        "src/hello.py": "319d455562a6961d13d6573acef29d1d488b30a1",
+        "src/requirements.txt": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      "hashOfExternalDependencies": "f208e9dceb81fa09",
+      "cache": {
+        "local": true,
+        "remote": false,
+        "status": "HIT",
+        "source": "LOCAL",
+        "timeSaved": 0
+      },
+      "command": "pl-pkg build",
+      "cliArguments": [],
+      "outputs": [
+        "./build/**",
+        "./dist/**",
+        "./pkg-*.tgz",
+        "./pkg-*.zip"
+      ],
+      "excludedOutputs": null,
+      "logFile": "hello-world-py/.turbo/turbo-build.log",
+      "directory": "hello-world-py",
+      "dependencies": [],
+      "dependents": [
+        "@platforma-open/milaboratories.software-small-binaries#build",
+        "@platforma-open/milaboratories.software-small-binaries.hello-world-py#test"
+      ],
+      "resolvedTaskDefinition": {
+        "outputs": [
+          "./build/**",
+          "./dist/**",
+          "./pkg-*.tgz",
+          "./pkg-*.zip"
+        ],
+        "cache": true,
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "$TURBO_DEFAULT$"
+        ],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.hello-world-py#test",
+      "task": "test",
+      "package": "@platforma-open/milaboratories.software-small-binaries.hello-world-py",
+      "hash": "3d88e41fb8969a8d",
+      "inputs": {
+        "CHANGELOG.md": "56e7d88828fe61d868c245eaa444322cf4cda8e7",
+        "package.json": "209f34d25f056ce326c5700dc0093d6342886aba",
+        "src/hello.py": "319d455562a6961d13d6573acef29d1d488b30a1",
+        "src/requirements.txt": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      "hashOfExternalDependencies": "f208e9dceb81fa09",
+      "cache": {
+        "local": false,
+        "remote": false,
+        "status": "MISS",
+        "timeSaved": 0
+      },
+      "command": "<NONEXISTENT>",
+      "cliArguments": [],
+      "outputs": null,
+      "excludedOutputs": null,
+      "logFile": "hello-world-py/.turbo/turbo-test.log",
+      "directory": "hello-world-py",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.hello-world-py#build"
+      ],
+      "dependents": [],
+      "resolvedTaskDefinition": {
+        "outputs": [],
+        "cache": true,
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.java-stub#build",
+      "task": "build",
+      "package": "@platforma-open/milaboratories.software-small-binaries.java-stub",
+      "hash": "3c2ab5dddfb9ffb4",
+      "inputs": {
+        "CHANGELOG.md": "6e5a95e75c7fe5191cf2c29742b79518455fc77b",
+        "package.json": "f0c388dc6e0b1fe056ed4bddb703509a40d62985",
+        "src/.empty": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": true,
+        "remote": false,
+        "status": "HIT",
+        "source": "LOCAL",
+        "timeSaved": 0
+      },
+      "command": "pl-pkg build",
+      "cliArguments": [],
+      "outputs": [
+        "./build/**",
+        "./dist/**",
+        "./pkg-*.tgz",
+        "./pkg-*.zip"
+      ],
+      "excludedOutputs": null,
+      "logFile": "java-stub/.turbo/turbo-build.log",
+      "directory": "java-stub",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub#build"
+      ],
+      "dependents": [
+        "@platforma-open/milaboratories.software-small-binaries#build",
+        "@platforma-open/milaboratories.software-small-binaries.java-stub#test"
+      ],
+      "resolvedTaskDefinition": {
+        "outputs": [
+          "./build/**",
+          "./dist/**",
+          "./pkg-*.tgz",
+          "./pkg-*.zip"
+        ],
+        "cache": true,
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "$TURBO_DEFAULT$"
+        ],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.java-stub#test",
+      "task": "test",
+      "package": "@platforma-open/milaboratories.software-small-binaries.java-stub",
+      "hash": "838977ee3fb02ee8",
+      "inputs": {
+        "CHANGELOG.md": "6e5a95e75c7fe5191cf2c29742b79518455fc77b",
+        "package.json": "f0c388dc6e0b1fe056ed4bddb703509a40d62985",
+        "src/.empty": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": false,
+        "remote": false,
+        "status": "MISS",
+        "timeSaved": 0
+      },
+      "command": "<NONEXISTENT>",
+      "cliArguments": [],
+      "outputs": null,
+      "excludedOutputs": null,
+      "logFile": "java-stub/.turbo/turbo-test.log",
+      "directory": "java-stub",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.java-stub#build"
+      ],
+      "dependents": [],
+      "resolvedTaskDefinition": {
+        "outputs": [],
+        "cache": true,
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.mnz-client#build",
+      "task": "build",
+      "package": "@platforma-open/milaboratories.software-small-binaries.mnz-client",
+      "hash": "21a77152ef0b8f3d",
+      "inputs": {
+        "CHANGELOG.md": "13af16de0260aab140394e403978ace41f69892c",
+        "README.md": "5b32c56de64f767d326a53c7a9c6c6ba8dffc47b",
+        "cmd/mnz-client/.gitignore": "cedab09172cd832be992aea353bd81abf12b026d",
+        "cmd/mnz-client/root.go": "c02b37d2853ae55a427881a08ae75aebacfda0a3",
+        "curl.sh": "31194948a760249109423d4d54ebf564607384f2",
+        "go.mod": "72b5fdce2b5104d589208228b067888be2222129",
+        "go.sum": "7e5004c0899182dad57c2882701dd233d1803040",
+        "internal/mnz/dir.zip": "ae3cfe87306ac2038d36a1778ba22dbe570e07bf",
+        "internal/mnz/file.go": "a320bfee6566aa2bf6db4df5ae5fcdad172dfb7a",
+        "internal/mnz/file_test.go": "d7d232bf733a2d85d4fed19fed9fe0748e35018c",
+        "internal/mnz/mixcr.csv": "dfe26db032740d7351f4ce2e13f1ca62bad38e7e",
+        "internal/mnz/mnz.go": "c7f0191b74a3c07eb40d9242c04507110eb761d0",
+        "internal/mnz/mnz_test.go": "ec18ef4ddf418118ef07029699c0f85c417f8c25",
+        "internal/mnz/multi.zip": "b038e5e0f3ebce580ac8a0182ee8ef0fd877045a",
+        "internal/mnz/testfile.txt": "5375adfdd51c04facac2a6b2dc513be2e4387ad7",
+        "internal/mnz/testfile.zip": "d3b2b75175429e327614b207add2f5a907fa5f41",
+        "package.json": "51ca3a650fc2fdeec428ebd868ccc19bd92de035",
+        "testfile.zip": "d3b2b75175429e327614b207add2f5a907fa5f41"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": true,
+        "remote": false,
+        "status": "HIT",
+        "source": "LOCAL",
+        "timeSaved": 0
+      },
+      "command": "../scripts/build.sh './cmd/mnz-client' 'mnz-client' && pl-pkg build --all-platforms",
+      "cliArguments": [],
+      "outputs": [
+        "./build/**",
+        "./dist/**",
+        "./pkg-*.tgz",
+        "./pkg-*.zip"
+      ],
+      "excludedOutputs": null,
+      "logFile": "mnz-client/.turbo/turbo-build.log",
+      "directory": "mnz-client",
+      "dependencies": [],
+      "dependents": [
+        "@platforma-open/milaboratories.software-small-binaries#build",
+        "@platforma-open/milaboratories.software-small-binaries.mnz-client#test"
+      ],
+      "resolvedTaskDefinition": {
+        "outputs": [
+          "./build/**",
+          "./dist/**",
+          "./pkg-*.tgz",
+          "./pkg-*.zip"
+        ],
+        "cache": true,
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "$TURBO_DEFAULT$"
+        ],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.mnz-client#test",
+      "task": "test",
+      "package": "@platforma-open/milaboratories.software-small-binaries.mnz-client",
+      "hash": "d062a6180d1401f8",
+      "inputs": {
+        "CHANGELOG.md": "13af16de0260aab140394e403978ace41f69892c",
+        "README.md": "5b32c56de64f767d326a53c7a9c6c6ba8dffc47b",
+        "cmd/mnz-client/.gitignore": "cedab09172cd832be992aea353bd81abf12b026d",
+        "cmd/mnz-client/root.go": "c02b37d2853ae55a427881a08ae75aebacfda0a3",
+        "curl.sh": "31194948a760249109423d4d54ebf564607384f2",
+        "go.mod": "72b5fdce2b5104d589208228b067888be2222129",
+        "go.sum": "7e5004c0899182dad57c2882701dd233d1803040",
+        "internal/mnz/dir.zip": "ae3cfe87306ac2038d36a1778ba22dbe570e07bf",
+        "internal/mnz/file.go": "a320bfee6566aa2bf6db4df5ae5fcdad172dfb7a",
+        "internal/mnz/file_test.go": "d7d232bf733a2d85d4fed19fed9fe0748e35018c",
+        "internal/mnz/mixcr.csv": "dfe26db032740d7351f4ce2e13f1ca62bad38e7e",
+        "internal/mnz/mnz.go": "c7f0191b74a3c07eb40d9242c04507110eb761d0",
+        "internal/mnz/mnz_test.go": "ec18ef4ddf418118ef07029699c0f85c417f8c25",
+        "internal/mnz/multi.zip": "b038e5e0f3ebce580ac8a0182ee8ef0fd877045a",
+        "internal/mnz/testfile.txt": "5375adfdd51c04facac2a6b2dc513be2e4387ad7",
+        "internal/mnz/testfile.zip": "d3b2b75175429e327614b207add2f5a907fa5f41",
+        "package.json": "51ca3a650fc2fdeec428ebd868ccc19bd92de035",
+        "testfile.zip": "d3b2b75175429e327614b207add2f5a907fa5f41"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": false,
+        "remote": true,
+        "status": "HIT",
+        "source": "REMOTE",
+        "timeSaved": 0
+      },
+      "command": "go test ./...",
+      "cliArguments": [],
+      "outputs": null,
+      "excludedOutputs": null,
+      "logFile": "mnz-client/.turbo/turbo-test.log",
+      "directory": "mnz-client",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.mnz-client#build"
+      ],
+      "dependents": [],
+      "resolvedTaskDefinition": {
+        "outputs": [],
+        "cache": true,
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.python-stub#build",
+      "task": "build",
+      "package": "@platforma-open/milaboratories.software-small-binaries.python-stub",
+      "hash": "039174b553d118cf",
+      "inputs": {
+        "CHANGELOG.md": "ae02e2e491b135b9b29dfb62d945030194a8ede6",
+        "package.json": "0fdb70986a9f1ee3c4c5b5d7b8904771929ce68a",
+        "src/hello.py": "382ea10ec17d4eef768fc609fb24631cccbd5716",
+        "src/requirements.txt": "bc7218b82880bb6ebc77ccc6290e9a81b9c011e1"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": true,
+        "remote": false,
+        "status": "HIT",
+        "source": "LOCAL",
+        "timeSaved": 0
+      },
+      "command": "pl-pkg build",
+      "cliArguments": [],
+      "outputs": [
+        "./build/**",
+        "./dist/**",
+        "./pkg-*.tgz",
+        "./pkg-*.zip"
+      ],
+      "excludedOutputs": null,
+      "logFile": "python-stub/.turbo/turbo-build.log",
+      "directory": "python-stub",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub#build"
+      ],
+      "dependents": [
+        "@platforma-open/milaboratories.software-small-binaries#build",
+        "@platforma-open/milaboratories.software-small-binaries.python-stub#test"
+      ],
+      "resolvedTaskDefinition": {
+        "outputs": [
+          "./build/**",
+          "./dist/**",
+          "./pkg-*.tgz",
+          "./pkg-*.zip"
+        ],
+        "cache": true,
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "$TURBO_DEFAULT$"
+        ],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.python-stub#test",
+      "task": "test",
+      "package": "@platforma-open/milaboratories.software-small-binaries.python-stub",
+      "hash": "1855e648c6c95dad",
+      "inputs": {
+        "CHANGELOG.md": "ae02e2e491b135b9b29dfb62d945030194a8ede6",
+        "package.json": "0fdb70986a9f1ee3c4c5b5d7b8904771929ce68a",
+        "src/hello.py": "382ea10ec17d4eef768fc609fb24631cccbd5716",
+        "src/requirements.txt": "bc7218b82880bb6ebc77ccc6290e9a81b9c011e1"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": false,
+        "remote": false,
+        "status": "MISS",
+        "timeSaved": 0
+      },
+      "command": "<NONEXISTENT>",
+      "cliArguments": [],
+      "outputs": null,
+      "excludedOutputs": null,
+      "logFile": "python-stub/.turbo/turbo-test.log",
+      "directory": "python-stub",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.python-stub#build"
+      ],
+      "dependents": [],
+      "resolvedTaskDefinition": {
+        "outputs": [],
+        "cache": true,
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.read-with-sleep#build",
+      "task": "build",
+      "package": "@platforma-open/milaboratories.software-small-binaries.read-with-sleep",
+      "hash": "6e298d9bf955bfda",
+      "inputs": {
+        "CHANGELOG.md": "a97ab301976e4ec3407b5228af19d2778374d50f",
+        "main.go": "5309cb39e84ae6877479a4896a16df3043f38054",
+        "package.json": "32cbdea8bc920b3d220130499e4246fd5c11ef35"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": true,
+        "remote": false,
+        "status": "HIT",
+        "source": "LOCAL",
+        "timeSaved": 0
+      },
+      "command": "../scripts/build.sh './main.go' 'read-with-sleep' && pl-pkg build --all-platforms",
+      "cliArguments": [],
+      "outputs": [
+        "./build/**",
+        "./dist/**",
+        "./pkg-*.tgz",
+        "./pkg-*.zip"
+      ],
+      "excludedOutputs": null,
+      "logFile": "read-with-sleep/.turbo/turbo-build.log",
+      "directory": "read-with-sleep",
+      "dependencies": [],
+      "dependents": [
+        "@platforma-open/milaboratories.software-small-binaries#build",
+        "@platforma-open/milaboratories.software-small-binaries.read-with-sleep#test"
+      ],
+      "resolvedTaskDefinition": {
+        "outputs": [
+          "./build/**",
+          "./dist/**",
+          "./pkg-*.tgz",
+          "./pkg-*.zip"
+        ],
+        "cache": true,
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "$TURBO_DEFAULT$"
+        ],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.read-with-sleep#test",
+      "task": "test",
+      "package": "@platforma-open/milaboratories.software-small-binaries.read-with-sleep",
+      "hash": "fe54c8999e7c387e",
+      "inputs": {
+        "CHANGELOG.md": "a97ab301976e4ec3407b5228af19d2778374d50f",
+        "main.go": "5309cb39e84ae6877479a4896a16df3043f38054",
+        "package.json": "32cbdea8bc920b3d220130499e4246fd5c11ef35"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": false,
+        "remote": false,
+        "status": "MISS",
+        "timeSaved": 0
+      },
+      "command": "<NONEXISTENT>",
+      "cliArguments": [],
+      "outputs": null,
+      "excludedOutputs": null,
+      "logFile": "read-with-sleep/.turbo/turbo-test.log",
+      "directory": "read-with-sleep",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.read-with-sleep#build"
+      ],
+      "dependents": [],
+      "resolvedTaskDefinition": {
+        "outputs": [],
+        "cache": true,
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub#build",
+      "task": "build",
+      "package": "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub",
+      "hash": "f7f3d1691f4fe889",
+      "inputs": {
+        "CHANGELOG.md": "5d267954d4220ebbcac97837b884a0ff6116fd42",
+        "main.go": "d1865f2fb0a557dcef0c2528122f65e917255fa0",
+        "package.json": "db297a9a7e4dd966210e63d9f0f3d135f2762171"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": true,
+        "remote": false,
+        "status": "HIT",
+        "source": "LOCAL",
+        "timeSaved": 0
+      },
+      "command": "../scripts/build.sh './main.go' 'bin/java' && pl-pkg build --all-platforms",
+      "cliArguments": [],
+      "outputs": [
+        "./build/**",
+        "./dist/**",
+        "./pkg-*.tgz",
+        "./pkg-*.zip"
+      ],
+      "excludedOutputs": null,
+      "logFile": "runenv-java-stub/.turbo/turbo-build.log",
+      "directory": "runenv-java-stub",
+      "dependencies": [],
+      "dependents": [
+        "@platforma-open/milaboratories.software-small-binaries#build",
+        "@platforma-open/milaboratories.software-small-binaries.java-stub#build",
+        "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub#test"
+      ],
+      "resolvedTaskDefinition": {
+        "outputs": [
+          "./build/**",
+          "./dist/**",
+          "./pkg-*.tgz",
+          "./pkg-*.zip"
+        ],
+        "cache": true,
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "$TURBO_DEFAULT$"
+        ],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub#test",
+      "task": "test",
+      "package": "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub",
+      "hash": "e5ff80eb84bea5ae",
+      "inputs": {
+        "CHANGELOG.md": "5d267954d4220ebbcac97837b884a0ff6116fd42",
+        "main.go": "d1865f2fb0a557dcef0c2528122f65e917255fa0",
+        "package.json": "db297a9a7e4dd966210e63d9f0f3d135f2762171"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": false,
+        "remote": false,
+        "status": "MISS",
+        "timeSaved": 0
+      },
+      "command": "<NONEXISTENT>",
+      "cliArguments": [],
+      "outputs": null,
+      "excludedOutputs": null,
+      "logFile": "runenv-java-stub/.turbo/turbo-test.log",
+      "directory": "runenv-java-stub",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub#build"
+      ],
+      "dependents": [],
+      "resolvedTaskDefinition": {
+        "outputs": [],
+        "cache": true,
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub#build",
+      "task": "build",
+      "package": "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub",
+      "hash": "6745a564a9d5b5c0",
+      "inputs": {
+        "CHANGELOG.md": "c3e9d33c18722511e356ccd70b2c7fe8d7c4d585",
+        "package.json": "cda2c2a6d2cc64f30d413c7a6e9e4e9e5b0fba9f",
+        "runenv-python-stub.go": "f59e309b6fb1aad9a5a0b8940242af2bbe1d07ae"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": true,
+        "remote": false,
+        "status": "HIT",
+        "source": "LOCAL",
+        "timeSaved": 0
+      },
+      "command": "../scripts/build.sh './runenv-python-stub.go' 'bin/python' && ../scripts/build.sh './runenv-python-stub.go' 'bin/pip' && pl-pkg build --all-platforms",
+      "cliArguments": [],
+      "outputs": [
+        "./build/**",
+        "./dist/**",
+        "./pkg-*.tgz",
+        "./pkg-*.zip"
+      ],
+      "excludedOutputs": null,
+      "logFile": "runenv-python-stub/.turbo/turbo-build.log",
+      "directory": "runenv-python-stub",
+      "dependencies": [],
+      "dependents": [
+        "@platforma-open/milaboratories.software-small-binaries#build",
+        "@platforma-open/milaboratories.software-small-binaries.python-stub#build",
+        "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub#test"
+      ],
+      "resolvedTaskDefinition": {
+        "outputs": [
+          "./build/**",
+          "./dist/**",
+          "./pkg-*.tgz",
+          "./pkg-*.zip"
+        ],
+        "cache": true,
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "$TURBO_DEFAULT$"
+        ],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub#test",
+      "task": "test",
+      "package": "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub",
+      "hash": "45a0d2c04f498cdd",
+      "inputs": {
+        "CHANGELOG.md": "c3e9d33c18722511e356ccd70b2c7fe8d7c4d585",
+        "package.json": "cda2c2a6d2cc64f30d413c7a6e9e4e9e5b0fba9f",
+        "runenv-python-stub.go": "f59e309b6fb1aad9a5a0b8940242af2bbe1d07ae"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": false,
+        "remote": false,
+        "status": "MISS",
+        "timeSaved": 0
+      },
+      "command": "<NONEXISTENT>",
+      "cliArguments": [],
+      "outputs": null,
+      "excludedOutputs": null,
+      "logFile": "runenv-python-stub/.turbo/turbo-test.log",
+      "directory": "runenv-python-stub",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub#build"
+      ],
+      "dependents": [],
+      "resolvedTaskDefinition": {
+        "outputs": [],
+        "cache": true,
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.sleep#build",
+      "task": "build",
+      "package": "@platforma-open/milaboratories.software-small-binaries.sleep",
+      "hash": "1ff84718b6c252f0",
+      "inputs": {
+        "CHANGELOG.md": "432e1ea7efd65c14302e1fefb47b3e857ba9e38e",
+        "package.json": "95b240eeb712bdd67457aeb65f56a9f1491d71bc",
+        "sleep.go": "4e010c340ae47a84927e524eace7471598efd38c"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": true,
+        "remote": false,
+        "status": "HIT",
+        "source": "LOCAL",
+        "timeSaved": 0
+      },
+      "command": "../scripts/build.sh './sleep.go' 'sleep' && pl-pkg build --all-platforms",
+      "cliArguments": [],
+      "outputs": [
+        "./build/**",
+        "./dist/**",
+        "./pkg-*.tgz",
+        "./pkg-*.zip"
+      ],
+      "excludedOutputs": null,
+      "logFile": "sleep/.turbo/turbo-build.log",
+      "directory": "sleep",
+      "dependencies": [],
+      "dependents": [
+        "@platforma-open/milaboratories.software-small-binaries#build",
+        "@platforma-open/milaboratories.software-small-binaries.sleep#test"
+      ],
+      "resolvedTaskDefinition": {
+        "outputs": [
+          "./build/**",
+          "./dist/**",
+          "./pkg-*.tgz",
+          "./pkg-*.zip"
+        ],
+        "cache": true,
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "$TURBO_DEFAULT$"
+        ],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.sleep#test",
+      "task": "test",
+      "package": "@platforma-open/milaboratories.software-small-binaries.sleep",
+      "hash": "8ed3ad0f1b74c7d6",
+      "inputs": {
+        "CHANGELOG.md": "432e1ea7efd65c14302e1fefb47b3e857ba9e38e",
+        "package.json": "95b240eeb712bdd67457aeb65f56a9f1491d71bc",
+        "sleep.go": "4e010c340ae47a84927e524eace7471598efd38c"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": false,
+        "remote": false,
+        "status": "MISS",
+        "timeSaved": 0
+      },
+      "command": "<NONEXISTENT>",
+      "cliArguments": [],
+      "outputs": null,
+      "excludedOutputs": null,
+      "logFile": "sleep/.turbo/turbo-test.log",
+      "directory": "sleep",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.sleep#build"
+      ],
+      "dependents": [],
+      "resolvedTaskDefinition": {
+        "outputs": [],
+        "cache": true,
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.small-asset#build",
+      "task": "build",
+      "package": "@platforma-open/milaboratories.software-small-binaries.small-asset",
+      "hash": "c384d7e3d882af9e",
+      "inputs": {
+        "CHANGELOG.md": "e0cee4605c382cd095221902470efc7d69362068",
+        "data/dir1/dir2/file3.txt": "bc17c217f3eb6b5a354ddad7b5b67df781289cbc",
+        "data/dir1/file1.txt": "310ff9fb5bfd973368c312cce23e4492f433f85d",
+        "data/dir1/file2.txt": "4000c81455b6c21f8cc374a41aaea3a8597a7f40",
+        "data/file1.txt": "e4b5a1923cf5d45ed271377c3b5331471d550e2e",
+        "data/file2.txt": "391716b6140982275899530e8f943f3471b60cd5",
+        "data/test-file.json": "22be13d426dac1dd64b4583678924d35f6d38819",
+        "data/test-file.txt": "0647c220fea4b205d3ea7953632351341c42c31a",
+        "package.json": "4a7acf073d24b61c675a053402e2ac9dba49b3fe"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": true,
+        "remote": false,
+        "status": "HIT",
+        "source": "LOCAL",
+        "timeSaved": 0
+      },
+      "command": "pl-pkg build",
+      "cliArguments": [],
+      "outputs": [
+        "./build/**",
+        "./dist/**",
+        "./pkg-*.tgz",
+        "./pkg-*.zip"
+      ],
+      "excludedOutputs": null,
+      "logFile": "small-asset/.turbo/turbo-build.log",
+      "directory": "small-asset",
+      "dependencies": [],
+      "dependents": [
+        "@platforma-open/milaboratories.software-small-binaries#build",
+        "@platforma-open/milaboratories.software-small-binaries.small-asset#test"
+      ],
+      "resolvedTaskDefinition": {
+        "outputs": [
+          "./build/**",
+          "./dist/**",
+          "./pkg-*.tgz",
+          "./pkg-*.zip"
+        ],
+        "cache": true,
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "$TURBO_DEFAULT$"
+        ],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.small-asset#test",
+      "task": "test",
+      "package": "@platforma-open/milaboratories.software-small-binaries.small-asset",
+      "hash": "eef73a8f62a6cc96",
+      "inputs": {
+        "CHANGELOG.md": "e0cee4605c382cd095221902470efc7d69362068",
+        "data/dir1/dir2/file3.txt": "bc17c217f3eb6b5a354ddad7b5b67df781289cbc",
+        "data/dir1/file1.txt": "310ff9fb5bfd973368c312cce23e4492f433f85d",
+        "data/dir1/file2.txt": "4000c81455b6c21f8cc374a41aaea3a8597a7f40",
+        "data/file1.txt": "e4b5a1923cf5d45ed271377c3b5331471d550e2e",
+        "data/file2.txt": "391716b6140982275899530e8f943f3471b60cd5",
+        "data/test-file.json": "22be13d426dac1dd64b4583678924d35f6d38819",
+        "data/test-file.txt": "0647c220fea4b205d3ea7953632351341c42c31a",
+        "package.json": "4a7acf073d24b61c675a053402e2ac9dba49b3fe"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": false,
+        "remote": false,
+        "status": "MISS",
+        "timeSaved": 0
+      },
+      "command": "<NONEXISTENT>",
+      "cliArguments": [],
+      "outputs": null,
+      "excludedOutputs": null,
+      "logFile": "small-asset/.turbo/turbo-test.log",
+      "directory": "small-asset",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.small-asset#build"
+      ],
+      "dependents": [],
+      "resolvedTaskDefinition": {
+        "outputs": [],
+        "cache": true,
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.table-converter#build",
+      "task": "build",
+      "package": "@platforma-open/milaboratories.software-small-binaries.table-converter",
+      "hash": "167591037c7ea295",
+      "inputs": {
+        ".gitignore": "82a45f3d66c922d96319391d4671a9a57674e0cc",
+        "CHANGELOG.md": "b2a2001d93ee75d0bd4af9ebd80a0682550fecbf",
+        "README.md": "c3923692106d2a84ced9806b4f7ba6d404b4e7da",
+        "cmd/table-converter/main.go": "108ba540000f6dd8bc907d288b49aef7a9ce8eab",
+        "go.mod": "e816f7ac5479b5b6f43cf2af8d6d6bb0abd238b6",
+        "integrations/canonical_in.scsv": "2fb0383040616690126ad9d2950365ec91c241c4",
+        "integrations/canonical_out.scsv": "13c4745f3c4f6d91099dfefb4cb75014c21b95ce",
+        "integrations/canonical_out_selection.scsv": "fc01217dfb2b9798cce89ec1d3ebe25ded25ce4a",
+        "integrations/custom_in.csv": "0562a818e7af5062f934047f27368966fc842d61",
+        "integrations/custom_out.csv": "0c45b5487eb01ce574f8784c53a025fe75ca01d6",
+        "integrations/custom_out_labels.csv": "fb8c13fba912993dc78e3100d5eb67d64773a26e",
+        "integrations/malformed.csv": "7e7b516101b2882bcb699a8e1b93401691683b22",
+        "internal/config.go": "c24357798fd8ca151e607011b38c16ee5b87a991",
+        "internal/converter.go": "c59f56adf7d7059979eec4f4663fa4380814d4a1",
+        "internal/converter_test.go": "05c0f00090631e9269f0e865b6770f3aff2aa8f9",
+        "internal/util.go": "a26de1fbe3f20008df141daf9f24158296c77ed3",
+        "package.json": "053fccb41c70cfad03f7cc4a0a1ec92a70b11809",
+        "test.sh": "c4c4e627e83de53cc6b75b818b26630f3cdc39ab"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": true,
+        "remote": false,
+        "status": "HIT",
+        "source": "LOCAL",
+        "timeSaved": 0
+      },
+      "command": "../scripts/build.sh './cmd/table-converter' 'table-converter' && pl-pkg build --all-platforms",
+      "cliArguments": [],
+      "outputs": [
+        "./build/**",
+        "./dist/**",
+        "./pkg-*.tgz",
+        "./pkg-*.zip"
+      ],
+      "excludedOutputs": null,
+      "logFile": "table-converter/.turbo/turbo-build.log",
+      "directory": "table-converter",
+      "dependencies": [],
+      "dependents": [
+        "@platforma-open/milaboratories.software-small-binaries#build",
+        "@platforma-open/milaboratories.software-small-binaries.table-converter#test"
+      ],
+      "resolvedTaskDefinition": {
+        "outputs": [
+          "./build/**",
+          "./dist/**",
+          "./pkg-*.tgz",
+          "./pkg-*.zip"
+        ],
+        "cache": true,
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "$TURBO_DEFAULT$"
+        ],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    },
+    {
+      "taskId": "@platforma-open/milaboratories.software-small-binaries.table-converter#test",
+      "task": "test",
+      "package": "@platforma-open/milaboratories.software-small-binaries.table-converter",
+      "hash": "a6958dc95b7097e1",
+      "inputs": {
+        ".gitignore": "82a45f3d66c922d96319391d4671a9a57674e0cc",
+        "CHANGELOG.md": "b2a2001d93ee75d0bd4af9ebd80a0682550fecbf",
+        "README.md": "c3923692106d2a84ced9806b4f7ba6d404b4e7da",
+        "cmd/table-converter/main.go": "108ba540000f6dd8bc907d288b49aef7a9ce8eab",
+        "go.mod": "e816f7ac5479b5b6f43cf2af8d6d6bb0abd238b6",
+        "integrations/canonical_in.scsv": "2fb0383040616690126ad9d2950365ec91c241c4",
+        "integrations/canonical_out.scsv": "13c4745f3c4f6d91099dfefb4cb75014c21b95ce",
+        "integrations/canonical_out_selection.scsv": "fc01217dfb2b9798cce89ec1d3ebe25ded25ce4a",
+        "integrations/custom_in.csv": "0562a818e7af5062f934047f27368966fc842d61",
+        "integrations/custom_out.csv": "0c45b5487eb01ce574f8784c53a025fe75ca01d6",
+        "integrations/custom_out_labels.csv": "fb8c13fba912993dc78e3100d5eb67d64773a26e",
+        "integrations/malformed.csv": "7e7b516101b2882bcb699a8e1b93401691683b22",
+        "internal/config.go": "c24357798fd8ca151e607011b38c16ee5b87a991",
+        "internal/converter.go": "c59f56adf7d7059979eec4f4663fa4380814d4a1",
+        "internal/converter_test.go": "05c0f00090631e9269f0e865b6770f3aff2aa8f9",
+        "internal/util.go": "a26de1fbe3f20008df141daf9f24158296c77ed3",
+        "package.json": "053fccb41c70cfad03f7cc4a0a1ec92a70b11809",
+        "test.sh": "c4c4e627e83de53cc6b75b818b26630f3cdc39ab"
+      },
+      "hashOfExternalDependencies": "91e0583d7e6ce736",
+      "cache": {
+        "local": false,
+        "remote": true,
+        "status": "HIT",
+        "source": "REMOTE",
+        "timeSaved": 0
+      },
+      "command": "./test.sh",
+      "cliArguments": [],
+      "outputs": null,
+      "excludedOutputs": null,
+      "logFile": "table-converter/.turbo/turbo-test.log",
+      "directory": "table-converter",
+      "dependencies": [
+        "@platforma-open/milaboratories.software-small-binaries.table-converter#build"
+      ],
+      "dependents": [],
+      "resolvedTaskDefinition": {
+        "outputs": [],
+        "cache": true,
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [],
+        "outputLogs": "full",
+        "persistent": false,
+        "interruptible": false,
+        "env": [],
+        "passThroughEnv": null,
+        "interactive": false
+      },
+      "expandedOutputs": [],
+      "framework": "",
+      "envMode": "strict",
+      "environmentVariables": {
+        "specified": {
+          "env": [],
+          "passThroughEnv": null
+        },
+        "configured": [],
+        "inferred": [],
+        "passthrough": null
+      }
+    }
+  ],
+  "user": "github-merge-queue[bot]",
+  "scm": {
+    "type": "git",
+    "sha": "9b238abcac7625ccdbc19d1966755dc75bf091c4",
+    "branch": "main"
+  }
+}
+

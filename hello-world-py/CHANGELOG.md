@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.hello-world-py
 
+## 1.0.5
+
+### Patch Changes
+
+- 974d76d: fix requirements.txt
+
 ## 1.0.4
 
 ### Patch Changes

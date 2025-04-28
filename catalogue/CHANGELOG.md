@@ -1,5 +1,12 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 1.15.20
+
+### Patch Changes
+
+- Updated dependencies [974d76d]
+  - @platforma-open/milaboratories.software-small-binaries.hello-world-py@1.0.5
+
 ## 1.15.19
 
 ### Patch Changes

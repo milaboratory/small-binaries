@@ -5,6 +5,7 @@ node_modules/
 pkg-*.tgz
 pkg-*.zip
 package.sw.json
+test-dry-run.json
 
 # IDE
 .idea

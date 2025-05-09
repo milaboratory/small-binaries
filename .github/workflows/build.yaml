@@ -4,10 +4,10 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
     branches:
-      - 'main'
+      - "main"
   push:
     branches:
-      - 'main'
+      - "main"
   workflow_dispatch: {}
 jobs:
   init:
@@ -24,18 +24,18 @@ jobs:
     uses: milaboratory/github-ci/.github/workflows/node-simple-pnpm.yaml@v4-beta
     with:
       app-name: Small cross-platform utils
-      app-name-slug: 'small-cross-platform-packages'
+      app-name-slug: "small-cross-platform-packages"
       notify-telegram: true
-      node-version: '20.x'
-      golang-version: '1.22'
-      build-script-name: 'build'
+      node-version: "20.x"
+      golang-version: "1.22"
+      build-script-name: "build"
 
       test: true
-      test-script-name: 'test'
+      test-script-name: "test"
       pl-start-for-tests: false
 
       publish-to-public: true
-      package-path: 'catalogue'
+      package-path: "catalogue"
       create-tag: true
 
       pnpm-recursive-build: false

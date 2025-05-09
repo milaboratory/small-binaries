@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.runenv-python-stub
 
+## 1.0.6
+
+### Patch Changes
+
+- 833c18d: udapte for new run python logic
+
 ## 1.0.5
 
 ### Patch Changes

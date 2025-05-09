@@ -1,5 +1,12 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 1.15.21
+
+### Patch Changes
+
+- Updated dependencies [833c18d]
+  - @platforma-open/milaboratories.software-small-binaries.runenv-python-stub@1.0.6
+
 ## 1.15.20
 
 ### Patch Changes

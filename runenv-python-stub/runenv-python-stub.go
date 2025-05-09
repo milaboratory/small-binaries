@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 )
 
@@ -22,6 +23,18 @@ func main() {
 	for i, a := range os.Args[1:] {
 		argStr := fmt.Sprintf("arg[%d]", i)
 		fmt.Fprintf(&argsReport, "%*s = %q\n", columnWidth, argStr, a)
+	}
+
+	// should support venv logic
+	// https://github.com/milaboratory/platforma/blob/3f9187fdb951ca7fedc96dc93057709cae166f31/sdk/workflow-tengo/src/exec/python/install-deps.tpl.tengo#L31
+	if strings.Contains(argsReport.String(), "windows") {
+		if runtime.GOOS != "windows" {
+			fmt.Fprint(os.Stdout, "bin")
+			return
+		}
+
+		fmt.Fprint(os.Stdout, "Scripts")
+		return
 	}
 
 	fmt.Fprint(os.Stdout, argsReport.String()+"\n")

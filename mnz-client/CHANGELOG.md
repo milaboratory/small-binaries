@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.6.0
+
+### Minor Changes
+
+- ab0f9fa: docker container
+
 ## 1.5.12
 
 ### Patch Changes

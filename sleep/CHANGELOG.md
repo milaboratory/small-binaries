@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.sleep
 
+## 1.1.0
+
+### Minor Changes
+
+- ab0f9fa: docker container
+
 ## 1.0.7
 
 ### Patch Changes

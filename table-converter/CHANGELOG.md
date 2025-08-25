@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.table-converter
 
+## 1.3.0
+
+### Minor Changes
+
+- ab0f9fa: docker container
+
 ## 1.2.3
 
 ### Patch Changes

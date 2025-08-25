@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.hello-world
 
+## 1.1.0
+
+### Minor Changes
+
+- ab0f9fa: docker container
+
 ## 1.0.4
 
 ### Patch Changes

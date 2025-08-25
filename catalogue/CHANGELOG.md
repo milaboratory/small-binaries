@@ -1,5 +1,17 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 1.15.22
+
+### Patch Changes
+
+- Updated dependencies [ab0f9fa]
+  - @platforma-open/milaboratories.software-small-binaries.read-with-sleep@1.1.0
+  - @platforma-open/milaboratories.software-small-binaries.table-converter@1.3.0
+  - @platforma-open/milaboratories.software-small-binaries.guided-command@1.1.0
+  - @platforma-open/milaboratories.software-small-binaries.hello-world@1.1.0
+  - @platforma-open/milaboratories.software-small-binaries.mnz-client@1.6.0
+  - @platforma-open/milaboratories.software-small-binaries.sleep@1.1.0
+
 ## 1.15.21
 
 ### Patch Changes

@@ -10,6 +10,14 @@
   "block-software": {
     "entrypoints": {
       "main": {
+        "docker": {
+          "artifact": {
+            "type": "docker",
+            "dockerfile": "Dockerfile",
+            "context": "./build/linux-x64/"
+          },
+          "cmd": []
+        },
         "binary": {
           "artifact": {
             "registry": "platforma-open",

@@ -21,7 +21,7 @@ jobs:
     needs:
       - init
 
-    uses: milaboratory/github-ci/.github/workflows/node-simple-pnpm.yaml@v4-beta
+    uses: milaboratory/github-ci/.github/workflows/node-simple-pnpm.yaml@v4
     with:
       app-name: Small cross-platform utils
       app-name-slug: "small-cross-platform-packages"

@@ -12,6 +12,9 @@ catalogs:
     '@platforma-open/milaboratories.runenv-python-3':
       specifier: ^1.0.0
       version: 1.1.5
+    '@platforma-sdk/blocks-deps-updater':
+      specifier: ^2.0.0
+      version: 2.0.0
     '@platforma-sdk/package-builder':
       specifier: ^3.0.2
       version: 3.0.2
@@ -26,6 +29,9 @@ importers:
       '@changesets/cli':
         specifier: 'catalog:'
         version: 2.27.10
+      '@platforma-sdk/blocks-deps-updater':
+        specifier: 'catalog:'
+        version: 2.0.0
       turbo:
         specifier: 'catalog:'
         version: 2.3.3
@@ -418,6 +424,10 @@ packages:
 
   '@platforma-open/milaboratories.runenv-python-3@1.1.5':
     resolution: {integrity: sha512-YFB6zC0cJCHVZw91ysLu0E9UDViPTCVWYmjWtxt1dsvud/zhjge4/iKv7gWIrltfmY6LahXeTehG2/bXnxEoUQ==}
+
+  '@platforma-sdk/blocks-deps-updater@2.0.0':
+    resolution: {integrity: sha512-cef5ysA011ub5bofbWQJ3EM9rZ7A4ixGMKhFIsF2VNwYrCu5XRHsayA6vDeFOBjX4Jnq9D0QztW0JUxXD73bpw==}
+    hasBin: true
 
   '@platforma-sdk/package-builder@3.0.2':
     resolution: {integrity: sha512-UV8kTksiO3fZj3C3yvUSytxh/Rvy3USgtPyWGBkLuw1RYTFu/ZN4hEtUMe4PMbDNi8VR7Pstf4mWWw5mnXjbzQ==}
@@ -2127,6 +2137,10 @@ snapshots:
     optional: true
 
   '@platforma-open/milaboratories.runenv-python-3@1.1.5': {}
+
+  '@platforma-sdk/blocks-deps-updater@2.0.0':
+    dependencies:
+      yaml: 2.8.1
 
   '@platforma-sdk/package-builder@3.0.2':
     dependencies:

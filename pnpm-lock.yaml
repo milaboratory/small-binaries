@@ -16,8 +16,8 @@ catalogs:
       specifier: ^2.0.0
       version: 2.0.0
     '@platforma-sdk/package-builder':
-      specifier: ^3.0.2
-      version: 3.0.2
+      specifier: ^3.2.0
+      version: 3.2.0
     turbo:
       specifier: ^2.3.3
       version: 2.3.3
@@ -77,19 +77,19 @@ importers:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.0.2
+        version: 3.2.0
 
   guided-command:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.0.2
+        version: 3.2.0
 
   hello-world:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.0.2
+        version: 3.2.0
 
   hello-world-py:
     devDependencies:
@@ -98,7 +98,7 @@ importers:
         version: 1.1.5
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.0.2
+        version: 3.2.0
 
   java-stub:
     devDependencies:
@@ -107,13 +107,13 @@ importers:
         version: link:../runenv-java-stub
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.0.2
+        version: 3.2.0
 
   mnz-client:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.0.2
+        version: 3.2.0
 
   python-stub:
     devDependencies:
@@ -122,43 +122,43 @@ importers:
         version: link:../runenv-python-stub
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.0.2
+        version: 3.2.0
 
   read-with-sleep:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.0.2
+        version: 3.2.0
 
   runenv-java-stub:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.0.2
+        version: 3.2.0
 
   runenv-python-stub:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.0.2
+        version: 3.2.0
 
   sleep:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.0.2
+        version: 3.2.0
 
   small-asset:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.0.2
+        version: 3.2.0
 
   table-converter:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.0.2
+        version: 3.2.0
 
 packages:
 
@@ -429,8 +429,8 @@ packages:
     resolution: {integrity: sha512-cef5ysA011ub5bofbWQJ3EM9rZ7A4ixGMKhFIsF2VNwYrCu5XRHsayA6vDeFOBjX4Jnq9D0QztW0JUxXD73bpw==}
     hasBin: true
 
-  '@platforma-sdk/package-builder@3.0.2':
-    resolution: {integrity: sha512-UV8kTksiO3fZj3C3yvUSytxh/Rvy3USgtPyWGBkLuw1RYTFu/ZN4hEtUMe4PMbDNi8VR7Pstf4mWWw5mnXjbzQ==}
+  '@platforma-sdk/package-builder@3.2.0':
+    resolution: {integrity: sha512-I6ZMDpUd84NWt+c//ia3YIJYQncUUDTP5R1M5QkEacFry9ida2esP/3oz3knODsnQnmKHdTfcODU/LQ+jBvcUw==}
     hasBin: true
 
   '@smithy/abort-controller@4.0.5':
@@ -2142,7 +2142,7 @@ snapshots:
     dependencies:
       yaml: 2.8.1
 
-  '@platforma-sdk/package-builder@3.0.2':
+  '@platforma-sdk/package-builder@3.2.0':
     dependencies:
       '@aws-sdk/client-s3': 3.859.0
       '@aws-sdk/lib-storage': 3.859.0(@aws-sdk/client-s3@3.859.0)

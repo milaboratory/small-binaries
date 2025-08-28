@@ -6,7 +6,8 @@
     "test": "turbo run test",
     "test:dry-run": "turbo run test --dry-run=json",
     "changeset": "changeset",
-    "version-packages": "changeset version"
+    "version-packages": "changeset version",
+    "update-sdk": "pl-blocks-deps-updater"
   },
   "license": "UNLICENSED",
   "packageManager": "pnpm@9.14.4",
@@ -15,7 +16,8 @@
   },
   "devDependencies": {
     "turbo": "catalog:",
-    "@changesets/cli": "catalog:"
+    "@changesets/cli": "catalog:",
+    "@platforma-sdk/blocks-deps-updater": "catalog:"
   },
   "//pnpm": {
     "overrides": {

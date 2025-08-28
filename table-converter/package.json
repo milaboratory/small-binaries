@@ -6,7 +6,7 @@
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
     "build": "../scripts/build.sh './cmd/table-converter' 'table-converter' && pl-pkg build --all-platforms",
     "test": "./test.sh",
-    "prepublishOnly": "pl-pkg publish --all-platforms"
+    "prepublishOnly": "pl-pkg prepublish"
   },
   "block-software": {
     "entrypoints": {

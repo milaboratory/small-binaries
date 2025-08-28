@@ -5,7 +5,7 @@
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
     "build": "../scripts/build.sh './main.go' 'bin/java' && pl-pkg build --all-platforms",
-    "prepublishOnly": "pl-pkg publish --all-platforms"
+    "prepublishOnly": "pl-pkg prepublish"
   },
   "block-software": {
     "entrypoints": {

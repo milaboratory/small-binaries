@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.python-stub",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Stub pacakge that uses python run environment stub",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",

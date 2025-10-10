@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.small-asset
 
+## 1.1.4
+
+### Patch Changes
+
+- 225cc43: Technical release: no CVEs for docker images
+
 ## 1.1.3
 
 ### Patch Changes

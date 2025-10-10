@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.java-stub
 
+## 1.0.4
+
+### Patch Changes
+
+- 225cc43: Technical release: no CVEs for docker images
+
 ## 1.0.3
 
 ### Patch Changes

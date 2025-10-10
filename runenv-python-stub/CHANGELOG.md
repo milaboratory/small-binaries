@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.runenv-python-stub
 
+## 1.0.7
+
+### Patch Changes
+
+- 225cc43: Technical release: no CVEs for docker images
+
 ## 1.0.6
 
 ### Patch Changes

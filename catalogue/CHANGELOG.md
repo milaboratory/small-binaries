@@ -1,5 +1,24 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 1.15.23
+
+### Patch Changes
+
+- 225cc43: Technical release: no CVEs for docker images
+- Updated dependencies [225cc43]
+  - @platforma-open/milaboratories.software-small-binaries.guided-command@1.1.1
+  - @platforma-open/milaboratories.software-small-binaries.hello-world@1.1.1
+  - @platforma-open/milaboratories.software-small-binaries.hello-world-py@1.0.6
+  - @platforma-open/milaboratories.software-small-binaries.java-stub@1.0.4
+  - @platforma-open/milaboratories.software-small-binaries.mnz-client@1.6.1
+  - @platforma-open/milaboratories.software-small-binaries.python-stub@1.0.4
+  - @platforma-open/milaboratories.software-small-binaries.read-with-sleep@1.1.1
+  - @platforma-open/milaboratories.software-small-binaries.runenv-java-stub@1.0.6
+  - @platforma-open/milaboratories.software-small-binaries.runenv-python-stub@1.0.7
+  - @platforma-open/milaboratories.software-small-binaries.sleep@1.1.1
+  - @platforma-open/milaboratories.software-small-binaries.small-asset@1.1.4
+  - @platforma-open/milaboratories.software-small-binaries.table-converter@1.3.1
+
 ## 1.15.22
 
 ### Patch Changes

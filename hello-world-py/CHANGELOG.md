@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.hello-world-py
 
+## 1.0.6
+
+### Patch Changes
+
+- 225cc43: Technical release: no CVEs for docker images
+
 ## 1.0.5
 
 ### Patch Changes

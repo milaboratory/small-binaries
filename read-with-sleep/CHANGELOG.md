@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.read-with-sleep
 
+## 1.1.1
+
+### Patch Changes
+
+- 225cc43: Technical release: no CVEs for docker images
+
 ## 1.1.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.6.2
+
+### Patch Changes
+
+- 300c70a: Make docker to always have non-empty cmd
+
 ## 1.6.1
 
 ### Patch Changes

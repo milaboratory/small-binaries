@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.read-with-sleep
 
+## 1.1.2
+
+### Patch Changes
+
+- 300c70a: Make docker to always have non-empty cmd
+
 ## 1.1.1
 
 ### Patch Changes

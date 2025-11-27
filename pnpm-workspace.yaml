@@ -31,4 +31,4 @@ catalog:
 
   "@platforma-sdk/package-builder": "^3.10.7"
   "@platforma-sdk/blocks-deps-updater": "^2.0.0"
-  "@platforma-open/milaboratories.runenv-python-3": "^1.7.4"
+  "@platforma-open/milaboratories.runenv-python-3": "^1.7.5"

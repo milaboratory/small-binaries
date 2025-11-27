@@ -17,7 +17,9 @@
             "dockerfile": "Dockerfile",
             "context": "./build/linux-x64/"
           },
-          "cmd": []
+          "cmd": [
+            "/app/mnz-client"
+          ]
         },
         "binary": {
           "artifact": {

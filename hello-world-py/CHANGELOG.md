@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.hello-world-py
 
+## 1.0.7
+
+### Patch Changes
+
+- 4c9a278: Use smaller python for hello-world-py to make download time predictable
+
 ## 1.0.6
 
 ### Patch Changes

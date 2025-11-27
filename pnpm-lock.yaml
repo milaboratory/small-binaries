@@ -10,14 +10,14 @@ catalogs:
       specifier: ^2.27.10
       version: 2.27.10
     '@platforma-open/milaboratories.runenv-python-3':
-      specifier: ^1.0.0
-      version: 1.1.5
+      specifier: ^1.7.4
+      version: 1.7.4
     '@platforma-sdk/blocks-deps-updater':
       specifier: ^2.0.0
       version: 2.0.0
     '@platforma-sdk/package-builder':
-      specifier: ^3.8.0
-      version: 3.8.0
+      specifier: ^3.10.7
+      version: 3.10.7
     turbo:
       specifier: ^2.3.3
       version: 2.3.3
@@ -77,28 +77,28 @@ importers:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.8.0
+        version: 3.10.7
 
   guided-command:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.8.0
+        version: 3.10.7
 
   hello-world:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.8.0
+        version: 3.10.7
 
   hello-world-py:
     devDependencies:
       '@platforma-open/milaboratories.runenv-python-3':
         specifier: 'catalog:'
-        version: 1.1.5
+        version: 1.7.4
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.8.0
+        version: 3.10.7
 
   java-stub:
     devDependencies:
@@ -107,13 +107,13 @@ importers:
         version: link:../runenv-java-stub
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.8.0
+        version: 3.10.7
 
   mnz-client:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.8.0
+        version: 3.10.7
 
   python-stub:
     devDependencies:
@@ -122,43 +122,43 @@ importers:
         version: link:../runenv-python-stub
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.8.0
+        version: 3.10.7
 
   read-with-sleep:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.8.0
+        version: 3.10.7
 
   runenv-java-stub:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.8.0
+        version: 3.10.7
 
   runenv-python-stub:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.8.0
+        version: 3.10.7
 
   sleep:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.8.0
+        version: 3.10.7
 
   small-asset:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.8.0
+        version: 3.10.7
 
   table-converter:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.8.0
+        version: 3.10.7
 
 packages:
 
@@ -422,15 +422,30 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@platforma-open/milaboratories.runenv-python-3@1.1.5':
-    resolution: {integrity: sha512-YFB6zC0cJCHVZw91ysLu0E9UDViPTCVWYmjWtxt1dsvud/zhjge4/iKv7gWIrltfmY6LahXeTehG2/bXnxEoUQ==}
+  '@platforma-open/milaboratories.runenv-python-3.12.10-atls@1.2.3':
+    resolution: {integrity: sha512-gSdJ85n4VN+XEeZ2Vsyhv3iLWrN9mU/gfuXAtjnAGuXe62UPw6W4R0EAQ1bhJi18UBpMr69jY/0OFPXippUBXQ==}
+
+  '@platforma-open/milaboratories.runenv-python-3.12.10-h5ad@1.1.3':
+    resolution: {integrity: sha512-RrCHJPVKRDD90UtiRKG+JRxWuBQGTM0twzIJVR4X7TedSJR8dnwrPL0uJKs7+f6Nw4B4PlZ+8vjivlyHSEIgZQ==}
+
+  '@platforma-open/milaboratories.runenv-python-3.12.10-rapids@1.4.3':
+    resolution: {integrity: sha512-W4tMkHdnasHkocLyUVtgQD6rR9haV40RjYkcW6GBqUkwZBrZj8kqI3bvNhaQT5Za3GXgxNYLtIHpggUa3KLy5w==}
+
+  '@platforma-open/milaboratories.runenv-python-3.12.10-sccoda@1.3.4':
+    resolution: {integrity: sha512-3U614BaP2Z7kKgjKWrcV8/67QvW93wQ2BzVaxE+nY+C9KhO53y1YQuDfBQue92oxBDjsrSuBOu+pfDS248YGyg==}
+
+  '@platforma-open/milaboratories.runenv-python-3.12.10@1.3.3':
+    resolution: {integrity: sha512-ycU93iUmpCdV9/pD+LyKe3k5DoSoha2iGsV9R3CYHofkLvT5fC4wesS5/8Uyek5UNUMyAlXjS/rtcm3ZveffOQ==}
+
+  '@platforma-open/milaboratories.runenv-python-3@1.7.4':
+    resolution: {integrity: sha512-svzu4a3DVzbM1lkoY3ITO9jhXvN1NNI90IBIF3njs62zHqIOkMo6gps7yr3W6hRLJAAzGHZ3R5XjNLRTn3wBKQ==}
 
   '@platforma-sdk/blocks-deps-updater@2.0.0':
     resolution: {integrity: sha512-cef5ysA011ub5bofbWQJ3EM9rZ7A4ixGMKhFIsF2VNwYrCu5XRHsayA6vDeFOBjX4Jnq9D0QztW0JUxXD73bpw==}
     hasBin: true
 
-  '@platforma-sdk/package-builder@3.8.0':
-    resolution: {integrity: sha512-sXTSGLA5yazqAo917z2nZ4qTEdY6pYxGAq79DZewQt3Ml5JTYFYt1d3SHojm0FArXsit1JkyQT01uDuDoPkBCQ==}
+  '@platforma-sdk/package-builder@3.10.7':
+    resolution: {integrity: sha512-3qWieTD0GTCNQ65lVV1/LAcwNlTFh7BuswS6qrK8acRtREFEZm/QvywbE6fQu7gEEF697y7/6/ktR8Sd1EzP/A==}
     hasBin: true
 
   '@smithy/abort-controller@4.0.5':
@@ -1381,6 +1396,10 @@ packages:
   undici-types@7.12.0:
     resolution: {integrity: sha512-goOacqME2GYyOZZfb5Lgtu+1IDmAlAEu5xnD3+xTzS10hT0vzpf0SPjkXwAw9Jm+4n/mQGDP3LO8CPbYROeBfQ==}
 
+  undici@7.16.0:
+    resolution: {integrity: sha512-QEg3HPMll0o3t2ourKwOeUAZ159Kn9mx5pnzHRQO8+Wixmh88YdZRiIwat0iNzNNXn0yoEtXJqFpyW7eM8BV7g==}
+    engines: {node: '>=20.18.1'}
+
   universalify@0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
     engines: {node: '>= 4.0.0'}
@@ -1433,8 +1452,8 @@ packages:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
     engines: {node: '>= 14'}
 
-  zod@3.23.8:
-    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+  zod@4.1.12:
+    resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
 
 snapshots:
 
@@ -2136,13 +2155,29 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@platforma-open/milaboratories.runenv-python-3@1.1.5': {}
+  '@platforma-open/milaboratories.runenv-python-3.12.10-atls@1.2.3': {}
+
+  '@platforma-open/milaboratories.runenv-python-3.12.10-h5ad@1.1.3': {}
+
+  '@platforma-open/milaboratories.runenv-python-3.12.10-rapids@1.4.3': {}
+
+  '@platforma-open/milaboratories.runenv-python-3.12.10-sccoda@1.3.4': {}
+
+  '@platforma-open/milaboratories.runenv-python-3.12.10@1.3.3': {}
+
+  '@platforma-open/milaboratories.runenv-python-3@1.7.4':
+    dependencies:
+      '@platforma-open/milaboratories.runenv-python-3.12.10': 1.3.3
+      '@platforma-open/milaboratories.runenv-python-3.12.10-atls': 1.2.3
+      '@platforma-open/milaboratories.runenv-python-3.12.10-h5ad': 1.1.3
+      '@platforma-open/milaboratories.runenv-python-3.12.10-rapids': 1.4.3
+      '@platforma-open/milaboratories.runenv-python-3.12.10-sccoda': 1.3.4
 
   '@platforma-sdk/blocks-deps-updater@2.0.0':
     dependencies:
       yaml: 2.8.1
 
-  '@platforma-sdk/package-builder@3.8.0':
+  '@platforma-sdk/package-builder@3.10.7':
     dependencies:
       '@aws-sdk/client-s3': 3.859.0
       '@aws-sdk/lib-storage': 3.859.0(@aws-sdk/client-s3@3.859.0)
@@ -2153,9 +2188,10 @@ snapshots:
       archiver: 7.0.1
       canonicalize: 2.1.0
       tar: 7.4.3
+      undici: 7.16.0
       winston: 3.17.0
       yaml: 2.8.1
-      zod: 3.23.8
+      zod: 4.1.12
     transitivePeerDependencies:
       - aws-crt
 
@@ -3179,6 +3215,8 @@ snapshots:
 
   undici-types@7.12.0: {}
 
+  undici@7.16.0: {}
+
   universalify@0.1.2: {}
 
   util-deprecate@1.0.2: {}
@@ -3237,4 +3275,4 @@ snapshots:
       compress-commons: 6.0.2
       readable-stream: 4.7.0
 
-  zod@3.23.8: {}
+  zod@4.1.12: {}

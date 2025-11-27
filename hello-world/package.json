@@ -16,7 +16,9 @@
             "dockerfile": "Dockerfile",
             "context": "./build/linux-x64/"
           },
-          "cmd": []
+          "cmd": [
+            "/app/hello-world"
+          ]
         },
         "binary": {
           "artifact": {

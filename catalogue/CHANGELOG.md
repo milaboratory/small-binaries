@@ -1,5 +1,12 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 1.15.26
+
+### Patch Changes
+
+- Updated dependencies [45d65b0]
+  - @platforma-open/milaboratories.software-small-binaries.small-asset@1.1.5
+
 ## 1.15.25
 
 ### Patch Changes

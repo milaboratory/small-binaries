@@ -2,6 +2,15 @@
 // It sleeps every sleepMs milliseconds between lines.
 // Also, every percentageSleepMs it prints a percentage with a percentagePattern.
 // This can help to test logs streaming and statuses from logs, like in MiXCR running.
+//
+// Parameters:
+//
+//	<filePath>            - path to the file to read and stream
+//	<percentagePattern>   - prefix string to use when printing progress (e.g., "Progress: ")
+//	<sleepMs>            - milliseconds to sleep between printing each line
+//	<percentageSleepMs>  - milliseconds between printing percentage progress updates
+//
+// Usage: read-with-sleep <filePath> <percentagePattern> <sleepMs> <percentageSleepMs>
 package main
 
 import (

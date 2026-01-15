@@ -1,5 +1,5 @@
 {
-  "name": "@platforma-open/milaboratories.software-small-binaries.hello-world-py",
+  "name": "@platforma-open/milaboratories.software-test-utils.hello-world-py",
   "version": "1.0.7",
   "description": "Small hello world on python",
   "scripts": {

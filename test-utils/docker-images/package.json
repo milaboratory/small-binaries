@@ -1,0 +1,47 @@
+{
+  "name": "@platforma-open/milaboratories.software-test-utils.docker-images",
+  "version": "1.0.0",
+  "description": "Collection of special docker images for testing purposes",
+  "scripts": {
+    "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
+    "build": "pl-pkg build --docker-build",
+    "prepublishOnly": "pl-pkg prepublish"
+  },
+  "block-software": {
+    "entrypoints": {
+      "always-true-ep": {
+        "docker": {
+          "artifact": {
+            "type": "docker",
+            "dockerfile": "Dockerfile-entrypoint",
+            "context": "./src/"
+          },
+          "cmd": [ 
+            "// entrypoint of the image is 'true', this should never fail"
+          ]
+        }
+      },
+      "always-true-cmd": {
+        "docker": {
+          "artifact": {
+            "type": "docker",
+            "dockerfile": "Dockerfile-busybox",
+            "context": "./src/"
+          },
+          "cmd": [
+            "true"
+          ]
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@platforma-sdk/package-builder": "catalog:"
+  },
+  "keywords": [],
+  "author": "",
+  "files": [
+    "dist/"
+  ],
+  "license": "UNLICENSED"
+}

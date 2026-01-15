@@ -1,5 +1,5 @@
 {
-  "name": "@platforma-open/milaboratories.software-small-binaries.python-stub",
+  "name": "@platforma-open/milaboratories.software-test-utils.python-stub",
   "version": "1.0.4",
   "description": "Stub pacakge that uses python run environment stub",
   "scripts": {
@@ -14,7 +14,7 @@
           "artifact": {
             "type": "python",
             "registry": "platforma-open",
-            "environment": "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub:main",
+            "environment": "@platforma-open/milaboratories.software-test-utils.runenv-python-stub:main",
             "root": "./src",
             "dependencies": {
               "toolset": "pip",
@@ -36,7 +36,7 @@
   ],
   "license": "UNLICENSED",
   "devDependencies": {
-    "@platforma-open/milaboratories.software-small-binaries.runenv-python-stub": "workspace:",
+    "@platforma-open/milaboratories.software-test-utils.runenv-python-stub": "workspace:",
     "@platforma-sdk/package-builder": "catalog:"
   }
 }

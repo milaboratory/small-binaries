@@ -5,21 +5,22 @@ packages:
   - small-asset
 
   #
-  # Small utility functions for tests
+  # Utility functions for tests
   #
-  - sleep
-  - read-with-sleep
-  - hello-world
-  - guided-command
-  - runenv-java-stub
-  - java-stub
-  - runenv-python-stub
-  - python-stub
-  - hello-world-py
+  - test-utils/read-with-sleep
+  - test-utils/hello-world
+  - test-utils/guided-command
+  - test-utils/runenv-java-stub
+  - test-utils/java-stub
+  - test-utils/runenv-python-stub
+  - test-utils/python-stub
+  - test-utils/hello-world-py
+  - test-utils/docker-images
 
   #
-  # Small production CLI instruments for use in workflows
+  # Production CLI instruments for use in workflows
   #
+  - sleep
   - table-converter
   - mnz-client
 

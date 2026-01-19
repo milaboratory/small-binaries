@@ -25,6 +25,7 @@ packages:
   - mnz-client
 
   - catalogue
+  - catalogue-tests
 
 catalog:
   'turbo': ^2.3.3

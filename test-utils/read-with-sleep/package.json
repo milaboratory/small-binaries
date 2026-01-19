@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.software-test-utils.read-with-sleep",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Read input file line-by-line with pause between lines",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",

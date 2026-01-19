@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 2.0.0
+
+### Major Changes
+
+- 1ce7c87: Split production packages from test utils. Put all test utild under 'software-test-utils' name group
+
 ## 1.15.26
 
 ### Patch Changes

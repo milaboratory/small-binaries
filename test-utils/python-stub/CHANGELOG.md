@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.python-stub
 
+## 1.0.5
+
+### Patch Changes
+
+- 1ce7c87: Split production packages from test utils. Put all test utild under 'software-test-utils' name group
+
 ## 1.0.4
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.software-test-utils.docker-images",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Collection of special docker images for testing purposes",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
@@ -16,7 +16,7 @@
             "dockerfile": "Dockerfile-entrypoint",
             "context": "./src/"
           },
-          "cmd": [ 
+          "cmd": [
             "// entrypoint of the image is 'true', this should never fail"
           ]
         }

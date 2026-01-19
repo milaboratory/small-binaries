@@ -1,6 +1,6 @@
 {
     "name": "@platforma-open/milaboratories.software-small-binaries",
-    "version": "1.15.26",
+    "version": "2.0.0",
     "description": "Small cross-platform binaries for Platforma workflows",
     "scripts": {
         "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./dist/",

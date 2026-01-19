@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.software-test-utils.hello-world",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",

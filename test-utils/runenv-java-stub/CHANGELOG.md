@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.runenv-java-stub
 
+## 1.0.7
+
+### Patch Changes
+
+- 1ce7c87: Split production packages from test utils. Put all test utild under 'software-test-utils' name group
+
 ## 1.0.6
 
 ### Patch Changes

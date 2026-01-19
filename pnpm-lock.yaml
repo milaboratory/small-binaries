@@ -16,8 +16,8 @@ catalogs:
       specifier: ^2.0.0
       version: 2.0.0
     '@platforma-sdk/package-builder':
-      specifier: ^3.10.7
-      version: 3.10.7
+      specifier: ^3.11.0
+      version: 3.11.0
     turbo:
       specifier: ^2.3.3
       version: 2.3.3
@@ -50,49 +50,49 @@ importers:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.0
 
   mnz-client:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.0
 
   sleep:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.0
 
   small-asset:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.0
 
   table-converter:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.0
 
   test-utils/docker-images:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.0
 
   test-utils/guided-command:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.0
 
   test-utils/hello-world:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.0
 
   test-utils/hello-world-py:
     devDependencies:
@@ -101,7 +101,7 @@ importers:
         version: 1.7.5
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.0
 
   test-utils/java-stub:
     devDependencies:
@@ -110,7 +110,7 @@ importers:
         version: link:../runenv-java-stub
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.0
 
   test-utils/python-stub:
     devDependencies:
@@ -119,25 +119,25 @@ importers:
         version: link:../runenv-python-stub
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.0
 
   test-utils/read-with-sleep:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.0
 
   test-utils/runenv-java-stub:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.0
 
   test-utils/runenv-python-stub:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
-        version: 3.10.7
+        version: 3.11.0
 
 packages:
 
@@ -423,8 +423,8 @@ packages:
     resolution: {integrity: sha512-cef5ysA011ub5bofbWQJ3EM9rZ7A4ixGMKhFIsF2VNwYrCu5XRHsayA6vDeFOBjX4Jnq9D0QztW0JUxXD73bpw==}
     hasBin: true
 
-  '@platforma-sdk/package-builder@3.10.7':
-    resolution: {integrity: sha512-3qWieTD0GTCNQ65lVV1/LAcwNlTFh7BuswS6qrK8acRtREFEZm/QvywbE6fQu7gEEF697y7/6/ktR8Sd1EzP/A==}
+  '@platforma-sdk/package-builder@3.11.0':
+    resolution: {integrity: sha512-U2aOV3sxxcdh1svtmbBDfMX+CNdSGpFwkNSkO3Npq+hBrdjENzrHbDguI9tElUtkP2OMApK05aDcvOPrCjOfag==}
     hasBin: true
 
   '@smithy/abort-controller@4.0.5':
@@ -1308,6 +1308,7 @@ packages:
   tar@7.4.3:
     resolution: {integrity: sha512-5S7Va8hKfV7W5U6g3aYxXmlPoZVAwUMy9AOKyF2fVuZa2UD3qZjg578OrLRt8PcNN1PleVaL/5/yYATNL0ICUw==}
     engines: {node: '>=18'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me
 
   term-size@2.2.1:
     resolution: {integrity: sha512-wK0Ri4fOGjv/XPy8SBHZChl8CM7uMc5VML7SqiQ0zG7+J5Vr+RMQDoHa2CNT6KHUnTGIXH34UDMkPzAUyapBZg==}
@@ -2156,7 +2157,7 @@ snapshots:
     dependencies:
       yaml: 2.8.1
 
-  '@platforma-sdk/package-builder@3.10.7':
+  '@platforma-sdk/package-builder@3.11.0':
     dependencies:
       '@aws-sdk/client-s3': 3.859.0
       '@aws-sdk/lib-storage': 3.859.0(@aws-sdk/client-s3@3.859.0)

@@ -52,6 +52,46 @@ importers:
         specifier: 'catalog:'
         version: 3.11.0
 
+  catalogue-tests:
+    dependencies:
+      '@platforma-open/milaboratories.software-small-binaries.sleep':
+        specifier: workspace:*
+        version: link:../sleep
+      '@platforma-open/milaboratories.software-small-binaries.small-asset':
+        specifier: workspace:*
+        version: link:../small-asset
+      '@platforma-open/milaboratories.software-test-utils.docker-images':
+        specifier: workspace:*
+        version: link:../test-utils/docker-images
+      '@platforma-open/milaboratories.software-test-utils.guided-command':
+        specifier: workspace:*
+        version: link:../test-utils/guided-command
+      '@platforma-open/milaboratories.software-test-utils.hello-world':
+        specifier: workspace:*
+        version: link:../test-utils/hello-world
+      '@platforma-open/milaboratories.software-test-utils.hello-world-py':
+        specifier: workspace:*
+        version: link:../test-utils/hello-world-py
+      '@platforma-open/milaboratories.software-test-utils.java-stub':
+        specifier: workspace:*
+        version: link:../test-utils/java-stub
+      '@platforma-open/milaboratories.software-test-utils.python-stub':
+        specifier: workspace:*
+        version: link:../test-utils/python-stub
+      '@platforma-open/milaboratories.software-test-utils.read-with-sleep':
+        specifier: workspace:*
+        version: link:../test-utils/read-with-sleep
+      '@platforma-open/milaboratories.software-test-utils.runenv-java-stub':
+        specifier: workspace:*
+        version: link:../test-utils/runenv-java-stub
+      '@platforma-open/milaboratories.software-test-utils.runenv-python-stub':
+        specifier: workspace:*
+        version: link:../test-utils/runenv-python-stub
+    devDependencies:
+      '@platforma-sdk/package-builder':
+        specifier: 'catalog:'
+        version: 3.11.0
+
   mnz-client:
     devDependencies:
       '@platforma-sdk/package-builder':

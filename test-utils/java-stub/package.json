@@ -1,5 +1,5 @@
 {
-  "name": "@platforma-open/milaboratories.software-small-binaries.java-stub",
+  "name": "@platforma-open/milaboratories.software-test-utils.java-stub",
   "version": "1.0.4",
   "description": "Stub pacakge that uses java run environment stub",
   "scripts": {
@@ -14,7 +14,7 @@
           "artifact": {
             "type": "java",
             "registry": "platforma-open",
-            "environment": "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub:main",
+            "environment": "@platforma-open/milaboratories.software-test-utils.runenv-java-stub:main",
             "root": "./src"
           },
           "cmd": [
@@ -32,7 +32,7 @@
   ],
   "license": "UNLICENSED",
   "devDependencies": {
-    "@platforma-open/milaboratories.software-small-binaries.runenv-java-stub": "workspace:",
+    "@platforma-open/milaboratories.software-test-utils.runenv-java-stub": "workspace:",
     "@platforma-sdk/package-builder": "catalog:"
   }
 }

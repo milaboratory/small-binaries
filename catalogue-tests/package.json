@@ -9,10 +9,10 @@
     "block-software": {
         "entrypoints": {
             "small-asset": {
-                "reference": "@platforma-open/milaboratories.software-small-binaries.small-asset/dist/tengo/asset/main.as.json"
+                "reference": "@platforma-open/milaboratories.software-test-utils.small-asset/dist/tengo/asset/main.as.json"
             },
             "sleep": {
-                "reference": "@platforma-open/milaboratories.software-small-binaries.sleep/dist/tengo/software/main.sw.json"
+                "reference": "@platforma-open/milaboratories.software-test-utils.sleep/dist/tengo/software/main.sw.json"
             },
             "runenv-java-stub": {
                 "reference": "@platforma-open/milaboratories.software-test-utils.runenv-java-stub/dist/tengo/software/main.sw.json"
@@ -21,10 +21,10 @@
                 "reference": "@platforma-open/milaboratories.software-test-utils.runenv-python-stub/dist/tengo/software/main.sw.json"
             },
             "hello-world": {
-                "reference": "@platforma-open/milaboratories.software-test-utils.hello-world/dist/tengo/software/main.sw.json"
+                "reference": "@platforma-open/milaboratories.software-small-binaries.hello-world/dist/tengo/software/main.sw.json"
             },
             "hello-world-py": {
-                "reference": "@platforma-open/milaboratories.software-test-utils.hello-world-py/dist/tengo/software/main.sw.json"
+                "reference": "@platforma-open/milaboratories.software-small-binaries.hello-world-py/dist/tengo/software/main.sw.json"
             },
             "guided-command": {
                 "reference": "@platforma-open/milaboratories.software-test-utils.guided-command/dist/tengo/software/main.sw.json"
@@ -54,17 +54,17 @@
     ],
     "license": "UNLICENSED",
     "dependencies": {
+        "@platforma-open/milaboratories.software-small-binaries.hello-world": "workspace:*",
+        "@platforma-open/milaboratories.software-small-binaries.hello-world-py": "workspace:*",
+        "@platforma-open/milaboratories.software-test-utils.docker-images": "workspace:*",
         "@platforma-open/milaboratories.software-test-utils.guided-command": "workspace:*",
-        "@platforma-open/milaboratories.software-test-utils.hello-world-py": "workspace:*",
-        "@platforma-open/milaboratories.software-test-utils.hello-world": "workspace:*",
-        "@platforma-open/milaboratories.software-test-utils.runenv-java-stub": "workspace:*",
         "@platforma-open/milaboratories.software-test-utils.java-stub": "workspace:*",
-        "@platforma-open/milaboratories.software-test-utils.runenv-python-stub": "workspace:*",
         "@platforma-open/milaboratories.software-test-utils.python-stub": "workspace:*",
         "@platforma-open/milaboratories.software-test-utils.read-with-sleep": "workspace:*",
-        "@platforma-open/milaboratories.software-test-utils.docker-images": "workspace:*",
-        "@platforma-open/milaboratories.software-small-binaries.small-asset": "workspace:*",
-        "@platforma-open/milaboratories.software-small-binaries.sleep": "workspace:*"
+        "@platforma-open/milaboratories.software-test-utils.runenv-java-stub": "workspace:*",
+        "@platforma-open/milaboratories.software-test-utils.runenv-python-stub": "workspace:*",
+        "@platforma-open/milaboratories.software-test-utils.sleep": "workspace:*",
+        "@platforma-open/milaboratories.software-test-utils.small-asset": "workspace:*"
     },
     "devDependencies": {
         "@platforma-sdk/package-builder": "catalog:"

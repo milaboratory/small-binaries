@@ -8,8 +8,11 @@
     },
     "block-software": {
         "entrypoints": {
-            "sleep": {
-                "reference": "@platforma-open/milaboratories.software-small-binaries.sleep/dist/tengo/software/main.sw.json"
+            "hello-world": {
+                "reference": "@platforma-open/milaboratories.software-small-binaries.hello-world/dist/tengo/software/main.sw.json"
+            },
+            "hello-world-py": {
+                "reference": "@platforma-open/milaboratories.software-small-binaries.hello-world-py/dist/tengo/software/main.sw.json"
             },
             "mnz-client": {
                 "reference": "@platforma-open/milaboratories.software-small-binaries.mnz-client/dist/tengo/software/main.sw.json"
@@ -24,7 +27,8 @@
     ],
     "license": "UNLICENSED",
     "dependencies": {
-        "@platforma-open/milaboratories.software-small-binaries.sleep": "workspace:*",
+        "@platforma-open/milaboratories.software-small-binaries.hello-world": "workspace:*",
+        "@platforma-open/milaboratories.software-small-binaries.hello-world-py": "workspace:*",
         "@platforma-open/milaboratories.software-small-binaries.mnz-client": "workspace:*",
         "@platforma-open/milaboratories.software-small-binaries.table-converter": "workspace:*"
     },

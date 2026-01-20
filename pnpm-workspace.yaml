@@ -7,15 +7,15 @@ packages:
   #
   # Utility functions for tests
   #
-  - test-utils/read-with-sleep
-  - test-utils/hello-world
-  - test-utils/guided-command
-  - test-utils/runenv-java-stub
-  - test-utils/java-stub
-  - test-utils/runenv-python-stub
-  - test-utils/python-stub
-  - test-utils/hello-world-py
   - test-utils/docker-images
+  - test-utils/guided-command
+  - test-utils/hello-world
+  - test-utils/hello-world-py
+  - test-utils/java-stub
+  - test-utils/python-stub
+  - test-utils/read-with-sleep
+  - test-utils/runenv-java-stub
+  - test-utils/runenv-python-stub
 
   #
   # Production CLI instruments for use in workflows

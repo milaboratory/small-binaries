@@ -38,6 +38,9 @@
             "read-file-to-stdout-with-sleep": {
                 "reference": "@platforma-open/milaboratories.software-test-utils.read-with-sleep/dist/tengo/software/main.sw.json"
             },
+            "docker-only": {
+                "reference": "@platforma-open/milaboratories.software-test-utils.docker-images/dist/tengo/software/docker-only.sw.json"
+            },
             "docker-true-ep": {
                 "reference": "@platforma-open/milaboratories.software-test-utils.docker-images/dist/tengo/software/always-true-ep.sw.json"
             },

@@ -38,12 +38,15 @@ importers:
 
   catalogue:
     dependencies:
+      '@platforma-open/milaboratories.software-small-binaries.hello-world':
+        specifier: workspace:*
+        version: link:../hello-world
+      '@platforma-open/milaboratories.software-small-binaries.hello-world-py':
+        specifier: workspace:*
+        version: link:../hello-world-py
       '@platforma-open/milaboratories.software-small-binaries.mnz-client':
         specifier: workspace:*
         version: link:../mnz-client
-      '@platforma-open/milaboratories.software-small-binaries.sleep':
-        specifier: workspace:*
-        version: link:../sleep
       '@platforma-open/milaboratories.software-small-binaries.table-converter':
         specifier: workspace:*
         version: link:../table-converter
@@ -54,24 +57,18 @@ importers:
 
   catalogue-tests:
     dependencies:
-      '@platforma-open/milaboratories.software-small-binaries.sleep':
+      '@platforma-open/milaboratories.software-small-binaries.hello-world':
         specifier: workspace:*
-        version: link:../sleep
-      '@platforma-open/milaboratories.software-small-binaries.small-asset':
+        version: link:../hello-world
+      '@platforma-open/milaboratories.software-small-binaries.hello-world-py':
         specifier: workspace:*
-        version: link:../small-asset
+        version: link:../hello-world-py
       '@platforma-open/milaboratories.software-test-utils.docker-images':
         specifier: workspace:*
         version: link:../test-utils/docker-images
       '@platforma-open/milaboratories.software-test-utils.guided-command':
         specifier: workspace:*
         version: link:../test-utils/guided-command
-      '@platforma-open/milaboratories.software-test-utils.hello-world':
-        specifier: workspace:*
-        version: link:../test-utils/hello-world
-      '@platforma-open/milaboratories.software-test-utils.hello-world-py':
-        specifier: workspace:*
-        version: link:../test-utils/hello-world-py
       '@platforma-open/milaboratories.software-test-utils.java-stub':
         specifier: workspace:*
         version: link:../test-utils/java-stub
@@ -87,24 +84,33 @@ importers:
       '@platforma-open/milaboratories.software-test-utils.runenv-python-stub':
         specifier: workspace:*
         version: link:../test-utils/runenv-python-stub
+      '@platforma-open/milaboratories.software-test-utils.sleep':
+        specifier: workspace:*
+        version: link:../test-utils/sleep
+      '@platforma-open/milaboratories.software-test-utils.small-asset':
+        specifier: workspace:*
+        version: link:../test-utils/small-asset
     devDependencies:
+      '@platforma-sdk/package-builder':
+        specifier: 'catalog:'
+        version: 3.11.0
+
+  hello-world:
+    devDependencies:
+      '@platforma-sdk/package-builder':
+        specifier: 'catalog:'
+        version: 3.11.0
+
+  hello-world-py:
+    devDependencies:
+      '@platforma-open/milaboratories.runenv-python-3':
+        specifier: 'catalog:'
+        version: 1.7.5
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
         version: 3.11.0
 
   mnz-client:
-    devDependencies:
-      '@platforma-sdk/package-builder':
-        specifier: 'catalog:'
-        version: 3.11.0
-
-  sleep:
-    devDependencies:
-      '@platforma-sdk/package-builder':
-        specifier: 'catalog:'
-        version: 3.11.0
-
-  small-asset:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
@@ -124,21 +130,6 @@ importers:
 
   test-utils/guided-command:
     devDependencies:
-      '@platforma-sdk/package-builder':
-        specifier: 'catalog:'
-        version: 3.11.0
-
-  test-utils/hello-world:
-    devDependencies:
-      '@platforma-sdk/package-builder':
-        specifier: 'catalog:'
-        version: 3.11.0
-
-  test-utils/hello-world-py:
-    devDependencies:
-      '@platforma-open/milaboratories.runenv-python-3':
-        specifier: 'catalog:'
-        version: 1.7.5
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
         version: 3.11.0
@@ -174,6 +165,18 @@ importers:
         version: 3.11.0
 
   test-utils/runenv-python-stub:
+    devDependencies:
+      '@platforma-sdk/package-builder':
+        specifier: 'catalog:'
+        version: 3.11.0
+
+  test-utils/sleep:
+    devDependencies:
+      '@platforma-sdk/package-builder':
+        specifier: 'catalog:'
+        version: 3.11.0
+
+  test-utils/small-asset:
     devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
@@ -3296,4 +3299,3 @@ snapshots:
       readable-stream: 4.7.0
 
   zod@4.1.12: {}
-

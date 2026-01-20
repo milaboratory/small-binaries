@@ -1,26 +1,22 @@
 packages:
   #
-  # Assets
-  #
-  - small-asset
-
-  #
-  # Utility functions for tests
+  # Utility functions and assets for tests
   #
   - test-utils/docker-images
   - test-utils/guided-command
-  - test-utils/hello-world
-  - test-utils/hello-world-py
   - test-utils/java-stub
   - test-utils/python-stub
   - test-utils/read-with-sleep
   - test-utils/runenv-java-stub
   - test-utils/runenv-python-stub
+  - test-utils/sleep
+  - test-utils/small-asset
 
   #
   # Production CLI instruments for use in workflows
   #
-  - sleep
+  - hello-world
+  - hello-world-py
   - table-converter
   - mnz-client
 

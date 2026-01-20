@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.hello-world-py
 
+## 1.0.9
+
+### Patch Changes
+
+- 34c1717: Adjust with check-network tool: hello world is actually prod software
+
 ## 1.0.8
 
 ### Patch Changes

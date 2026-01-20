@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.small-asset
 
+## 1.1.6
+
+### Patch Changes
+
+- 34c1717: Adjust with check-network tool: hello world is actually prod software
+
 ## 1.1.5
 
 ### Patch Changes

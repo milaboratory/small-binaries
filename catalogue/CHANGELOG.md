@@ -1,5 +1,14 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 2.0.1
+
+### Patch Changes
+
+- 34c1717: Adjust with check-network tool: hello world is actually prod software
+- Updated dependencies [34c1717]
+  - @platforma-open/milaboratories.software-small-binaries.hello-world-py@1.0.9
+  - @platforma-open/milaboratories.software-small-binaries.hello-world@1.1.4
+
 ## 2.0.0
 
 ### Major Changes

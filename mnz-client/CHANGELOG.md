@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.6.3
+
+### Patch Changes
+
+- 4409a69: Switch base image from alpine:3 to ubuntu:24.04
+
 ## 1.6.2
 
 ### Patch Changes

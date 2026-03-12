@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.sleep
 
+## 1.1.4
+
+### Patch Changes
+
+- 4409a69: Switch base image from alpine:3 to ubuntu:24.04
+
 ## 1.1.3
 
 ### Patch Changes

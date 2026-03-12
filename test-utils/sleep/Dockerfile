@@ -1,3 +1,3 @@
-FROM alpine:3
+FROM ubuntu:24.04
 
 COPY ./ /app

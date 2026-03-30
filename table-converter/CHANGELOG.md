@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.table-converter
 
+## 1.3.4
+
+### Patch Changes
+
+- b1e1588: bump package builder
+
 ## 1.3.3
 
 ### Patch Changes

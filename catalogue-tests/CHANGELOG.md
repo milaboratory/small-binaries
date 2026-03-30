@@ -1,5 +1,15 @@
 # @platforma-open/milaboratories.software-test-utils
 
+## 1.1.5
+
+### Patch Changes
+
+- Updated dependencies [b1e1588]
+  - @platforma-open/milaboratories.software-test-utils.read-with-sleep@1.1.5
+  - @platforma-open/milaboratories.software-test-utils.guided-command@1.1.5
+  - @platforma-open/milaboratories.software-test-utils.sleep@1.1.5
+  - @platforma-open/milaboratories.software-small-binaries.hello-world@1.1.6
+
 ## 1.1.4
 
 ### Patch Changes

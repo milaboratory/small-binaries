@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.hello-world
 
+## 1.1.6
+
+### Patch Changes
+
+- b1e1588: bump package builder
+
 ## 1.1.5
 
 ### Patch Changes

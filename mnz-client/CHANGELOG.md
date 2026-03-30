@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.6.4
+
+### Patch Changes
+
+- b1e1588: bump package builder
+
 ## 1.6.3
 
 ### Patch Changes

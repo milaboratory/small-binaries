@@ -1,5 +1,14 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 2.0.3
+
+### Patch Changes
+
+- Updated dependencies [b1e1588]
+  - @platforma-open/milaboratories.software-small-binaries.table-converter@1.3.4
+  - @platforma-open/milaboratories.software-small-binaries.hello-world@1.1.6
+  - @platforma-open/milaboratories.software-small-binaries.mnz-client@1.6.4
+
 ## 2.0.2
 
 ### Patch Changes

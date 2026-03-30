@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-test-utils
 
+## 1.1.3
+
+### Patch Changes
+
+- 63b68d3: bump test image version
+
 ## 1.1.2
 
 ### Patch Changes

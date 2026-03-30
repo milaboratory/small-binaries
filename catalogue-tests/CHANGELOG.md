@@ -1,5 +1,12 @@
 # @platforma-open/milaboratories.software-test-utils
 
+## 1.1.4
+
+### Patch Changes
+
+- Updated dependencies [934b370]
+  - @platforma-open/milaboratories.software-test-utils.docker-images@1.1.1
+
 ## 1.1.3
 
 ### Patch Changes

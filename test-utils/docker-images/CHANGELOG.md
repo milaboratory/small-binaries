@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-test-utils.docker-images
 
+## 1.1.1
+
+### Patch Changes
+
+- 934b370: trigger docker image rebuild
+
 ## 1.1.0
 
 ### Minor Changes

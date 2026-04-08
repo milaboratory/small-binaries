@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.hello-world-py
 
+## 1.0.10
+
+### Patch Changes
+
+- cca83eb: trigger docker build
+
 ## 1.0.9
 
 ### Patch Changes

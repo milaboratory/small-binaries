@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.table-converter
 
+## 1.3.5
+
+### Patch Changes
+
+- cca83eb: trigger docker build
+
 ## 1.3.4
 
 ### Patch Changes

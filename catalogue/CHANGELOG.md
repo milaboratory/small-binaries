@@ -1,5 +1,16 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 2.0.4
+
+### Patch Changes
+
+- cca83eb: trigger docker build
+- Updated dependencies [cca83eb]
+  - @platforma-open/milaboratories.software-small-binaries.hello-world@1.1.7
+  - @platforma-open/milaboratories.software-small-binaries.hello-world-py@1.0.10
+  - @platforma-open/milaboratories.software-small-binaries.mnz-client@1.6.5
+  - @platforma-open/milaboratories.software-small-binaries.table-converter@1.3.5
+
 ## 2.0.3
 
 ### Patch Changes

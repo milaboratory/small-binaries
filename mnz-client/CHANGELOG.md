@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.mnz-client
 
+## 1.6.5
+
+### Patch Changes
+
+- cca83eb: trigger docker build
+
 ## 1.6.4
 
 ### Patch Changes

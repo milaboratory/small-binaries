@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.java-stub
 
+## 1.0.6
+
+### Patch Changes
+
+- cca83eb: trigger docker build
+
 ## 1.0.5
 
 ### Patch Changes

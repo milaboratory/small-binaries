@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-test-utils.docker-images
 
+## 1.1.2
+
+### Patch Changes
+
+- cca83eb: trigger docker build
+
 ## 1.1.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.runenv-python-stub
 
+## 1.0.9
+
+### Patch Changes
+
+- cca83eb: trigger docker build
+
 ## 1.0.8
 
 ### Patch Changes

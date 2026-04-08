@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.sleep
 
+## 1.1.6
+
+### Patch Changes
+
+- cca83eb: trigger docker build
+
 ## 1.1.5
 
 ### Patch Changes

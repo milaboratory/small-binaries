@@ -75,6 +75,11 @@ func TestCountLines(t *testing.T) {
 		{"zstd", func(t *testing.T) string { return writeZstd(t, "a.txt.zst", []byte("1\n2\n3\n4\n")) }, 4},
 		// stdlib has no bzip2 writer, so read a committed fixture (3 lines).
 		{"bzip2_fixture", func(t *testing.T) string { return "testdata/sample.txt.bz2" }, 3},
+		// case-insensitive suffix detection: a compression extension in upper or
+		// mixed case must still trigger decompression (real-world inputs vary in
+		// casing). Without it the compressed bytes are read raw and miscounted.
+		{"gzip_uppercase_ext", func(t *testing.T) string { return writeGzip(t, "a.txt.GZ", []byte("x\ny\n")) }, 2},
+		{"zstd_mixedcase_ext", func(t *testing.T) string { return writeZstd(t, "a.txt.Zst", []byte("1\n2\n3\n4\n")) }, 4},
 		// boundary: an empty file has zero newlines.
 		{"empty", func(t *testing.T) string { return writeFile(t, "empty.txt", []byte("")) }, 0},
 		// CONTRACT: count is the number of '\n', so a final line with no

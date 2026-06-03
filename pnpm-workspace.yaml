@@ -18,6 +18,7 @@ packages:
   - hello-world
   - hello-world-py
   - table-converter
+  - line-counter
   - mnz-client
 
   - catalogue

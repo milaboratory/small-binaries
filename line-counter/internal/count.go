@@ -12,7 +12,8 @@ import (
 )
 
 // CountLines returns the number of '\n' bytes in the (optionally compressed) file.
-// Compression is inferred from the file extension: .gz, .bz2, .zst, else raw.
+// Compression is inferred from the file extension (case-insensitively): .gz,
+// .bz2, .zst, else raw.
 func CountLines(path string) (int64, error) {
 	f, err := os.Open(path)
 	if err != nil {
@@ -20,18 +21,21 @@ func CountLines(path string) (int64, error) {
 	}
 	defer f.Close()
 
+	// Match the suffix case-insensitively (real-world inputs use .GZ, .Zst, …);
+	// open() above still uses the original path.
+	ext := strings.ToLower(path)
 	var r io.Reader = f
 	switch {
-	case strings.HasSuffix(path, ".gz"):
+	case strings.HasSuffix(ext, ".gz"):
 		gz, err := gzip.NewReader(f)
 		if err != nil {
 			return 0, err
 		}
 		defer gz.Close()
 		r = gz
-	case strings.HasSuffix(path, ".bz2"):
+	case strings.HasSuffix(ext, ".bz2"):
 		r = bzip2.NewReader(f)
-	case strings.HasSuffix(path, ".zst"):
+	case strings.HasSuffix(ext, ".zst"):
 		zr, err := zstd.NewReader(f)
 		if err != nil {
 			return 0, err

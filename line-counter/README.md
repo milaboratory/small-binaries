@@ -12,6 +12,6 @@ Usage:
 
 Counts the number of lines (`'\n'` bytes) in `--input` and writes the exact
 count as a base-10 integer (no trailing newline) into `--output`. Compression
-is inferred from the input file extension: `.gz`, `.bz2`, `.zst`, otherwise the
-file is read as-is. The file is streamed, so memory usage is O(1) regardless of
-file size.
+is inferred (case-insensitively) from the input file extension: `.gz`, `.bz2`,
+`.zst`, otherwise the file is read as-is. The file is streamed, so memory usage
+is O(1) regardless of file size.

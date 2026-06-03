@@ -44,6 +44,9 @@ importers:
       '@platforma-open/milaboratories.software-small-binaries.hello-world-py':
         specifier: workspace:*
         version: link:../hello-world-py
+      '@platforma-open/milaboratories.software-small-binaries.line-counter':
+        specifier: workspace:*
+        version: link:../line-counter
       '@platforma-open/milaboratories.software-small-binaries.mnz-client':
         specifier: workspace:*
         version: link:../mnz-client

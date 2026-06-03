@@ -19,6 +19,9 @@
             },
             "table-converter": {
                 "reference": "@platforma-open/milaboratories.software-small-binaries.table-converter/dist/tengo/software/main.sw.json"
+            },
+            "line-counter": {
+                "reference": "@platforma-open/milaboratories.software-small-binaries.line-counter/dist/tengo/software/main.sw.json"
             }
         }
     },
@@ -30,7 +33,8 @@
         "@platforma-open/milaboratories.software-small-binaries.hello-world": "workspace:*",
         "@platforma-open/milaboratories.software-small-binaries.hello-world-py": "workspace:*",
         "@platforma-open/milaboratories.software-small-binaries.mnz-client": "workspace:*",
-        "@platforma-open/milaboratories.software-small-binaries.table-converter": "workspace:*"
+        "@platforma-open/milaboratories.software-small-binaries.table-converter": "workspace:*",
+        "@platforma-open/milaboratories.software-small-binaries.line-counter": "workspace:*"
     },
     "devDependencies": {
         "@platforma-sdk/package-builder": "catalog:"

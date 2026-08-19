@@ -10,6 +10,24 @@
   "block-software": {
     "entrypoints": {
       "main": {
+        "docker": {
+          "artifact": {
+            "type": "docker",
+            "dockerfile": "Dockerfile",
+            "context": "docker/",
+            "pkg": "/app"
+          },
+          "cmd": [
+            "java",
+            "-cp",
+            "{pkg}",
+            "Report",
+            "java",
+            "got fake java by dependency",
+            "pkg={pkg}",
+            "java=/opt/java/openjdk/bin/java"
+          ]
+        },
         "binary": {
           "artifact": {
             "type": "java",

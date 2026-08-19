@@ -10,6 +10,22 @@
   "block-software": {
     "entrypoints": {
       "main": {
+        "docker": {
+          "artifact": {
+            "type": "docker",
+            "dockerfile": "Dockerfile",
+            "context": "docker/",
+            "pkg": "/app"
+          },
+          "cmd": [
+            "python",
+            "{pkg}/report.py",
+            "python",
+            "got fake python by dependency",
+            "pkg={pkg}",
+            "python=/usr/local/bin/python"
+          ]
+        },
         "binary": {
           "artifact": {
             "type": "python",

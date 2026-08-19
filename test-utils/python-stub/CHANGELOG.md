@@ -1,5 +1,16 @@
 # @platforma-open/milaboratories.software-small-binaries.python-stub
 
+## 1.0.7
+
+### Patch Changes
+
+- 8668eb1: Add a `docker` entrypoint to the python and java stub packages, so tests that
+  run them work on runners without local binary execution (Kubernetes).
+
+  The images run real python and real java. They print the same command line
+  report as the fake run environments of the binary distribution, byte for byte,
+  so the output contract of the consuming tests does not change.
+
 ## 1.0.6
 
 ### Patch Changes

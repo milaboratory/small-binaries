@@ -44,6 +44,9 @@
             "docker-true-ep": {
                 "reference": "@platforma-open/milaboratories.software-test-utils.docker-images/dist/tengo/software/always-true-ep.sw.json"
             },
+            "shell": {
+                "reference": "@platforma-open/milaboratories.software-test-utils.docker-images/dist/tengo/software/shell.sw.json"
+            },
             "docker-true-cmd": {
                 "reference": "@platforma-open/milaboratories.software-test-utils.docker-images/dist/tengo/software/always-true-cmd.sw.json"
             }

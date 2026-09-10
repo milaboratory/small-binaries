@@ -52,6 +52,24 @@
           ]
         }
       },
+      "shell": {
+        "binary": {
+          "artifact": "true",
+          "cmd": [
+            "sh"
+          ]
+        },
+        "docker": {
+          "artifact": {
+            "type": "docker",
+            "dockerfile": "Dockerfile-busybox",
+            "context": "./src/"
+          },
+          "cmd": [
+            "sh"
+          ]
+        }
+      },
       "always-true-cmd": {
         "binary": {
           "artifact": "true",

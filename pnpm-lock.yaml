@@ -44,6 +44,9 @@ importers:
       '@platforma-open/milaboratories.software-small-binaries.hello-world-py':
         specifier: workspace:*
         version: link:../hello-world-py
+      '@platforma-open/milaboratories.software-small-binaries.job-wrapper':
+        specifier: workspace:*
+        version: link:../job-wrapper
       '@platforma-open/milaboratories.software-small-binaries.line-counter':
         specifier: workspace:*
         version: link:../line-counter
@@ -109,6 +112,12 @@ importers:
       '@platforma-open/milaboratories.runenv-python-3':
         specifier: 'catalog:'
         version: 1.7.5
+      '@platforma-sdk/package-builder':
+        specifier: 'catalog:'
+        version: 3.11.6
+
+  job-wrapper:
+    devDependencies:
       '@platforma-sdk/package-builder':
         specifier: 'catalog:'
         version: 3.11.6

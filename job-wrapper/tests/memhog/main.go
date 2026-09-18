@@ -3,6 +3,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"os"
@@ -22,8 +23,9 @@ func main() {
 	fmt.Printf("memhog: pid=%d mb=%d hold=%s spin=%v\n", os.Getpid(), *mb, *hold, *spin)
 
 	if *orphan {
-		cmd := exec.Command("sh", "-c", "sleep 0.2 &")
-		if err := cmd.Run(); err != nil {
+		cmd := exec.CommandContext(context.Background(), "sh", "-c", "sleep 0.2 &")
+		err := cmd.Run()
+		if err != nil {
 			fmt.Fprintln(os.Stderr, "memhog: orphan spawn:", err)
 		}
 	}
@@ -41,7 +43,7 @@ func main() {
 	if *spin {
 		x := uint64(0)
 		for time.Now().Before(deadline) {
-			for i := 0; i < 1_000_000; i++ {
+			for range 1_000_000 {
 				x = x*6364136223846793005 + 1442695040888963407
 			}
 		}

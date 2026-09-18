@@ -12,7 +12,11 @@ func TestSplit(t *testing.T) {
 		want []string
 	}{
 		{"plain", "mixcr align -s hs in.fq out.vdjca", []string{"mixcr", "align", "-s", "hs", "in.fq", "out.vdjca"}},
-		{"backend quoting", `'/pkg/mixcr' 'align' '--threads' '4' 'file with space.fq'`, []string{"/pkg/mixcr", "align", "--threads", "4", "file with space.fq"}},
+		{
+			"backend quoting",
+			`'/pkg/mixcr' 'align' '--threads' '4' 'file with space.fq'`,
+			[]string{"/pkg/mixcr", "align", "--threads", "4", "file with space.fq"},
+		},
 		{"escaped single quote", `'it'\''s' 'x'`, []string{"it's", "x"}},
 		{"double quotes", `"a b" "c\"d" "$HOME"`, []string{"a b", `c"d`, "$HOME"}},
 		{"backslash outside quotes", `a\ b c`, []string{"a b", "c"}},
@@ -36,7 +40,8 @@ func TestSplit(t *testing.T) {
 
 func TestSplitUnterminated(t *testing.T) {
 	for _, in := range []string{`'abc`, `"abc`, `a 'b`} {
-		if _, err := Split(in); err == nil {
+		_, err := Split(in)
+		if err == nil {
 			t.Errorf("Split(%q): expected error", in)
 		}
 	}

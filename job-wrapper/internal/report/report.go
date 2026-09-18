@@ -75,6 +75,7 @@ type Usage struct {
 // CPUUsage extends Usage with cgroup CPU totals.
 type CPUUsage struct {
 	Usage
+
 	UsageSeconds     float64 `json:"usageSeconds"`
 	ThrottledSeconds float64 `json:"throttledSeconds"`
 	ThrottledPeriods uint64  `json:"throttledPeriods"`

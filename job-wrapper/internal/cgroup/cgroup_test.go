@@ -10,10 +10,12 @@ import (
 func write(t *testing.T, dir, name, content string) {
 	t.Helper()
 	p := filepath.Join(dir, name)
-	if err := os.MkdirAll(filepath.Dir(p), 0o750); err != nil {
+	err := os.MkdirAll(filepath.Dir(p), 0o750)
+	if err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(p, []byte(content), 0o600); err != nil {
+	err = os.WriteFile(p, []byte(content), 0o600)
+	if err != nil {
 		t.Fatal(err)
 	}
 }
@@ -37,7 +39,8 @@ func v2Fixture(t *testing.T) (dir, proc string) {
 	write(t, dir, "memory.max", "536870912\n")
 	write(t, dir, "memory.stat", "anon 90000000\nfile 14857600\ninactive_file 4857600\nactive_file 10000000\n")
 	write(t, dir, "memory.events", "low 0\nhigh 0\nmax 3\noom 1\noom_kill 1\noom_group_kill 0\n")
-	write(t, dir, "cpu.stat", "usage_usec 2500000\nuser_usec 2000000\nsystem_usec 500000\nnr_periods 30\nnr_throttled 2\nthrottled_usec 150000\n")
+	write(t, dir, "cpu.stat",
+		"usage_usec 2500000\nuser_usec 2000000\nsystem_usec 500000\nnr_periods 30\nnr_throttled 2\nthrottled_usec 150000\n")
 	write(t, dir, "cpu.max", "200000 100000\n")
 	write(t, dir, "cgroup.procs", "1\n42\n43\n")
 	fakeProc(t, proc, map[int][2]uint64{1: {5, 5}, 42: {1000, 200}, 43: {300, 100}})
@@ -115,7 +118,8 @@ func TestV2IOTrackerSurvivesProcessExit(t *testing.T) {
 
 	// 43 exits, 42 keeps reading, 44 appears.
 	write(t, dir, "cgroup.procs", "42\n44\n")
-	if err := os.RemoveAll(filepath.Join(proc, "43")); err != nil {
+	err := os.RemoveAll(filepath.Join(proc, "43"))
+	if err != nil {
 		t.Fatal(err)
 	}
 	fakeProc(t, proc, map[int][2]uint64{42: {200, 10}, 44: {7, 7}})
@@ -149,7 +153,8 @@ func TestV1Read(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if st.Memory.Current != 3000 || st.Memory.Peak != 5000 || !st.Memory.HasPeak || st.Memory.InactiveFile != 40 || st.Memory.OOMKills != 2 {
+	if st.Memory.Current != 3000 || st.Memory.Peak != 5000 || !st.Memory.HasPeak ||
+		st.Memory.InactiveFile != 40 || st.Memory.OOMKills != 2 {
 		t.Errorf("memory: %+v", *st.Memory)
 	}
 	if st.CPU.UsageUsec != 4000000 || st.CPU.NrThrottled != 3 || st.CPU.ThrottledUsec != 9000 {
@@ -211,7 +216,9 @@ func TestDiscoverV1(t *testing.T) {
 		t.Fatal(err)
 	}
 	info := src.Info()
-	if info.Version != 1 || info.Path != filepath.Join(sysfs, "memory", "docker", "abc") || info.CPUPath != filepath.Join(sysfs, "cpu,cpuacct", "docker", "abc") {
+	wantMem := filepath.Join(sysfs, "memory", "docker", "abc")
+	wantCPU := filepath.Join(sysfs, "cpu,cpuacct", "docker", "abc")
+	if info.Version != 1 || info.Path != wantMem || info.CPUPath != wantCPU {
 		t.Errorf("info: %+v", info)
 	}
 }
@@ -220,16 +227,25 @@ func TestDiscoverUnavailable(t *testing.T) {
 	sysfs := t.TempDir()
 	proc := t.TempDir()
 	write(t, proc, "self/cgroup", "0::/\n")
-	if _, err := Discover(DiscoverOptions{SysFS: sysfs, ProcRoot: proc}); err == nil {
+	_, err := Discover(DiscoverOptions{SysFS: sysfs, ProcRoot: proc})
+	if err == nil {
 		t.Fatal("expected an error when no cgroup files exist")
 	}
-	if _, err := Discover(DiscoverOptions{SysFS: sysfs, ProcRoot: t.TempDir()}); err == nil {
+	_, err = Discover(DiscoverOptions{SysFS: sysfs, ProcRoot: t.TempDir()})
+	if err == nil {
 		t.Fatal("expected an error when /proc/self/cgroup is missing")
 	}
 }
 
 func TestParseCPUQuota(t *testing.T) {
-	cases := map[string]uint64{"max 100000": 0, "100000 100000": 1000, "50000 100000": 500, "250000 100000": 2500, "garbage": 0, "1 0": 0}
+	cases := map[string]uint64{
+		"max 100000":    0,
+		"100000 100000": 1000,
+		"50000 100000":  500,
+		"250000 100000": 2500,
+		"garbage":       0,
+		"1 0":           0,
+	}
 	for in, want := range cases {
 		if got := parseCPUQuota(in); got != want {
 			t.Errorf("parseCPUQuota(%q) = %d, want %d", in, got, want)

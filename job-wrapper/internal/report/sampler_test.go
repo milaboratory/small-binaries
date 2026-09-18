@@ -45,10 +45,22 @@ func TestSamplerPeaksSeriesAndPoints(t *testing.T) {
 		{Memory: mem(10, 2), CPU: &cgroup.CPUStats{UsageUsec: 0}, IO: &cgroup.IOStats{ReadBytes: 0, WriteBytes: 0}},
 		// ticks: 1s apart; CPU 500m then 1000m; RAM climbs to 100 and drops; IO 10 B/s read
 		{Memory: mem(50, 5), CPU: &cgroup.CPUStats{UsageUsec: 500_000}, IO: &cgroup.IOStats{ReadBytes: 10}},
-		{Memory: mem(100, 20), CPU: &cgroup.CPUStats{UsageUsec: 1_500_000}, IO: &cgroup.IOStats{ReadBytes: 20, WriteBytes: 5}},
-		{Memory: mem(30, 0), CPU: &cgroup.CPUStats{UsageUsec: 1_600_000, NrThrottled: 2, ThrottledUsec: 250_000}, IO: &cgroup.IOStats{ReadBytes: 20, WriteBytes: 5}},
+		{
+			Memory: mem(100, 20),
+			CPU:    &cgroup.CPUStats{UsageUsec: 1_500_000},
+			IO:     &cgroup.IOStats{ReadBytes: 20, WriteBytes: 5},
+		},
+		{
+			Memory: mem(30, 0),
+			CPU:    &cgroup.CPUStats{UsageUsec: 1_600_000, NrThrottled: 2, ThrottledUsec: 250_000},
+			IO:     &cgroup.IOStats{ReadBytes: 20, WriteBytes: 5},
+		},
 		// finish
-		{Memory: &cgroup.MemoryStats{Current: 20, OOMKills: 1}, CPU: &cgroup.CPUStats{UsageUsec: 1_700_000, NrThrottled: 2, ThrottledUsec: 250_000}, IO: &cgroup.IOStats{ReadBytes: 20, WriteBytes: 5}},
+		{
+			Memory: &cgroup.MemoryStats{Current: 20, OOMKills: 1},
+			CPU:    &cgroup.CPUStats{UsageUsec: 1_700_000, NrThrottled: 2, ThrottledUsec: 250_000},
+			IO:     &cgroup.IOStats{ReadBytes: 20, WriteBytes: 5},
+		},
 	}}
 	s := NewSampler(src, time.Second, 240)
 	s.Start(t0)
@@ -93,7 +105,8 @@ func TestSamplerPeaksSeriesAndPoints(t *testing.T) {
 	if r.DiskIO == nil || r.DiskIO.Read.Peak != 10 || r.DiskIO.Write.Peak != 5 {
 		t.Errorf("disk io: %+v", r.DiskIO)
 	}
-	if r.Points.Start == nil || r.Points.Start.RAM != 10 || r.Points.Start.RAMWorkingSet != 8 || r.Points.Start.At != t0.UnixMilli() {
+	if r.Points.Start == nil || r.Points.Start.RAM != 10 || r.Points.Start.RAMWorkingSet != 8 ||
+		r.Points.Start.At != t0.UnixMilli() {
 		t.Errorf("start point: %+v", r.Points.Start)
 	}
 	if r.Points.End == nil || r.Points.End.RAM != 20 || r.Points.End.CPUUsageSeconds != 1.7 {
@@ -218,12 +231,19 @@ func TestWriteAtomic(t *testing.T) {
 	dir := t.TempDir()
 	path := filepath.Join(dir, ".pl", "usage.json")
 	code := 3
-	r := &Report{Version: Version, State: StateFinished, ExitCode: &code, Wrapper: Wrapper{Name: "job-wrapper", Version: "test"}}
+	r := &Report{
+		Version:  Version,
+		State:    StateFinished,
+		ExitCode: &code,
+		Wrapper:  Wrapper{Name: "job-wrapper", Version: "test"},
+	}
 
-	if err := WriteAtomic(path, r); err != nil {
+	err := WriteAtomic(path, r)
+	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := os.Stat(path + ".tmp"); !os.IsNotExist(err) {
+	_, err = os.Stat(path + ".tmp")
+	if !os.IsNotExist(err) {
 		t.Error("temporary file must not survive the rename")
 	}
 	got, err := Read(path)
@@ -239,7 +259,8 @@ func TestWriteAtomic(t *testing.T) {
 	}
 
 	r.State = StateRunning
-	if err := WriteAtomic(path, r); err != nil {
+	err = WriteAtomic(path, r)
+	if err != nil {
 		t.Fatal(err)
 	}
 	got, _ = Read(path)

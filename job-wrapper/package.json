@@ -5,6 +5,7 @@
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",
     "build": "CGO_ENABLED=0 GO_LDFLAGS=\"-s -w -X main.version=${npm_package_version:-dev}\" ../scripts/build.sh './cmd/job-wrapper' 'job-wrapper' && pl-pkg build --all-platforms",
+    "lint": "golangci-lint run",
     "test": "./test.sh",
     "prepublishOnly": "pl-pkg prepublish"
   },

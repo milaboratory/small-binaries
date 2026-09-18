@@ -3,6 +3,7 @@
 package tests
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os"
@@ -40,7 +41,8 @@ func TestMain(m *testing.M) {
 	if runtime.GOOS == "windows" {
 		hostBin += ".exe"
 	}
-	if err := goBuild(hostBin, "./cmd/job-wrapper", "", ""); err != nil {
+	err = goBuild(hostBin, "./cmd/job-wrapper", "", "")
+	if err != nil {
 		fmt.Fprintln(os.Stderr, "building job-wrapper:", err)
 		os.Exit(1)
 	}
@@ -50,14 +52,15 @@ func TestMain(m *testing.M) {
 }
 
 func goBuild(out, pkg, goos, goarch string) error {
-	cmd := exec.Command("go", "build", "-ldflags", "-X main.version=test", "-o", out, pkg)
+	cmd := exec.CommandContext(context.Background(), "go", "build", "-ldflags", "-X main.version=test", "-o", out, pkg)
 	cmd.Dir = moduleRt
 	cmd.Env = append(os.Environ(), "CGO_ENABLED=0")
 	if goos != "" {
 		cmd.Env = append(cmd.Env, "GOOS="+goos, "GOARCH="+goarch)
 	}
-	if outb, err := cmd.CombinedOutput(); err != nil {
-		return fmt.Errorf("%v: %s", err, outb)
+	outb, err := cmd.CombinedOutput()
+	if err != nil {
+		return fmt.Errorf("%w: %s", err, outb)
 	}
 	return nil
 }
@@ -70,7 +73,7 @@ type result struct {
 // runWrapper executes the host binary with a clean environment (PATH and HOME only) plus env.
 func runWrapper(t *testing.T, env map[string]string, args ...string) result {
 	t.Helper()
-	cmd := exec.Command(hostBin, args...)
+	cmd := exec.CommandContext(t.Context(), hostBin, args...)
 	cmd.Env = []string{"PATH=" + os.Getenv("PATH"), "HOME=" + os.Getenv("HOME")}
 	for k, v := range env {
 		cmd.Env = append(cmd.Env, k+"="+v)
@@ -105,7 +108,8 @@ func exists(p string) bool {
 
 func mkdir(t *testing.T, p string) string {
 	t.Helper()
-	if err := os.MkdirAll(p, 0o750); err != nil {
+	err := os.MkdirAll(p, 0o750)
+	if err != nil {
 		t.Fatal(err)
 	}
 	return p
@@ -114,7 +118,8 @@ func mkdir(t *testing.T, p string) string {
 func writeFile(t *testing.T, p, content string, mode os.FileMode) {
 	t.Helper()
 	mkdir(t, filepath.Dir(p))
-	if err := os.WriteFile(p, []byte(content), mode); err != nil {
+	err := os.WriteFile(p, []byte(content), mode)
+	if err != nil {
 		t.Fatal(err)
 	}
 }

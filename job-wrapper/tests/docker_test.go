@@ -1,12 +1,15 @@
 package tests
 
 import (
+	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"math/rand"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"sync"
 	"testing"
@@ -36,16 +39,16 @@ func dockerEnabled(t *testing.T) {
 var (
 	linuxOnce sync.Once
 	linuxDir  string
-	linuxErr  error
+	errLinux  error
 )
 
 // linuxBinaries cross-compiles job-wrapper and memhog for the Docker daemon's architecture.
 func linuxBinaries(t *testing.T) string {
 	t.Helper()
 	linuxOnce.Do(func() {
-		out, err := exec.Command("docker", "info", "--format", "{{.Architecture}}").Output()
+		out, err := exec.CommandContext(t.Context(), "docker", "info", "--format", "{{.Architecture}}").Output()
 		if err != nil {
-			linuxErr = fmt.Errorf("docker info: %w", err)
+			errLinux = fmt.Errorf("docker info: %w", err)
 			return
 		}
 		arch := strings.TrimSpace(string(out))
@@ -55,26 +58,27 @@ func linuxBinaries(t *testing.T) string {
 		case "aarch64", "arm64":
 			arch = "arm64"
 		default:
-			linuxErr = fmt.Errorf("unsupported docker architecture %q", arch)
+			errLinux = fmt.Errorf("unsupported docker architecture %q", arch)
 			return
 		}
 		linuxDir = filepath.Join(binDir, "linux-"+arch)
-		if err := os.MkdirAll(linuxDir, 0o755); err != nil {
-			linuxErr = err
+		errLinux = os.MkdirAll(linuxDir, 0o755)
+		if errLinux != nil {
 			return
 		}
 		for name, pkg := range map[string]string{"job-wrapper": "./cmd/job-wrapper", "memhog": "./tests/memhog"} {
 			p := filepath.Join(linuxDir, name)
-			if err := goBuild(p, pkg, "linux", arch); err != nil {
-				linuxErr = fmt.Errorf("building %s: %w", name, err)
+			err := goBuild(p, pkg, "linux", arch)
+			if err != nil {
+				errLinux = fmt.Errorf("building %s: %w", name, err)
 				return
 			}
 			_ = os.Chmod(p, 0o755)
 		}
-		_ = exec.Command("docker", "pull", "-q", dockerImage).Run()
+		_ = exec.CommandContext(t.Context(), "docker", "pull", "-q", dockerImage).Run()
 	})
-	if linuxErr != nil {
-		t.Fatal(linuxErr)
+	if errLinux != nil {
+		t.Fatal(errLinux)
 	}
 	return linuxDir
 }
@@ -82,20 +86,29 @@ func linuxBinaries(t *testing.T) string {
 // workDir is a host directory the container (uid 1010) can write to.
 func workDir(t *testing.T) string {
 	t.Helper()
-	dir, err := os.MkdirTemp(os.Getenv("JOB_WRAPPER_TEST_TMPDIR"), "jw-work-")
+	// Not t.TempDir(): files the container writes as uid 1010 can defeat its RemoveAll on Linux and
+	// fail the test in cleanup; this directory has a container-side fallback below.
+	dir, err := os.MkdirTemp(os.Getenv("JOB_WRAPPER_TEST_TMPDIR"), "jw-work-") //nolint:usetesting // see above
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := os.Chmod(dir, 0o777); err != nil {
+	err = os.Chmod(dir, 0o777)
+	if err != nil {
 		t.Fatal(err)
 	}
 	t.Cleanup(func() {
-		if err := os.RemoveAll(dir); err != nil {
-			// Files created by uid 1010 inside a directory the host user cannot write: let a
-			// container clean up.
-			_ = exec.Command("docker", "run", "--rm", "-v", dir+":/work", dockerImage, "sh", "-c", "rm -rf /work/.pl /work/*").Run()
-			_ = os.RemoveAll(dir)
+		err := os.RemoveAll(dir)
+		if err == nil {
+			return
 		}
+		// Files created by uid 1010 inside a directory the host user cannot write: let a container
+		// clean up. t.Context() is already cancelled in Cleanup, so this gets its own context.
+		cleanup := exec.CommandContext(
+			context.Background(),
+			"docker", "run", "--rm", "-v", dir+":/work", dockerImage, "sh", "-c", "rm -rf /work/.pl /work/*",
+		)
+		_ = cleanup.Run()
+		_ = os.RemoveAll(dir)
 	})
 	return dir
 }
@@ -121,16 +134,14 @@ func dockerArgs(bins, work string, extra []string, env map[string]string, wrappe
 func dockerRun(t *testing.T, bins, work string, extra []string, env map[string]string, wrapperArgs ...string) result {
 	t.Helper()
 	args := dockerArgs(bins, work, append([]string{"--rm"}, extra...), env, wrapperArgs...)
-	cmd := exec.Command("docker", args...)
+	cmd := exec.CommandContext(t.Context(), "docker", args...)
 	var out, errb strings.Builder
 	cmd.Stdout, cmd.Stderr = &out, &errb
 	err := cmd.Run()
 	code := 0
 	if err != nil {
 		var exitErr *exec.ExitError
-		if ee, ok := err.(*exec.ExitError); ok {
-			exitErr = ee
-		} else {
+		if !errors.As(err, &exitErr) {
 			t.Fatalf("docker run: %v", err)
 		}
 		code = exitErr.ExitCode()
@@ -139,26 +150,38 @@ func dockerRun(t *testing.T, bins, work string, extra []string, env map[string]s
 	return result{stdout: out.String(), stderr: errb.String(), exitCode: code}
 }
 
-func dockerStart(t *testing.T, bins, work string, extra []string, env map[string]string, wrapperArgs ...string) container {
+func dockerStart(
+	t *testing.T,
+	bins, work string,
+	extra []string,
+	env map[string]string,
+	wrapperArgs ...string,
+) container {
 	t.Helper()
 	name := fmt.Sprintf("jw-test-%d-%d", time.Now().UnixNano(), rand.Intn(1<<16))
 	args := dockerArgs(bins, work, append([]string{"-d", "--name", name}, extra...), env, wrapperArgs...)
-	if out, err := exec.Command("docker", args...).CombinedOutput(); err != nil {
+	out, err := exec.CommandContext(t.Context(), "docker", args...).CombinedOutput()
+	if err != nil {
 		t.Fatalf("docker run -d: %v: %s", err, out)
 	}
-	t.Cleanup(func() { _ = exec.Command("docker", "rm", "-f", name).Run() })
+	t.Cleanup(func() {
+		// t.Context() is already cancelled in Cleanup.
+		_ = exec.CommandContext(context.Background(), "docker", "rm", "-f", name).Run()
+	})
 	return container{name: name, work: work}
 }
 
 func (c container) wait(t *testing.T) int {
 	t.Helper()
-	out, err := exec.Command("docker", "wait", c.name).Output()
+	out, err := exec.CommandContext(t.Context(), "docker", "wait", c.name).Output()
 	if err != nil {
 		t.Fatalf("docker wait: %v", err)
 	}
-	var code int
-	fmt.Sscanf(strings.TrimSpace(string(out)), "%d", &code)
-	logs, _ := exec.Command("docker", "logs", c.name).CombinedOutput()
+	code, err := strconv.Atoi(strings.TrimSpace(string(out)))
+	if err != nil {
+		t.Fatalf("docker wait output %q: %v", out, err)
+	}
+	logs, _ := exec.CommandContext(t.Context(), "docker", "logs", c.name).CombinedOutput()
 	t.Logf("container %s exit=%d logs:\n%s", c.name, code, logs)
 	return code
 }
@@ -169,7 +192,10 @@ func readReport(t *testing.T, work string) *report.Report {
 	if err != nil {
 		t.Fatalf("reading report: %v", err)
 	}
-	b, _ := json.MarshalIndent(rep, "", "  ")
+	b, err := json.MarshalIndent(rep, "", "  ")
+	if err != nil {
+		t.Fatalf("marshalling report: %v", err)
+	}
 	t.Logf("report:\n%s", b)
 	return rep
 }
@@ -241,7 +267,8 @@ func TestDockerCollectsCPUAndRAM(t *testing.T) {
 	if rep.Duration == nil || *rep.Duration < 2.9 || *rep.Duration > 20 {
 		t.Errorf("duration = %v", rep.Duration)
 	}
-	if rep.Points.Start == nil || rep.Points.End == nil || rep.Points.End.CPUUsageSeconds <= rep.Points.Start.CPUUsageSeconds {
+	if rep.Points.Start == nil || rep.Points.End == nil ||
+		rep.Points.End.CPUUsageSeconds <= rep.Points.Start.CPUUsageSeconds {
 		t.Errorf("points: %+v", rep.Points)
 	}
 	if rep.OOMKilled || rep.MemoryEvents.OOMKill != 0 {
@@ -288,7 +315,11 @@ func TestDockerOOMKillIsDetected(t *testing.T) {
 		t.Errorf("signal = %q, want SIGKILL", rep.Signal)
 	}
 	if !rep.OOMKilled || rep.MemoryEvents.OOMKill < 1 {
-		t.Errorf("the kernel's oom_kill counter is the definitive signal: killed=%v events=%+v", rep.OOMKilled, rep.MemoryEvents)
+		t.Errorf(
+			"the kernel's oom_kill counter is the definitive signal: killed=%v events=%+v",
+			rep.OOMKilled,
+			rep.MemoryEvents,
+		)
 	}
 	if rep.Granted.MemoryBytes != 64*mib {
 		t.Errorf("granted.ram = %d", rep.Granted.MemoryBytes)
@@ -321,7 +352,12 @@ func TestDockerReportIsPublishedWhileRunning(t *testing.T) {
 		t.Errorf("a running report carries no outcome yet: %+v", first)
 	}
 	if first.StartedAt == 0 || first.UpdatedAt < first.StartedAt || first.Points.Start == nil {
-		t.Errorf("running report header: started=%d updated=%d start=%+v", first.StartedAt, first.UpdatedAt, first.Points.Start)
+		t.Errorf(
+			"running report header: started=%d updated=%d start=%+v",
+			first.StartedAt,
+			first.UpdatedAt,
+			first.Points.Start,
+		)
 	}
 	waitFor(t, 8*time.Second, func() bool {
 		rep, ok := tryReadReport(work)
@@ -403,13 +439,13 @@ func TestDockerReapsOrphansAsPID1(t *testing.T) {
 	time.Sleep(1500 * time.Millisecond) // the orphan's `sleep 0.2` has exited by now
 
 	// Every process state in the container; a naive PID 1 leaves the orphan as Z.
-	out, err := exec.Command("docker", "exec", c.name, "sh", "-c",
+	out, err := exec.CommandContext(t.Context(), "docker", "exec", c.name, "sh", "-c",
 		`for p in /proc/[0-9]*; do [ -r "$p/stat" ] && awk '{print $1, $3}' "$p/stat"; done`).CombinedOutput()
 	if err != nil {
 		t.Fatalf("docker exec: %v: %s", err, out)
 	}
 	t.Logf("process states:\n%s", out)
-	for _, line := range strings.Split(strings.TrimSpace(string(out)), "\n") {
+	for line := range strings.SplitSeq(strings.TrimSpace(string(out)), "\n") {
 		if strings.HasSuffix(line, " Z") {
 			t.Errorf("zombie left behind: %q", line)
 		}

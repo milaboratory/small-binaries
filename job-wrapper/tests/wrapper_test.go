@@ -154,7 +154,10 @@ func TestGpuBinPathPrependDoesNotWipeImagePath(t *testing.T) {
 	skipOnWindows(t)
 	dir := t.TempDir()
 	writeFile(t, filepath.Join(dir, "fake-nvidia-smi"), "#!/bin/sh\necho GPU_BIN_WORKS\n", 0o500)
-	r := runWrapper(t, map[string]string{"PL_JOB_CMD_AND_ARGS": "fake-nvidia-smi && echo IMAGE_PATH_PRESERVED", "PL_GPU_BIN_PATH": dir})
+	r := runWrapper(t, map[string]string{
+		"PL_JOB_CMD_AND_ARGS": "fake-nvidia-smi && echo IMAGE_PATH_PRESERVED",
+		"PL_GPU_BIN_PATH":     dir,
+	})
 	if r.exitCode != 0 {
 		t.Fatal(r.stderr)
 	}
@@ -164,11 +167,18 @@ func TestGpuBinPathPrependDoesNotWipeImagePath(t *testing.T) {
 
 func TestGpuLibPath(t *testing.T) {
 	skipOnWindows(t)
-	r := runWrapper(t, map[string]string{"PL_JOB_CMD_AND_ARGS": `printf '%s\n' "$LD_LIBRARY_PATH"`, "PL_GPU_LIB_PATH": "/usr/local/nvidia/lib64:/usr/local/nvidia/lib"})
+	r := runWrapper(t, map[string]string{
+		"PL_JOB_CMD_AND_ARGS": `printf '%s\n' "$LD_LIBRARY_PATH"`,
+		"PL_GPU_LIB_PATH":     "/usr/local/nvidia/lib64:/usr/local/nvidia/lib",
+	})
 	if strings.TrimSpace(r.stdout) != "/usr/local/nvidia/lib64:/usr/local/nvidia/lib" {
 		t.Errorf("LD_LIBRARY_PATH = %q", r.stdout)
 	}
-	r = runWrapper(t, map[string]string{"PL_JOB_CMD_AND_ARGS": `printf '%s\n' "$LD_LIBRARY_PATH"`, "PL_GPU_LIB_PATH": "/usr/local/nvidia/lib64", "LD_LIBRARY_PATH": "/opt/conda/lib"})
+	r = runWrapper(t, map[string]string{
+		"PL_JOB_CMD_AND_ARGS": `printf '%s\n' "$LD_LIBRARY_PATH"`,
+		"PL_GPU_LIB_PATH":     "/usr/local/nvidia/lib64",
+		"LD_LIBRARY_PATH":     "/opt/conda/lib",
+	})
 	if strings.TrimSpace(r.stdout) != "/usr/local/nvidia/lib64:/opt/conda/lib" {
 		t.Errorf("LD_LIBRARY_PATH = %q", r.stdout)
 	}
@@ -179,7 +189,11 @@ func TestJobPathWinsOverGpuBinPath(t *testing.T) {
 	jobDir, gpuDir := t.TempDir(), t.TempDir()
 	writeFile(t, filepath.Join(jobDir, "which-wins"), "#!/bin/sh\necho JOB_PATH_WINS\n", 0o500)
 	writeFile(t, filepath.Join(gpuDir, "which-wins"), "#!/bin/sh\necho GPU_PATH_WINS\n", 0o500)
-	r := runWrapper(t, map[string]string{"PL_JOB_CMD_AND_ARGS": "which-wins", "PL_JOB_PATH": jobDir, "PL_GPU_BIN_PATH": gpuDir})
+	r := runWrapper(t, map[string]string{
+		"PL_JOB_CMD_AND_ARGS": "which-wins",
+		"PL_JOB_PATH":         jobDir,
+		"PL_GPU_BIN_PATH":     gpuDir,
+	})
 	assertContains(t, "stdout", r.stdout, "JOB_PATH_WINS")
 	assertNotContains(t, "stdout", r.stdout, "GPU_PATH_WINS")
 }
@@ -273,7 +287,10 @@ func TestCompletionMarker(t *testing.T) {
 	skipOnWindows(t)
 	for _, code := range []int{0, 42, 137} {
 		marker := filepath.Join(t.TempDir(), serviceMarkerFile) // parent .pl does not exist yet
-		r := runWrapper(t, map[string]string{"PL_JOB_CMD_AND_ARGS": "exit " + itoa(code), "PL_JOB_COMPLETION_MARKER_PATH": marker})
+		r := runWrapper(t, map[string]string{
+			"PL_JOB_CMD_AND_ARGS":           "exit " + itoa(code),
+			"PL_JOB_COMPLETION_MARKER_PATH": marker,
+		})
 		if r.exitCode != code {
 			t.Errorf("exit %d, want %d", r.exitCode, code)
 		}
@@ -297,18 +314,20 @@ func TestCompletionMarkerNotWrittenWhenKilled(t *testing.T) {
 	sentinel := filepath.Join(dir, ".started")
 	pidFile := filepath.Join(dir, ".pid")
 
-	cmd := exec.Command(hostBin)
+	cmd := exec.CommandContext(t.Context(), hostBin)
 	cmd.Env = []string{"PATH=" + os.Getenv("PATH"), "HOME=" + os.Getenv("HOME"),
 		"PL_JOB_CMD_AND_ARGS=echo $$ > " + pidFile + " && touch " + sentinel + " && sleep 60",
 		"PL_JOB_COMPLETION_MARKER_PATH=" + marker}
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	if err := cmd.Start(); err != nil {
+	err := cmd.Start()
+	if err != nil {
 		t.Fatal(err)
 	}
 	waitFor(t, 5*time.Second, func() bool { return exists(sentinel) })
 	// SIGKILL to the whole tree, the OOM reaper's shape.
 	_ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
-	if pid, err := strconv.Atoi(strings.TrimSpace(readFile(t, pidFile))); err == nil {
+	pid, err := strconv.Atoi(strings.TrimSpace(readFile(t, pidFile)))
+	if err == nil {
 		_ = syscall.Kill(-pid, syscall.SIGKILL) // the command's own process group
 	}
 	_ = cmd.Wait()
@@ -325,17 +344,19 @@ func TestSigtermIsForwardedToTheCommand(t *testing.T) {
 	sentinel := filepath.Join(dir, ".started")
 	reportPath := filepath.Join(dir, "usage.json")
 
-	cmd := exec.Command(hostBin, "--report", reportPath, "--flush-interval", "1s")
+	cmd := exec.CommandContext(t.Context(), hostBin, "--report", reportPath, "--flush-interval", "1s")
 	cmd.Env = []string{"PATH=" + os.Getenv("PATH"), "HOME=" + os.Getenv("HOME"),
 		`PL_JOB_CMD_AND_ARGS=trap 'exit 143' TERM; touch ` + sentinel + `; sleep 30 & wait $!`}
 	var stderr strings.Builder
 	cmd.Stderr = &stderr
-	if err := cmd.Start(); err != nil {
+	err := cmd.Start()
+	if err != nil {
 		t.Fatal(err)
 	}
 	waitFor(t, 5*time.Second, func() bool { return exists(sentinel) })
 	time.Sleep(200 * time.Millisecond)
-	if err := cmd.Process.Signal(syscall.SIGTERM); err != nil {
+	err = cmd.Process.Signal(syscall.SIGTERM)
+	if err != nil {
 		t.Fatal(err)
 	}
 	done := make(chan error, 1)
@@ -353,7 +374,8 @@ func TestSigtermIsForwardedToTheCommand(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if rep.TerminationSignal != "SIGTERM" || rep.State != report.StateFinished || rep.ExitCode == nil || *rep.ExitCode != 143 {
+	if rep.TerminationSignal != "SIGTERM" || rep.State != report.StateFinished ||
+		rep.ExitCode == nil || *rep.ExitCode != 143 {
 		t.Errorf("report: signal=%q state=%q exit=%v", rep.TerminationSignal, rep.State, rep.ExitCode)
 	}
 }
@@ -431,7 +453,8 @@ func TestReportWrittenOnHost(t *testing.T) {
 	if rep.FinishedAt == nil || *rep.FinishedAt < rep.StartedAt || rep.UpdatedAt < rep.StartedAt {
 		t.Errorf("timestamps: started=%d finished=%v updated=%d", rep.StartedAt, rep.FinishedAt, rep.UpdatedAt)
 	}
-	if rep.Exec == nil || rep.Exec.Command != "env" || rep.Exec.Mode != "shell" || rep.Exec.ArgCount != 2 || rep.ExecID != "env:"+rep.Exec.ArgsHash {
+	if rep.Exec == nil || rep.Exec.Command != "env" || rep.Exec.Mode != "shell" ||
+		rep.Exec.ArgCount != 2 || rep.ExecID != "env:"+rep.Exec.ArgsHash {
 		t.Errorf("exec identity from the quoted shell line: %+v id=%q", rep.Exec, rep.ExecID)
 	}
 	if runtime.GOOS != "linux" && rep.Cgroup.Available {
@@ -445,7 +468,11 @@ func TestReportWrittenOnHost(t *testing.T) {
 func TestReportDisabledAndOverridden(t *testing.T) {
 	skipOnWindows(t)
 	workdir := mkdir(t, filepath.Join(t.TempDir(), "workdir"))
-	r := runWrapper(t, map[string]string{"PL_JOB_CMD_AND_ARGS": "true", "PL_JOB_WORKDIR": workdir, "PL_JOB_USAGE_REPORT_PATH": "none"})
+	r := runWrapper(t, map[string]string{
+		"PL_JOB_CMD_AND_ARGS":      "true",
+		"PL_JOB_WORKDIR":           workdir,
+		"PL_JOB_USAGE_REPORT_PATH": "none",
+	})
 	if r.exitCode != 0 || exists(filepath.Join(workdir, serviceReportFile)) {
 		t.Error("PL_JOB_USAGE_REPORT_PATH=none must disable the report")
 	}
@@ -454,7 +481,12 @@ func TestReportDisabledAndOverridden(t *testing.T) {
 		t.Error("--report none must disable the report")
 	}
 	custom := filepath.Join(t.TempDir(), "elsewhere", "u.json")
-	r = runWrapper(t, map[string]string{"PL_JOB_CMD_AND_ARGS": "true", "PL_JOB_WORKDIR": workdir, "PL_JOB_USAGE_REPORT_PATH": custom, "PL_JOB_EXEC_ID": "upstream-id"})
+	r = runWrapper(t, map[string]string{
+		"PL_JOB_CMD_AND_ARGS":      "true",
+		"PL_JOB_WORKDIR":           workdir,
+		"PL_JOB_USAGE_REPORT_PATH": custom,
+		"PL_JOB_EXEC_ID":           "upstream-id",
+	})
 	if r.exitCode != 0 || !exists(custom) || exists(filepath.Join(workdir, serviceReportFile)) {
 		t.Error("the env path must win over the default")
 	}

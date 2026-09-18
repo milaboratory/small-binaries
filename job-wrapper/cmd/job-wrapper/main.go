@@ -19,7 +19,7 @@ import (
 var version = "dev"
 
 func usage(fs *flag.FlagSet) {
-	fmt.Fprintf(fs.Output(), `Usage:
+	_, _ = fmt.Fprintf(fs.Output(), `Usage:
   job-wrapper [flags] -- <command> [args...]
   job-wrapper [flags]              (command taken from $%s, run through 'sh -c')
 
@@ -70,7 +70,8 @@ func main() {
 	cgroupDir := fs.String("cgroup-dir", "", "cgroup directory; overrides $"+wrapper.EnvCgroupDir)
 	showVersion := fs.Bool("version", false, "print the version and exit")
 
-	if err := fs.Parse(os.Args[1:]); err != nil {
+	err := fs.Parse(os.Args[1:])
+	if err != nil {
 		if errors.Is(err, flag.ErrHelp) {
 			os.Exit(0)
 		}
@@ -100,7 +101,7 @@ func main() {
 	cfg.ResolveReportPath()
 
 	if len(cfg.Argv) == 0 && cfg.ShellCommand == "" {
-		fmt.Fprintf(os.Stderr, "job-wrapper: no command given and $%s is empty\n\n", wrapper.EnvCmdAndArgs)
+		_, _ = fmt.Fprintf(os.Stderr, "job-wrapper: no command given and $%s is empty\n\n", wrapper.EnvCmdAndArgs)
 		usage(fs)
 		os.Exit(2)
 	}

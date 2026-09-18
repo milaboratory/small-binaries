@@ -21,18 +21,12 @@ func forwardSignal(cmd *exec.Cmd, sig os.Signal) {
 		return
 	}
 	if s, ok := sig.(syscall.Signal); ok {
-		if err := syscall.Kill(-cmd.Process.Pid, s); err == nil {
+		err := syscall.Kill(-cmd.Process.Pid, s)
+		if err == nil {
 			return
 		}
 	}
 	_ = cmd.Process.Signal(sig)
-}
-
-// killGroup is the last resort after a start failure: nothing to kill, kept for symmetry.
-func killGroup(cmd *exec.Cmd) {
-	if cmd.Process != nil {
-		_ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
-	}
 }
 
 // waitChild waits for the command while reaping every other child that gets reparented to the

@@ -113,14 +113,17 @@ func FromEnv(getenv func(string) string) Config {
 		SampleInterval:    DefaultSampleInterval,
 		MaxSamples:        DefaultMaxSamples,
 	}
-	if d, err := time.ParseDuration(getenv(EnvFlushInterval)); err == nil && d > 0 {
-		cfg.FlushInterval = d
+	flush, err := time.ParseDuration(getenv(EnvFlushInterval))
+	if err == nil && flush > 0 {
+		cfg.FlushInterval = flush
 	}
-	if d, err := time.ParseDuration(getenv(EnvSampleInterval)); err == nil && d > 0 {
-		cfg.SampleInterval = d
+	sample, err := time.ParseDuration(getenv(EnvSampleInterval))
+	if err == nil && sample > 0 {
+		cfg.SampleInterval = sample
 	}
-	if n, err := strconv.Atoi(getenv(EnvMaxSamples)); err == nil && n >= 2 {
-		cfg.MaxSamples = n
+	maxSamples, err := strconv.Atoi(getenv(EnvMaxSamples))
+	if err == nil && maxSamples >= 2 {
+		cfg.MaxSamples = maxSamples
 	}
 	return cfg
 }

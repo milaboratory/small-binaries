@@ -9,8 +9,11 @@ import (
 // WriteAtomic publishes r at path through a temporary file and a rename, creating the parent
 // directory when it is missing. A reader on the other side of a shared filesystem therefore sees
 // either the previous report or the new one, never a half-written file.
+//
+// The directory is 0755 and the file 0644 on purpose: the runner reads them under another uid.
 func WriteAtomic(path string, r *Report) error {
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+	err := os.MkdirAll(filepath.Dir(path), 0o755)
+	if err != nil {
 		return err
 	}
 	data, err := json.MarshalIndent(r, "", "  ")
@@ -18,10 +21,12 @@ func WriteAtomic(path string, r *Report) error {
 		return err
 	}
 	tmp := path + ".tmp"
-	if err := os.WriteFile(tmp, append(data, '\n'), 0o644); err != nil {
+	err = os.WriteFile(tmp, append(data, '\n'), 0o644)
+	if err != nil {
 		return err
 	}
-	if err := os.Rename(tmp, path); err != nil {
+	err = os.Rename(tmp, path)
+	if err != nil {
 		_ = os.Remove(tmp)
 		return err
 	}
@@ -35,7 +40,8 @@ func Read(path string) (*Report, error) {
 		return nil, err
 	}
 	var r Report
-	if err := json.Unmarshal(b, &r); err != nil {
+	err = json.Unmarshal(b, &r)
+	if err != nil {
 		return nil, err
 	}
 	return &r, nil

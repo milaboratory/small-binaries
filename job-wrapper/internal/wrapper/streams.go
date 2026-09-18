@@ -45,65 +45,92 @@ type streams struct {
 
 func openStreams(cfg Config, realOut, realErr io.Writer) (*streams, error) {
 	s := &streams{}
-
-	openLog := func(path string) (*os.File, error) {
-		f, err := os.OpenFile(path, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0o644)
+	if cfg.StderrPath != "" && cfg.StdoutPath == cfg.StderrPath {
+		err := s.openCombined(cfg.StderrPath, realErr)
 		if err != nil {
 			return nil, err
-		}
-		s.files = append(s.files, f)
-		return f, nil
-	}
-
-	switch {
-	case cfg.StderrPath != "" && cfg.StdoutPath == cfg.StderrPath:
-		// One file, one pipe, both streams; the script did `exec 1>&2` here.
-		f, err := openLog(cfg.StderrPath)
-		if err != nil {
-			return nil, err
-		}
-		sink := &fanout{ws: []io.Writer{f, realErr}}
-		w, err := s.pipeTo(sink)
-		if err != nil {
-			return nil, err
-		}
-		s.childStdout, s.childStderr, s.wrapperStderr = w, w, sink
-		return s, nil
-
-	default:
-		var err error
-		if cfg.StderrPath != "" {
-			f, err := openLog(cfg.StderrPath)
-			if err != nil {
-				return nil, err
-			}
-			sink := &fanout{ws: []io.Writer{f, realErr}}
-			if s.childStderr, err = s.pipeTo(sink); err != nil {
-				return nil, err
-			}
-			s.wrapperStderr = sink
-		} else {
-			if s.childStderr, err = s.direct(realErr); err != nil {
-				return nil, err
-			}
-			s.wrapperStderr = &fanout{ws: []io.Writer{realErr}}
-		}
-
-		if cfg.StdoutPath != "" {
-			f, err := openLog(cfg.StdoutPath)
-			if err != nil {
-				return nil, err
-			}
-			if s.childStdout, err = s.pipeTo(&fanout{ws: []io.Writer{f, realOut}}); err != nil {
-				return nil, err
-			}
-		} else {
-			if s.childStdout, err = s.direct(realOut); err != nil {
-				return nil, err
-			}
 		}
 		return s, nil
 	}
+	err := s.openStderr(cfg.StderrPath, realErr)
+	if err != nil {
+		return nil, err
+	}
+	err = s.openStdout(cfg.StdoutPath, realOut)
+	if err != nil {
+		return nil, err
+	}
+	return s, nil
+}
+
+// openCombined is the one-file case: one pipe carries both streams; the script did `exec 1>&2`.
+func (s *streams) openCombined(path string, realErr io.Writer) error {
+	f, err := s.openLog(path)
+	if err != nil {
+		return err
+	}
+	sink := &fanout{ws: []io.Writer{f, realErr}}
+	w, err := s.pipeTo(sink)
+	if err != nil {
+		return err
+	}
+	s.childStdout, s.childStderr, s.wrapperStderr = w, w, sink
+	return nil
+}
+
+func (s *streams) openStderr(path string, realErr io.Writer) error {
+	if path == "" {
+		w, err := s.direct(realErr)
+		if err != nil {
+			return err
+		}
+		s.childStderr = w
+		s.wrapperStderr = &fanout{ws: []io.Writer{realErr}}
+		return nil
+	}
+	f, err := s.openLog(path)
+	if err != nil {
+		return err
+	}
+	sink := &fanout{ws: []io.Writer{f, realErr}}
+	w, err := s.pipeTo(sink)
+	if err != nil {
+		return err
+	}
+	s.childStderr = w
+	s.wrapperStderr = sink
+	return nil
+}
+
+func (s *streams) openStdout(path string, realOut io.Writer) error {
+	if path == "" {
+		w, err := s.direct(realOut)
+		if err != nil {
+			return err
+		}
+		s.childStdout = w
+		return nil
+	}
+	f, err := s.openLog(path)
+	if err != nil {
+		return err
+	}
+	w, err := s.pipeTo(&fanout{ws: []io.Writer{f, realOut}})
+	if err != nil {
+		return err
+	}
+	s.childStdout = w
+	return nil
+}
+
+// openLog opens a mirror file for appending; 0644 so the runner can read it under another uid.
+func (s *streams) openLog(path string) (*os.File, error) {
+	f, err := os.OpenFile(path, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0o644)
+	if err != nil {
+		return nil, err
+	}
+	s.files = append(s.files, f)
+	return f, nil
 }
 
 // direct hands w to the command as is when it is a file descriptor, and through a pipe otherwise.

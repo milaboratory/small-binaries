@@ -25,7 +25,8 @@ func (r *run) joined() string { return strings.Join(r.logs, "\n") }
 func mkdir(t *testing.T, parts ...string) string {
 	t.Helper()
 	p := filepath.Join(parts...)
-	if err := os.MkdirAll(p, 0o750); err != nil {
+	err := os.MkdirAll(p, 0o750)
+	if err != nil {
 		t.Fatal(err)
 	}
 	return p
@@ -33,10 +34,12 @@ func mkdir(t *testing.T, parts ...string) string {
 
 func write(t *testing.T, p string, content string) {
 	t.Helper()
-	if err := os.MkdirAll(filepath.Dir(p), 0o750); err != nil {
+	err := os.MkdirAll(filepath.Dir(p), 0o750)
+	if err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(p, []byte(content), 0o600); err != nil {
+	err = os.WriteFile(p, []byte(content), 0o600)
+	if err != nil {
 		t.Fatal(err)
 	}
 }
@@ -60,7 +63,8 @@ func exists(p string) bool {
 func prune(t *testing.T, workdir string, items Items) *run {
 	t.Helper()
 	r := &run{}
-	if err := Run(workdir, items, tmpRel, r.log); err != nil {
+	err := Run(workdir, items, tmpRel, r.log)
+	if err != nil {
 		t.Fatalf("Run: %v", err)
 	}
 	return r
@@ -252,7 +256,8 @@ func TestLargeItemsList(t *testing.T) {
 
 	prune(t, wd, itemsFor(t, items...))
 
-	if !exists(filepath.Join(wd, "pdbs", "s0000001.pdb")) || !exists(filepath.Join(wd, "pdbs", fmt.Sprintf("s%07d.pdb", n))) {
+	last := fmt.Sprintf("s%07d.pdb", n)
+	if !exists(filepath.Join(wd, "pdbs", "s0000001.pdb")) || !exists(filepath.Join(wd, "pdbs", last)) {
 		t.Fatal("expected files must survive")
 	}
 	if exists(filepath.Join(wd, "leftover.bin")) {
@@ -271,7 +276,8 @@ func TestTmpSubtreeNeverWalked(t *testing.T) {
 	if strings.Contains(r.joined(), "leftover.tmp") || strings.Contains(r.joined(), "deeper.tmp") {
 		t.Fatalf("temporary subtree must never be reported: %q", r.joined())
 	}
-	if strings.Contains(r.joined(), "Pruning unexpected directory: .pl/tmp") || strings.Contains(r.joined(), "Pruning empty directory: .pl/tmp") {
+	if strings.Contains(r.joined(), "Pruning unexpected directory: .pl/tmp") ||
+		strings.Contains(r.joined(), "Pruning empty directory: .pl/tmp") {
 		t.Fatalf("the temporary directory itself must survive: %q", r.joined())
 	}
 	if !exists(filepath.Join(wd, tmpRel, "leftover.tmp")) {
@@ -287,12 +293,14 @@ func TestSymlinksAreLeftAlone(t *testing.T) {
 	outside := filepath.Join(t.TempDir(), "outside.txt")
 	write(t, outside, "outside")
 	write(t, filepath.Join(wd, "keep.txt"), "keep")
-	if err := os.Symlink(outside, filepath.Join(wd, "link.txt")); err != nil {
+	err := os.Symlink(outside, filepath.Join(wd, "link.txt"))
+	if err != nil {
 		t.Fatal(err)
 	}
 	outsideDir := mkdir(t, t.TempDir(), "outside_dir")
 	write(t, filepath.Join(outsideDir, "victim.txt"), "victim")
-	if err := os.Symlink(outsideDir, filepath.Join(wd, "linkdir")); err != nil {
+	err = os.Symlink(outsideDir, filepath.Join(wd, "linkdir"))
+	if err != nil {
 		t.Fatal(err)
 	}
 

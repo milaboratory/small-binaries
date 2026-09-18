@@ -149,7 +149,14 @@ must be added to the expected-items list or the prune removes it before it runs.
 go test ./...                 # unit + host integration tests (Docker suite skipped)
 ./test.sh                     # everything, Docker suite included (mandatory unless SKIP_DOCKER_TESTS=1)
 JOB_WRAPPER_DOCKER=1 go test ./tests/ -run TestDocker -v
+pnpm lint                     # golangci-lint over the whole module (needs golangci-lint v2 on PATH)
 ```
+
+Linting uses `.golangci.yaml`, adapted from `core/pl`: the same linter set, but the whole module
+is linted on every run rather than only changed files, and the pl-specific rules (`mierr`
+enforcement, replace-directive allow list, path exclusions) are dropped. Deliberate deviations
+are documented in the config: 0755/0644 service files, and no G304/G703 since every path comes
+from the job template or cgroup discovery.
 
 The Docker suite runs the Linux build as PID 1 of a `busybox` container under `--memory` /
 `--cpus` limits and checks peaks, series, granted limits, the online report, an OOM kill

@@ -14,6 +14,12 @@ const (
 	DefaultMaxSamples   = 240
 )
 
+// Peak sources, see Usage.PeakSource.
+const (
+	peakSourceKernel  = "kernel"
+	peakSourceSampled = "sampled"
+)
+
 type point struct {
 	at      time.Time
 	cpuUsec uint64
@@ -24,6 +30,16 @@ type point struct {
 	ioR     uint64
 	ioW     uint64
 	hasIO   bool
+}
+
+// peaks are tracked from every base-interval reading, independent of the retained series.
+type peaks struct {
+	ramSampled  uint64
+	kernel      uint64
+	hasKernel   bool
+	cpuMilli    uint64
+	ioReadRate  uint64
+	ioWriteRate uint64
 }
 
 // Sampler turns a stream of cgroup readings into peaks and bounded series.
@@ -48,13 +64,7 @@ type Sampler struct {
 	observed int
 	errors   int
 	lastErr  string
-
-	ramPeakSampled uint64
-	kernelPeak     uint64
-	hasKernelPeak  bool
-	cpuPeakMilli   uint64
-	ioReadPeak     uint64
-	ioWritePeak    uint64
+	peaks    peaks
 
 	startEvents *cgroup.MemoryStats
 	lastMem     *cgroup.MemoryStats
@@ -117,6 +127,27 @@ func (s *Sampler) Finish(now time.Time) {
 	s.end = toPoint(p)
 }
 
+// Fill writes the sampler's current view into r. Static fields of r are left alone.
+func (s *Sampler) Fill(r *Report) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	r.Sampling = Sampling{
+		BaseIntervalSeconds: s.base.Seconds(),
+		MaxSamples:          s.maxSamples,
+		Observed:            s.observed,
+		Retained:            len(s.points),
+		ReadErrors:          s.errors,
+		LastError:           s.lastErr,
+	}
+	r.Points = Points{Start: s.start, End: s.end}
+	r.RAM = s.ramUsage()
+	r.CPU = s.cpuUsage()
+	r.DiskIO = s.diskIO()
+	r.MemoryEvents = s.memoryEvents()
+	r.OOMKilled = r.MemoryEvents.OOMKill > 0 || r.MemoryEvents.OOMGroupKill > 0
+}
+
 // read performs one reading and updates the peaks. Must hold s.mu.
 func (s *Sampler) read(now time.Time) (point, cgroup.Stats, bool) {
 	if s.src == nil {
@@ -129,25 +160,24 @@ func (s *Sampler) read(now time.Time) (point, cgroup.Stats, bool) {
 		return point{}, st, false
 	}
 	s.observed++
+	p := s.toRawPoint(now, st)
+	s.updatePeaks(st, p)
+	if s.first == nil {
+		first := p
+		s.first = &first
+	}
+	prev := p
+	s.prev = &prev
+	return p, st, true
+}
+
+// toRawPoint converts a reading into a point and remembers the last controller readings.
+func (s *Sampler) toRawPoint(now time.Time, st cgroup.Stats) point {
 	p := point{at: now}
 	if st.Memory != nil {
 		p.hasRAM = true
 		p.ram = st.Memory.Current
-		p.ws = st.Memory.Current
-		if st.Memory.InactiveFile < p.ws {
-			p.ws -= st.Memory.InactiveFile
-		} else {
-			p.ws = 0
-		}
-		if p.ram > s.ramPeakSampled {
-			s.ramPeakSampled = p.ram
-		}
-		if st.Memory.HasPeak {
-			s.hasKernelPeak = true
-			if st.Memory.Peak > s.kernelPeak {
-				s.kernelPeak = st.Memory.Peak
-			}
-		}
+		p.ws = workingSet(st.Memory)
 		s.lastMem = st.Memory
 	}
 	if st.CPU != nil {
@@ -159,26 +189,27 @@ func (s *Sampler) read(now time.Time) (point, cgroup.Stats, bool) {
 		p.hasIO = true
 		p.ioR, p.ioW = st.IO.ReadBytes, st.IO.WriteBytes
 	}
-	if s.prev != nil {
-		if r, ok := rateMilli(*s.prev, p); ok && r > s.cpuPeakMilli {
-			s.cpuPeakMilli = r
-		}
-		if r, w, ok := rateIO(*s.prev, p); ok {
-			if r > s.ioReadPeak {
-				s.ioReadPeak = r
-			}
-			if w > s.ioWritePeak {
-				s.ioWritePeak = w
-			}
+	return p
+}
+
+func (s *Sampler) updatePeaks(st cgroup.Stats, p point) {
+	if st.Memory != nil {
+		s.peaks.ramSampled = max(s.peaks.ramSampled, p.ram)
+		if st.Memory.HasPeak {
+			s.peaks.hasKernel = true
+			s.peaks.kernel = max(s.peaks.kernel, st.Memory.Peak)
 		}
 	}
-	if s.first == nil {
-		first := p
-		s.first = &first
+	if s.prev == nil {
+		return
 	}
-	prev := p
-	s.prev = &prev
-	return p, st, true
+	if r, ok := rateMilli(*s.prev, p); ok {
+		s.peaks.cpuMilli = max(s.peaks.cpuMilli, r)
+	}
+	if r, w, ok := rateIO(*s.prev, p); ok {
+		s.peaks.ioReadRate = max(s.peaks.ioReadRate, r)
+		s.peaks.ioWriteRate = max(s.peaks.ioWriteRate, w)
+	}
 }
 
 // downsample halves the series resolution in place once the budget is exhausted. Must hold s.mu.
@@ -192,6 +223,95 @@ func (s *Sampler) downsample() {
 		s.interval *= 2
 		s.stride *= 2
 	}
+}
+
+// ramUsage is the peak from the kernel where it has one, sampled otherwise, and the working-set
+// series.
+func (s *Sampler) ramUsage() Usage {
+	u := Usage{Series: s.emptySeries()}
+	switch {
+	case s.peaks.hasKernel:
+		u.Peak, u.PeakSource = s.peaks.kernel, peakSourceKernel
+	case s.observed > 0:
+		u.Peak, u.PeakSource = s.peaks.ramSampled, peakSourceSampled
+	}
+	for _, p := range s.points {
+		if p.hasRAM {
+			u.Series.Values = append(u.Series.Values, p.ws)
+		}
+	}
+	return u
+}
+
+// cpuUsage is the series of rates between retained points, the peak from base-interval rates,
+// and the cgroup totals.
+func (s *Sampler) cpuUsage() CPUUsage {
+	u := CPUUsage{Usage: Usage{Peak: s.peaks.cpuMilli, Series: s.emptySeries()}}
+	if s.observed > 0 {
+		u.PeakSource = peakSourceSampled
+	}
+	for i := 1; i < len(s.points); i++ {
+		if v, ok := rateMilli(s.points[i-1], s.points[i]); ok {
+			u.Series.Values = append(u.Series.Values, v)
+		}
+	}
+	if s.first != nil && s.prev != nil && s.first.hasCPU && s.prev.hasCPU && s.prev.cpuUsec >= s.first.cpuUsec {
+		u.UsageSeconds = float64(s.prev.cpuUsec-s.first.cpuUsec) / 1e6
+	}
+	if s.lastCPU != nil {
+		u.ThrottledPeriods = s.lastCPU.NrThrottled
+		u.ThrottledSeconds = float64(s.lastCPU.ThrottledUsec) / 1e6
+	}
+	return u
+}
+
+// diskIO is nil unless the source produced IO readings.
+func (s *Sampler) diskIO() *DiskIO {
+	if s.prev == nil || !s.prev.hasIO {
+		return nil
+	}
+	d := &DiskIO{
+		Read:  Usage{Peak: s.peaks.ioReadRate, PeakSource: peakSourceSampled, Series: s.emptySeries()},
+		Write: Usage{Peak: s.peaks.ioWriteRate, PeakSource: peakSourceSampled, Series: s.emptySeries()},
+	}
+	for i := 1; i < len(s.points); i++ {
+		if rd, wr, ok := rateIO(s.points[i-1], s.points[i]); ok {
+			d.Read.Series.Values = append(d.Read.Series.Values, rd)
+			d.Write.Series.Values = append(d.Write.Series.Values, wr)
+		}
+	}
+	return d
+}
+
+// memoryEvents are the kernel counters as deltas since the run started.
+func (s *Sampler) memoryEvents() MemoryEvents {
+	var ev MemoryEvents
+	if s.lastMem == nil {
+		return ev
+	}
+	base := cgroup.MemoryStats{}
+	if s.startEvents != nil {
+		base = *s.startEvents
+	}
+	if s.lastMem.OOMKills >= base.OOMKills {
+		ev.OOMKill = s.lastMem.OOMKills - base.OOMKills
+	}
+	if s.lastMem.OOMGroupKills >= base.OOMGroupKills {
+		ev.OOMGroupKill = s.lastMem.OOMGroupKills - base.OOMGroupKills
+	}
+	return ev
+}
+
+func (s *Sampler) emptySeries() Series {
+	return Series{IntervalSeconds: s.interval.Seconds(), Values: []uint64{}}
+}
+
+// workingSet is memory.current minus the reclaimable file cache, floored at zero.
+func workingSet(m *cgroup.MemoryStats) uint64 {
+	if m.InactiveFile >= m.Current {
+		return 0
+	}
+	return m.Current - m.InactiveFile
 }
 
 // rateMilli is CPU usage between two points in millicores.
@@ -225,84 +345,4 @@ func toPoint(p point) *Point {
 		RAMWorkingSet:   p.ws,
 		CPUUsageSeconds: float64(p.cpuUsec) / 1e6,
 	}
-}
-
-// Fill writes the sampler's current view into r. Static fields of r are left alone.
-func (s *Sampler) Fill(r *Report) {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-
-	interval := s.interval.Seconds()
-	r.Sampling = Sampling{
-		BaseIntervalSeconds: s.base.Seconds(),
-		MaxSamples:          s.maxSamples,
-		Observed:            s.observed,
-		Retained:            len(s.points),
-		ReadErrors:          s.errors,
-		LastError:           s.lastErr,
-	}
-	r.Points = Points{Start: s.start, End: s.end}
-
-	// RAM: peak from the kernel where it has one, sampled otherwise; series of working sets.
-	r.RAM = Usage{Series: Series{IntervalSeconds: interval, Values: []uint64{}}}
-	if s.hasKernelPeak {
-		r.RAM.Peak, r.RAM.PeakSource = s.kernelPeak, "kernel"
-	} else if s.observed > 0 {
-		r.RAM.Peak, r.RAM.PeakSource = s.ramPeakSampled, "sampled"
-	}
-	for _, p := range s.points {
-		if p.hasRAM {
-			r.RAM.Series.Values = append(r.RAM.Series.Values, p.ws)
-		}
-	}
-
-	// CPU: series of rates between retained points, peak from base-interval rates.
-	r.CPU = CPUUsage{Usage: Usage{Peak: s.cpuPeakMilli, Series: Series{IntervalSeconds: interval, Values: []uint64{}}}}
-	if s.cpuPeakMilli > 0 || s.observed > 0 {
-		r.CPU.PeakSource = "sampled"
-	}
-	for i := 1; i < len(s.points); i++ {
-		if v, ok := rateMilli(s.points[i-1], s.points[i]); ok {
-			r.CPU.Series.Values = append(r.CPU.Series.Values, v)
-		}
-	}
-	if s.first != nil && s.prev != nil && s.first.hasCPU && s.prev.hasCPU && s.prev.cpuUsec >= s.first.cpuUsec {
-		r.CPU.UsageSeconds = float64(s.prev.cpuUsec-s.first.cpuUsec) / 1e6
-	}
-	if s.lastCPU != nil {
-		r.CPU.ThrottledPeriods = s.lastCPU.NrThrottled
-		r.CPU.ThrottledSeconds = float64(s.lastCPU.ThrottledUsec) / 1e6
-	}
-
-	// Disk IO: only when the source produced any.
-	r.DiskIO = nil
-	if s.prev != nil && s.prev.hasIO {
-		d := &DiskIO{
-			Read:  Usage{Peak: s.ioReadPeak, PeakSource: "sampled", Series: Series{IntervalSeconds: interval, Values: []uint64{}}},
-			Write: Usage{Peak: s.ioWritePeak, PeakSource: "sampled", Series: Series{IntervalSeconds: interval, Values: []uint64{}}},
-		}
-		for i := 1; i < len(s.points); i++ {
-			if rd, wr, ok := rateIO(s.points[i-1], s.points[i]); ok {
-				d.Read.Series.Values = append(d.Read.Series.Values, rd)
-				d.Write.Series.Values = append(d.Write.Series.Values, wr)
-			}
-		}
-		r.DiskIO = d
-	}
-
-	// Memory events as deltas since the run started.
-	r.MemoryEvents = MemoryEvents{}
-	if s.lastMem != nil {
-		base := cgroup.MemoryStats{}
-		if s.startEvents != nil {
-			base = *s.startEvents
-		}
-		if s.lastMem.OOMKills >= base.OOMKills {
-			r.MemoryEvents.OOMKill = s.lastMem.OOMKills - base.OOMKills
-		}
-		if s.lastMem.OOMGroupKills >= base.OOMGroupKills {
-			r.MemoryEvents.OOMGroupKill = s.lastMem.OOMGroupKills - base.OOMGroupKills
-		}
-	}
-	r.OOMKilled = r.MemoryEvents.OOMKill > 0 || r.MemoryEvents.OOMGroupKill > 0
 }

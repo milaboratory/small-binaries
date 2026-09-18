@@ -87,10 +87,11 @@ func Run(workdir string, items Items, skip string, log Logger) error {
 	if err != nil {
 		return err
 	}
-	defer root.Close()
+	defer func() { _ = root.Close() }()
 
 	skip = path.Clean(skip)
-	if err := pruneFiles(root, ".", items, skip, log); err != nil {
+	err = pruneFiles(root, ".", items, skip, log)
+	if err != nil {
 		return err
 	}
 	return pruneDirs(root, ".", items, skip, log)
@@ -103,7 +104,7 @@ func EmptyDir(workdir, rel string) {
 	if err != nil {
 		return
 	}
-	defer root.Close()
+	defer func() { _ = root.Close() }()
 
 	entries, err := readDir(root, rel)
 	if err != nil {
@@ -124,7 +125,7 @@ func readDir(root *os.Root, rel string) ([]fs.DirEntry, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 	return f.ReadDir(-1)
 }
 
@@ -144,7 +145,8 @@ func pruneFiles(root *os.Root, dir string, items Items, skip string, log Logger)
 		}
 		switch {
 		case e.Type().IsDir():
-			if err := pruneFiles(root, rel, items, skip, log); err != nil {
+			err := pruneFiles(root, rel, items, skip, log)
+			if err != nil {
 				return err
 			}
 		case e.Type().IsRegular():
@@ -173,13 +175,15 @@ func pruneDirs(root *os.Root, dir string, items Items, skip string, log Logger) 
 			continue
 		}
 		// Depth-first: children decide before their parent.
-		if err := pruneDirs(root, rel, items, skip, log); err != nil {
+		err := pruneDirs(root, rel, items, skip, log)
+		if err != nil {
 			return err
 		}
 		if items.expectedDir(rel) || items.ancestorOfExpected(rel) {
 			continue
 		}
-		if err := root.Remove(rel); err == nil {
+		err = root.Remove(rel)
+		if err == nil {
 			log("Pruning empty directory: " + rel)
 			continue
 		}

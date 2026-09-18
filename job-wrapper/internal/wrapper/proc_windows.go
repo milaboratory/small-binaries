@@ -16,12 +16,6 @@ func forwardSignal(cmd *exec.Cmd, sig os.Signal) {
 	}
 }
 
-func killGroup(cmd *exec.Cmd) {
-	if cmd.Process != nil {
-		_ = cmd.Process.Kill()
-	}
-}
-
 func waitChild(cmd *exec.Cmd) waitResult {
 	err := cmd.Wait()
 	if err == nil {

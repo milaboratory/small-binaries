@@ -15,12 +15,6 @@ import (
 	"time"
 )
 
-// ErrUnavailable is returned by Discover when no cgroup can be found for this process.
-var ErrUnavailable = errors.New("cgroup accounting is not available")
-
-// Above this a v1 limit means "unlimited" (the file holds a page-rounded max int64).
-const noLimitThreshold = 1 << 60
-
 // MemoryStats is one reading of the memory controller.
 type MemoryStats struct {
 	// Current is memory.current (v2) / memory.usage_in_bytes (v1): anon + file cache + kernel.
@@ -81,54 +75,11 @@ type Source interface {
 	Info() Info
 }
 
-// ---- file helpers ----
+// ErrUnavailable is returned by Discover when no cgroup can be found for this process.
+var ErrUnavailable = errors.New("cgroup accounting is not available")
 
-func readTrim(p string) (string, error) {
-	b, err := os.ReadFile(p)
-	if err != nil {
-		return "", err
-	}
-	return strings.TrimSpace(string(b)), nil
-}
-
-func readUint(p string) (uint64, error) {
-	s, err := readTrim(p)
-	if err != nil {
-		return 0, err
-	}
-	return strconv.ParseUint(s, 10, 64)
-}
-
-// readKV parses "key value" lines (memory.stat, cpu.stat, memory.events, memory.oom_control).
-func readKV(p string) (map[string]uint64, error) {
-	b, err := os.ReadFile(p)
-	if err != nil {
-		return nil, err
-	}
-	m := make(map[string]uint64)
-	for _, line := range strings.Split(string(b), "\n") {
-		fields := strings.Fields(line)
-		if len(fields) < 2 {
-			continue
-		}
-		v, err := strconv.ParseUint(fields[1], 10, 64)
-		if err != nil {
-			continue
-		}
-		m[fields[0]] = v
-	}
-	return m, nil
-}
-
-func fileExists(p string) bool {
-	st, err := os.Stat(p)
-	return err == nil && !st.IsDir()
-}
-
-func dirExists(p string) bool {
-	st, err := os.Stat(p)
-	return err == nil && st.IsDir()
-}
+// Above this a v1 limit means "unlimited" (the file holds a page-rounded max int64).
+const noLimitThreshold = 1 << 60
 
 // ---- cgroup v2 ----
 
@@ -146,30 +97,7 @@ func NewV2(dir, procRoot string) Source {
 func (c *v2) Info() Info { return Info{Available: true, Version: 2, Path: c.dir} }
 
 func (c *v2) Read() (Stats, error) {
-	st := Stats{At: time.Now()}
-	if cur, err := readUint(filepath.Join(c.dir, "memory.current")); err == nil {
-		m := &MemoryStats{Current: cur}
-		if peak, err := readUint(filepath.Join(c.dir, "memory.peak")); err == nil {
-			m.Peak, m.HasPeak = peak, true
-		}
-		if kv, err := readKV(filepath.Join(c.dir, "memory.stat")); err == nil {
-			m.InactiveFile = kv["inactive_file"]
-		}
-		if kv, err := readKV(filepath.Join(c.dir, "memory.events")); err == nil {
-			m.OOMKills = kv["oom_kill"]
-			m.OOMGroupKills = kv["oom_group_kill"]
-		}
-		st.Memory = m
-	}
-	if kv, err := readKV(filepath.Join(c.dir, "cpu.stat")); err == nil {
-		if _, ok := kv["usage_usec"]; ok {
-			st.CPU = &CPUStats{
-				UsageUsec:     kv["usage_usec"],
-				NrThrottled:   kv["nr_throttled"],
-				ThrottledUsec: kv["throttled_usec"],
-			}
-		}
-	}
+	st := Stats{At: time.Now(), Memory: readV2Memory(c.dir), CPU: readV2CPU(c.dir)}
 	if io, ok := c.io.read(filepath.Join(c.dir, "cgroup.procs")); ok {
 		st.IO = &io
 	}
@@ -179,15 +107,56 @@ func (c *v2) Read() (Stats, error) {
 	return st, nil
 }
 
+func readV2Memory(dir string) *MemoryStats {
+	cur, err := readUint(filepath.Join(dir, "memory.current"))
+	if err != nil {
+		return nil
+	}
+	m := &MemoryStats{Current: cur}
+	peak, err := readUint(filepath.Join(dir, "memory.peak"))
+	if err == nil {
+		m.Peak, m.HasPeak = peak, true
+	}
+	kv, err := readKV(filepath.Join(dir, "memory.stat"))
+	if err == nil {
+		m.InactiveFile = kv["inactive_file"]
+	}
+	kv, err = readKV(filepath.Join(dir, "memory.events"))
+	if err == nil {
+		m.OOMKills = kv["oom_kill"]
+		m.OOMGroupKills = kv["oom_group_kill"]
+	}
+	return m
+}
+
+func readV2CPU(dir string) *CPUStats {
+	kv, err := readKV(filepath.Join(dir, "cpu.stat"))
+	if err != nil {
+		return nil
+	}
+	usage, ok := kv["usage_usec"]
+	if !ok {
+		return nil
+	}
+	return &CPUStats{
+		UsageUsec:     usage,
+		NrThrottled:   kv["nr_throttled"],
+		ThrottledUsec: kv["throttled_usec"],
+	}
+}
+
 func (c *v2) Limits() Limits {
 	var l Limits
-	if s, err := readTrim(filepath.Join(c.dir, "memory.max")); err == nil && s != "max" {
-		if v, err := strconv.ParseUint(s, 10, 64); err == nil {
+	s, err := readTrim(filepath.Join(c.dir, "memory.max"))
+	if err == nil && s != "max" {
+		v, err := strconv.ParseUint(s, 10, 64)
+		if err == nil {
 			l.MemoryBytes = v
 		}
 	}
 	// cpu.max: "<quota> <period>" or "max <period>".
-	if s, err := readTrim(filepath.Join(c.dir, "cpu.max")); err == nil {
+	s, err = readTrim(filepath.Join(c.dir, "cpu.max"))
+	if err == nil {
 		l.CPUMillicores = parseCPUQuota(s)
 	}
 	return l
@@ -230,41 +199,12 @@ func (c *v1) Info() Info {
 }
 
 func (c *v1) Read() (Stats, error) {
-	st := Stats{At: time.Now()}
-	if c.memDir != "" {
-		if cur, err := readUint(filepath.Join(c.memDir, "memory.usage_in_bytes")); err == nil {
-			m := &MemoryStats{Current: cur}
-			if peak, err := readUint(filepath.Join(c.memDir, "memory.max_usage_in_bytes")); err == nil {
-				m.Peak, m.HasPeak = peak, true
-			}
-			if kv, err := readKV(filepath.Join(c.memDir, "memory.stat")); err == nil {
-				if v, ok := kv["total_inactive_file"]; ok {
-					m.InactiveFile = v
-				} else {
-					m.InactiveFile = kv["inactive_file"]
-				}
-			}
-			if kv, err := readKV(filepath.Join(c.memDir, "memory.oom_control")); err == nil {
-				m.OOMKills = kv["oom_kill"]
-			}
-			st.Memory = m
-		}
+	st := Stats{At: time.Now(), Memory: readV1Memory(c.memDir), CPU: readV1CPU(c.cpuDir)}
+	procsDir := c.memDir
+	if procsDir == "" {
+		procsDir = c.cpuDir
 	}
-	if c.cpuDir != "" {
-		if ns, err := readUint(filepath.Join(c.cpuDir, "cpuacct.usage")); err == nil {
-			cpu := &CPUStats{UsageUsec: ns / 1000}
-			if kv, err := readKV(filepath.Join(c.cpuDir, "cpu.stat")); err == nil {
-				cpu.NrThrottled = kv["nr_throttled"]
-				cpu.ThrottledUsec = kv["throttled_time"] / 1000
-			}
-			st.CPU = cpu
-		}
-	}
-	procs := filepath.Join(c.memDir, "cgroup.procs")
-	if c.memDir == "" {
-		procs = filepath.Join(c.cpuDir, "cgroup.procs")
-	}
-	if io, ok := c.io.read(procs); ok {
+	if io, ok := c.io.read(filepath.Join(procsDir, "cgroup.procs")); ok {
 		st.IO = &io
 	}
 	if st.Memory == nil && st.CPU == nil {
@@ -273,10 +213,56 @@ func (c *v1) Read() (Stats, error) {
 	return st, nil
 }
 
+func readV1Memory(memDir string) *MemoryStats {
+	if memDir == "" {
+		return nil
+	}
+	cur, err := readUint(filepath.Join(memDir, "memory.usage_in_bytes"))
+	if err != nil {
+		return nil
+	}
+	m := &MemoryStats{Current: cur}
+	peak, err := readUint(filepath.Join(memDir, "memory.max_usage_in_bytes"))
+	if err == nil {
+		m.Peak, m.HasPeak = peak, true
+	}
+	kv, err := readKV(filepath.Join(memDir, "memory.stat"))
+	if err == nil {
+		if v, ok := kv["total_inactive_file"]; ok {
+			m.InactiveFile = v
+		} else {
+			m.InactiveFile = kv["inactive_file"]
+		}
+	}
+	kv, err = readKV(filepath.Join(memDir, "memory.oom_control"))
+	if err == nil {
+		m.OOMKills = kv["oom_kill"]
+	}
+	return m
+}
+
+func readV1CPU(cpuDir string) *CPUStats {
+	if cpuDir == "" {
+		return nil
+	}
+	ns, err := readUint(filepath.Join(cpuDir, "cpuacct.usage"))
+	if err != nil {
+		return nil
+	}
+	cpu := &CPUStats{UsageUsec: ns / 1000}
+	kv, err := readKV(filepath.Join(cpuDir, "cpu.stat"))
+	if err == nil {
+		cpu.NrThrottled = kv["nr_throttled"]
+		cpu.ThrottledUsec = kv["throttled_time"] / 1000
+	}
+	return cpu
+}
+
 func (c *v1) Limits() Limits {
 	var l Limits
 	if c.memDir != "" {
-		if v, err := readUint(filepath.Join(c.memDir, "memory.limit_in_bytes")); err == nil && v < noLimitThreshold {
+		v, err := readUint(filepath.Join(c.memDir, "memory.limit_in_bytes"))
+		if err == nil && v < noLimitThreshold {
 			l.MemoryBytes = v
 		}
 	}
@@ -319,7 +305,7 @@ func (t *ioTracker) read(procsFile string) (IOStats, bool) {
 	}
 	self := os.Getpid()
 	next := make(map[int]ioCounters, len(t.live))
-	for _, f := range strings.Fields(string(b)) {
+	for f := range strings.FieldsSeq(string(b)) {
 		pid, err := strconv.Atoi(f)
 		if err != nil || pid == self {
 			continue
@@ -360,4 +346,53 @@ func readProcIO(p string) (ioCounters, bool) {
 		return ioCounters{}, false
 	}
 	return ioCounters{r: r, w: w}, true
+}
+
+// ---- file helpers ----
+
+func readTrim(p string) (string, error) {
+	b, err := os.ReadFile(p)
+	if err != nil {
+		return "", err
+	}
+	return strings.TrimSpace(string(b)), nil
+}
+
+func readUint(p string) (uint64, error) {
+	s, err := readTrim(p)
+	if err != nil {
+		return 0, err
+	}
+	return strconv.ParseUint(s, 10, 64)
+}
+
+// readKV parses "key value" lines (memory.stat, cpu.stat, memory.events, memory.oom_control).
+func readKV(p string) (map[string]uint64, error) {
+	b, err := os.ReadFile(p)
+	if err != nil {
+		return nil, err
+	}
+	m := make(map[string]uint64)
+	for line := range strings.SplitSeq(string(b), "\n") {
+		fields := strings.Fields(line)
+		if len(fields) < 2 {
+			continue
+		}
+		v, err := strconv.ParseUint(fields[1], 10, 64)
+		if err != nil {
+			continue
+		}
+		m[fields[0]] = v
+	}
+	return m, nil
+}
+
+func fileExists(p string) bool {
+	st, err := os.Stat(p)
+	return err == nil && !st.IsDir()
+}
+
+func dirExists(p string) bool {
+	st, err := os.Stat(p)
+	return err == nil && st.IsDir()
 }

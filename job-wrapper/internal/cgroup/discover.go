@@ -18,6 +18,14 @@ type DiscoverOptions struct {
 	ProcRoot string
 }
 
+// selfCgroup is the parsed content of /proc/self/cgroup.
+type selfCgroup struct {
+	v2Path  string
+	hasV2   bool
+	memPath string // v1 memory controller path
+	cpuPath string // v1 cpu / cpuacct controller path
+}
+
 // Discover finds the cgroup this process belongs to. It looks at /proc/self/cgroup and tries the
 // path it names under SysFS first and SysFS itself second: with a private cgroup namespace
 // (Kubernetes, Docker on cgroup v2) the container's own cgroup is mounted at the root, while with
@@ -39,55 +47,85 @@ func Discover(opts DiscoverOptions) (Source, error) {
 		return fromDir(opts.Dir, procRoot)
 	}
 
-	b, err := os.ReadFile(filepath.Join(procRoot, "self", "cgroup"))
+	raw, err := readSelfCgroup(procRoot)
 	if err != nil {
-		if procRoot == "" {
-			b, err = os.ReadFile("/proc/self/cgroup")
-		}
-		if err != nil {
-			return nil, fmt.Errorf("%w: %v", ErrUnavailable, err)
+		return nil, fmt.Errorf("%w: %w", ErrUnavailable, err)
+	}
+	self := parseSelfCgroup(raw)
+
+	if self.hasV2 {
+		if dir := findV2Dir(sysfs, self.v2Path); dir != "" {
+			return NewV2(dir, procRoot), nil
 		}
 	}
 
-	var v2Path, memPath, cpuPath string
-	hasV2 := false
-	for _, line := range strings.Split(string(b), "\n") {
+	memDir, cpuDir := findV1Dirs(sysfs, self)
+	if memDir == "" && cpuDir == "" {
+		return nil, fmt.Errorf(
+			"%w: no readable cgroup under %s (self: %q)",
+			ErrUnavailable,
+			sysfs,
+			strings.TrimSpace(raw),
+		)
+	}
+	return NewV1(memDir, cpuDir, procRoot), nil
+}
+
+// readSelfCgroup reads /proc/self/cgroup, from the real /proc when procRoot is empty.
+func readSelfCgroup(procRoot string) (string, error) {
+	if procRoot == "" {
+		procRoot = "/proc"
+	}
+	b, err := os.ReadFile(filepath.Join(procRoot, "self", "cgroup"))
+	if err != nil {
+		return "", err
+	}
+	return string(b), nil
+}
+
+// parseSelfCgroup reads "hierarchy:controllers:path" lines.
+func parseSelfCgroup(raw string) selfCgroup {
+	var self selfCgroup
+	for line := range strings.SplitSeq(raw, "\n") {
 		parts := strings.SplitN(line, ":", 3)
 		if len(parts) != 3 {
 			continue
 		}
 		controllers, p := parts[1], parts[2]
-		switch {
-		case controllers == "":
-			v2Path, hasV2 = p, true
-		default:
-			for _, c := range strings.Split(controllers, ",") {
-				switch c {
-				case "memory":
-					memPath = p
-				case "cpu", "cpuacct":
-					cpuPath = p
-				}
+		if controllers == "" {
+			self.v2Path, self.hasV2 = p, true
+			continue
+		}
+		for c := range strings.SplitSeq(controllers, ",") {
+			switch c {
+			case "memory":
+				self.memPath = p
+			case "cpu", "cpuacct":
+				self.cpuPath = p
 			}
 		}
 	}
+	return self
+}
 
-	if hasV2 {
-		for _, dir := range []string{filepath.Join(sysfs, v2Path), sysfs} {
-			if fileExists(filepath.Join(dir, "memory.current")) || fileExists(filepath.Join(dir, "cpu.stat")) {
-				return NewV2(dir, procRoot), nil
-			}
+func findV2Dir(sysfs, v2Path string) string {
+	for _, dir := range []string{filepath.Join(sysfs, v2Path), sysfs} {
+		if fileExists(filepath.Join(dir, "memory.current")) || fileExists(filepath.Join(dir, "cpu.stat")) {
+			return dir
 		}
 	}
+	return ""
+}
 
-	memDir := firstDir(
-		filepath.Join(sysfs, "memory", memPath),
+func findV1Dirs(sysfs string, self selfCgroup) (memDir, cpuDir string) {
+	memDir = firstDir(
+		filepath.Join(sysfs, "memory", self.memPath),
 		filepath.Join(sysfs, "memory"),
 	)
-	cpuDir := firstDir(
-		filepath.Join(sysfs, "cpu,cpuacct", cpuPath),
-		filepath.Join(sysfs, "cpuacct", cpuPath),
-		filepath.Join(sysfs, "cpu", cpuPath),
+	cpuDir = firstDir(
+		filepath.Join(sysfs, "cpu,cpuacct", self.cpuPath),
+		filepath.Join(sysfs, "cpuacct", self.cpuPath),
+		filepath.Join(sysfs, "cpu", self.cpuPath),
 		filepath.Join(sysfs, "cpu,cpuacct"),
 		filepath.Join(sysfs, "cpuacct"),
 	)
@@ -97,10 +135,7 @@ func Discover(opts DiscoverOptions) (Source, error) {
 	if cpuDir != "" && !fileExists(filepath.Join(cpuDir, "cpuacct.usage")) {
 		cpuDir = ""
 	}
-	if memDir == "" && cpuDir == "" {
-		return nil, fmt.Errorf("%w: no readable cgroup under %s (self: %q)", ErrUnavailable, sysfs, strings.TrimSpace(string(b)))
-	}
-	return NewV1(memDir, cpuDir, procRoot), nil
+	return memDir, cpuDir
 }
 
 func fromDir(dir, procRoot string) (Source, error) {
@@ -108,7 +143,11 @@ func fromDir(dir, procRoot string) (Source, error) {
 		return NewV2(dir, procRoot), nil
 	}
 	memDir := firstDir(filepath.Join(dir, "memory"))
-	cpuDir := firstDir(filepath.Join(dir, "cpu,cpuacct"), filepath.Join(dir, "cpuacct"), filepath.Join(dir, "cpu"))
+	cpuDir := firstDir(
+		filepath.Join(dir, "cpu,cpuacct"),
+		filepath.Join(dir, "cpuacct"),
+		filepath.Join(dir, "cpu"),
+	)
 	if memDir == "" && cpuDir == "" {
 		return nil, fmt.Errorf("%w: %s is neither a cgroup v2 directory nor a v1 mount root", ErrUnavailable, dir)
 	}

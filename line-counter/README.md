@@ -11,7 +11,9 @@ Usage:
 ```
 
 Counts the number of lines (`'\n'` bytes) in `--input` and writes the exact
-count as a base-10 integer (no trailing newline) into `--output`. Compression
+count as a base-10 integer (no trailing newline) into `--output`. A file
+without a trailing newline therefore counts one line fewer than an editor
+shows: only line terminators are counted. Compression
 is inferred (case-insensitively) from the input file extension: `.gz`, `.bz2`,
 `.zst`, otherwise the file is read as-is. The file is streamed, so memory usage
 is O(1) regardless of file size.

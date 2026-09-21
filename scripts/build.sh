@@ -28,10 +28,17 @@ build_binary() {
 
     local _pkg_root="$(pkg_content_root "${_os_reg}" "${_arch_reg}")"
 
+    # Optional linker flags, e.g. GO_LDFLAGS="-X main.version=1.2.3" to stamp a version.
+    local _ldflags=()
+    if [ -n "${GO_LDFLAGS:-}" ]; then
+        _ldflags=(-ldflags "${GO_LDFLAGS}")
+    fi
+
     printf "## os='%s', arch='%s':\n" "${_os_go}" "${_arch_go}"
     env GOOS="${_os_go}" GOARCH="${_arch_go}" \
         go build \
         -C "$(dirname "./${_go_name}")" \
+        ${_ldflags[@]+"${_ldflags[@]}"} \
         -o "${_pkg_root}/${_bin_name}${_ext}" \
         "./$(basename "${_go_name}")"
 }

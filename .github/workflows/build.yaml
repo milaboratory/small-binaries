@@ -17,9 +17,110 @@ jobs:
         with:
           version-canonize: false
           branch-versioning: main
+
+  # The shared node-simple-pnpm workflow below only runs package tests when it also starts a
+  # Platforma backend for them (pl-start-for-tests), which nothing here needs. The Go packages
+  # carry self-contained test scripts (they build their own binaries; job-wrapper also drives
+  # Docker), so they run here directly, and the build/publish job waits for them.
+  test:
+    name: Package tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+          cache-dependency-path: "**/go.sum"
+
+      - name: Run the test script of every package that has one
+        shell: bash
+        run: |
+          set -o errexit
+          set -o nounset
+          set -o pipefail
+
+          failed=()
+          for manifest in */package.json test-utils/*/package.json; do
+            pkg="$(dirname "${manifest}")"
+            if ! jq -e '.scripts.test // empty' "${manifest}" >/dev/null; then
+              continue
+            fi
+            echo "::group::${pkg}"
+            if (cd "${pkg}" && npm run test); then
+              echo "::endgroup::"
+            else
+              echo "::endgroup::"
+              echo "::error::tests failed in ${pkg}"
+              failed+=("${pkg}")
+            fi
+          done
+
+          if [ "${#failed[@]}" -ne 0 ]; then
+            echo "Failed packages: ${failed[*]}"
+            exit 1
+          fi
+
+  # golangci-lint over every package that has a lint script (its own .golangci.yaml applies).
+  # The whole module is linted on every run; the version matches what developers run locally.
+  lint:
+    name: Package lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+          cache-dependency-path: "**/go.sum"
+
+      # Installed as a binary rather than through golangci-lint-action: the action insists on
+      # running lint itself in one working directory, while this repo lints one module per package.
+      - name: Install golangci-lint
+        shell: bash
+        env:
+          GOLANGCI_LINT_VERSION: v2.11.4
+        run: |
+          set -o errexit
+          set -o pipefail
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh \
+            | sh -s -- -b "$(go env GOPATH)/bin" "${GOLANGCI_LINT_VERSION}"
+          echo "$(go env GOPATH)/bin" >> "${GITHUB_PATH}"
+          "$(go env GOPATH)/bin/golangci-lint" --version
+
+      - name: Run the lint script of every package that has one
+        shell: bash
+        run: |
+          set -o errexit
+          set -o nounset
+          set -o pipefail
+
+          failed=()
+          for manifest in */package.json test-utils/*/package.json; do
+            pkg="$(dirname "${manifest}")"
+            if ! jq -e '.scripts.lint // empty' "${manifest}" >/dev/null; then
+              continue
+            fi
+            echo "::group::${pkg}"
+            if (cd "${pkg}" && npm run lint); then
+              echo "::endgroup::"
+            else
+              echo "::endgroup::"
+              echo "::error::lint failed in ${pkg}"
+              failed+=("${pkg}")
+            fi
+          done
+
+          if [ "${#failed[@]}" -ne 0 ]; then
+            echo "Failed packages: ${failed[*]}"
+            exit 1
+          fi
+
   run:
     needs:
       - init
+      - test
+      - lint
 
     uses: milaboratory/github-ci/.github/workflows/node-simple-pnpm.yaml@v4
     with:

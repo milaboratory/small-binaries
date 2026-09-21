@@ -1,5 +1,12 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 2.2.1
+
+### Patch Changes
+
+- Updated dependencies [40b55bd]
+  - @platforma-open/milaboratories.software-small-binaries.job-wrapper@1.1.1
+
 ## 2.2.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @platforma-open/milaboratories.software-small-binaries.job-wrapper
 
+## 1.1.1
+
+### Patch Changes
+
+- 40b55bd: Move job-wrapper to Go 1.26.6 (`go` directive): the 1.24 standard library carried 19 HIGH CVEs
+  flagged by the backend image scan, among them the os.Root symlink-following bug (CVE-2026-39822)
+  that the workdir prune relies on.
+
 ## 1.1.0
 
 ### Minor Changes

@@ -149,7 +149,7 @@ must be added to the expected-items list or the prune removes it before it runs.
 go test ./...                 # unit + host integration tests (Docker suite skipped)
 ./test.sh                     # everything, Docker suite included (mandatory unless SKIP_DOCKER_TESTS=1)
 JOB_WRAPPER_DOCKER=1 go test ./tests/ -run TestDocker -v
-pnpm lint                     # golangci-lint over the whole module (needs golangci-lint v2 on PATH)
+pnpm lint                     # golangci-lint over the whole module (v2.11.4, the version CI pins)
 ```
 
 Linting uses `.golangci.yaml`, adapted from `core/pl`: the same linter set, but the whole module

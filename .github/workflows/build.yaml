@@ -61,10 +61,57 @@ jobs:
             exit 1
           fi
 
+  # golangci-lint over every package that has a lint script (its own .golangci.yaml applies).
+  # The whole module is linted on every run; the version matches what developers run locally.
+  lint:
+    name: Package lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+          cache-dependency-path: "**/go.sum"
+
+      - uses: golangci/golangci-lint-action@v8
+        with:
+          version: v2.11.4
+          install-only: true
+
+      - name: Run the lint script of every package that has one
+        shell: bash
+        run: |
+          set -o errexit
+          set -o nounset
+          set -o pipefail
+
+          failed=()
+          for manifest in */package.json test-utils/*/package.json; do
+            pkg="$(dirname "${manifest}")"
+            if ! jq -e '.scripts.lint // empty' "${manifest}" >/dev/null; then
+              continue
+            fi
+            echo "::group::${pkg}"
+            if (cd "${pkg}" && npm run lint); then
+              echo "::endgroup::"
+            else
+              echo "::endgroup::"
+              echo "::error::lint failed in ${pkg}"
+              failed+=("${pkg}")
+            fi
+          done
+
+          if [ "${#failed[@]}" -ne 0 ]; then
+            echo "Failed packages: ${failed[*]}"
+            exit 1
+          fi
+
   run:
     needs:
       - init
       - test
+      - lint
 
     uses: milaboratory/github-ci/.github/workflows/node-simple-pnpm.yaml@v4
     with:

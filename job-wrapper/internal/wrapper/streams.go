@@ -149,12 +149,10 @@ func (s *streams) pipeTo(dst io.Writer) (*os.File, error) {
 		return nil, err
 	}
 	s.closeOwn = append(s.closeOwn, w)
-	s.wg.Add(1)
-	go func() {
-		defer s.wg.Done()
+	s.wg.Go(func() {
 		_, _ = io.Copy(dst, r)
 		_ = r.Close()
-	}()
+	})
 	return w, nil
 }
 

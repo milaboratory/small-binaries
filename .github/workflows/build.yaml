@@ -17,9 +17,54 @@ jobs:
         with:
           version-canonize: false
           branch-versioning: main
+
+  # The shared node-simple-pnpm workflow below only runs package tests when it also starts a
+  # Platforma backend for them (pl-start-for-tests), which nothing here needs. The Go packages
+  # carry self-contained test scripts (they build their own binaries; job-wrapper also drives
+  # Docker), so they run here directly, and the build/publish job waits for them.
+  test:
+    name: Package tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+          cache-dependency-path: "**/go.sum"
+
+      - name: Run the test script of every package that has one
+        shell: bash
+        run: |
+          set -o errexit
+          set -o nounset
+          set -o pipefail
+
+          failed=()
+          for manifest in */package.json test-utils/*/package.json; do
+            pkg="$(dirname "${manifest}")"
+            if ! jq -e '.scripts.test // empty' "${manifest}" >/dev/null; then
+              continue
+            fi
+            echo "::group::${pkg}"
+            if (cd "${pkg}" && npm run test); then
+              echo "::endgroup::"
+            else
+              echo "::endgroup::"
+              echo "::error::tests failed in ${pkg}"
+              failed+=("${pkg}")
+            fi
+          done
+
+          if [ "${#failed[@]}" -ne 0 ]; then
+            echo "Failed packages: ${failed[*]}"
+            exit 1
+          fi
+
   run:
     needs:
       - init
+      - test
 
     uses: milaboratory/github-ci/.github/workflows/node-simple-pnpm.yaml@v4
     with:

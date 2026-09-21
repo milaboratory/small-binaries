@@ -1,6 +1,6 @@
 {
   "name": "@platforma-open/milaboratories.software-small-binaries.job-wrapper",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Job container entrypoint replacing job-script.sh: runs the command, mirrors its streams, prunes the workdir, writes the completion marker and collects CPU/RAM usage from the container cgroup into .pl/usage.json",
   "scripts": {
     "cleanup": "rm -rf ./pkg-*.tgz && rm -rf ./build/ && rm -rf ./dist/",

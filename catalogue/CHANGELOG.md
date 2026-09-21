@@ -1,5 +1,16 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 2.2.0
+
+### Minor Changes
+
+- 22018cf: Add `job-wrapper`: a static Go entrypoint for job containers that replaces `job-script.sh`(PATH/LD_LIBRARY_PATH prepend, workdir prune, stdout/stderr mirroring, completion marker, exit code) and, while the command runs, samples the container cgroup and publishes CPU/RAM usage, peaks, OOM-kill events, duration and a basic execId to `.pl/usage.json`.
+
+### Patch Changes
+
+- Updated dependencies [22018cf]
+  - @platforma-open/milaboratories.software-small-binaries.job-wrapper@1.1.0
+
 ## 2.1.1
 
 ### Patch Changes

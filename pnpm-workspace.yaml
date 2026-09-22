@@ -20,7 +20,6 @@ packages:
   - table-converter
   - line-counter
   - mnz-client
-  - job-wrapper
 
   - catalogue
   - catalogue-tests

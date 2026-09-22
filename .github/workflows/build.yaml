@@ -20,8 +20,8 @@ jobs:
 
   # The shared node-simple-pnpm workflow below only runs package tests when it also starts a
   # Platforma backend for them (pl-start-for-tests), which nothing here needs. The Go packages
-  # carry self-contained test scripts (they build their own binaries; job-wrapper also drives
-  # Docker), so they run here directly, and the build/publish job waits for them.
+  # carry self-contained test scripts (they build their own binaries; some drive Docker), so
+  # they run here directly, and the build/publish job waits for them.
   test:
     name: Package tests
     runs-on: ubuntu-latest

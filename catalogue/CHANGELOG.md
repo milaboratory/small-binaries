@@ -1,5 +1,17 @@
 # @platforma-open/milaboratories.software-small-binaries
 
+## 2.3.1
+
+### Patch Changes
+
+- 6ebfa5a: Release every package through npm trusted publishing (OIDC) so each package's trusted publisher is used before it expires.
+- Updated dependencies [6ebfa5a]
+  - @platforma-open/milaboratories.software-small-binaries.hello-world@1.1.8
+  - @platforma-open/milaboratories.software-small-binaries.hello-world-py@1.0.11
+  - @platforma-open/milaboratories.software-small-binaries.line-counter@1.1.2
+  - @platforma-open/milaboratories.software-small-binaries.mnz-client@1.6.6
+  - @platforma-open/milaboratories.software-small-binaries.table-converter@1.3.6
+
 ## 2.3.0
 
 ### Minor Changes

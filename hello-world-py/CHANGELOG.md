@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-small-binaries.hello-world-py
 
+## 1.0.11
+
+### Patch Changes
+
+- 6ebfa5a: Release every package through npm trusted publishing (OIDC) so each package's trusted publisher is used before it expires.
+
 ## 1.0.10
 
 ### Patch Changes

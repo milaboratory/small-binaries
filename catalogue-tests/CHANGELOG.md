@@ -1,5 +1,23 @@
 # @platforma-open/milaboratories.software-test-utils
 
+## 1.2.1
+
+### Patch Changes
+
+- 6ebfa5a: Release every package through npm trusted publishing (OIDC) so each package's trusted publisher is used before it expires.
+- Updated dependencies [6ebfa5a]
+  - @platforma-open/milaboratories.software-small-binaries.hello-world@1.1.8
+  - @platforma-open/milaboratories.software-small-binaries.hello-world-py@1.0.11
+  - @platforma-open/milaboratories.software-test-utils.docker-images@1.2.1
+  - @platforma-open/milaboratories.software-test-utils.guided-command@1.1.7
+  - @platforma-open/milaboratories.software-test-utils.java-stub@1.0.8
+  - @platforma-open/milaboratories.software-test-utils.python-stub@1.0.8
+  - @platforma-open/milaboratories.software-test-utils.read-with-sleep@1.1.7
+  - @platforma-open/milaboratories.software-test-utils.runenv-java-stub@1.0.9
+  - @platforma-open/milaboratories.software-test-utils.runenv-python-stub@1.0.10
+  - @platforma-open/milaboratories.software-test-utils.sleep@1.1.7
+  - @platforma-open/milaboratories.software-test-utils.small-asset@1.1.8
+
 ## 1.2.0
 
 ### Minor Changes

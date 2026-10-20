@@ -1,5 +1,11 @@
 # @platforma-open/milaboratories.software-test-utils.docker-images
 
+## 1.2.1
+
+### Patch Changes
+
+- 6ebfa5a: Release every package through npm trusted publishing (OIDC) so each package's trusted publisher is used before it expires.
+
 ## 1.2.0
 
 ### Minor Changes
